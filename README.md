@@ -11,7 +11,7 @@
 
 ## TODOs
 
-- [ ] UTF-8化
+- [x] UTF-8化
 - [ ] clang-formatの適用
 - [ ] clang-tidyの適用
 - [ ] CMake化

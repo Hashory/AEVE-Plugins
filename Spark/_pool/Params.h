@@ -40,7 +40,7 @@
 #endif
 
 
-//UI‚Ìƒpƒ‰ƒ[ƒ^
+//UIã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 #ifndef PointInfo_H
 #define PointInfo_H
 typedef struct PointInfo {

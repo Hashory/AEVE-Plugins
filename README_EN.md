@@ -12,7 +12,7 @@ production.\
 
 ## TODOs
 
-- [ ] Convert to UTF-8
+- [x] Convert to UTF-8
 - [ ] Set up clang-format
 - [ ] Set up clang-tidy
 - [ ] Migrate to CMake
