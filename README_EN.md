@@ -18,6 +18,8 @@ production.\
 - [ ] Migrate to CMake
 - [ ] Create documentation
 - [ ] Set up Github Actions
+- [ ] MacOS support
+- [ ] OpenFX support
 - [ ] Accelerate and modernize source code →
       [Feature Update List](#feature-update-list)
 
