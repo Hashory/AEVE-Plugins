@@ -138,11 +138,11 @@
 | whiteInOut              |        ❌        |
 | YuvControl              |        ❌        |
 
-# ライセンス
+## ライセンス
 
 このソフトウェアはMITライセンスの下で公開されています。詳細は[LICENSE](LICENSE)をご覧ください。
 
-# Super Thanks
+## Super Thanks
 
 「F's
 Plugins」の作成者である[bry-ful](https://github.com/bryful)さんに感謝いたします。
