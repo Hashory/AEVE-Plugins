@@ -1,0 +1,53 @@
+cmake_minimum_required(VERSION 3.18.2)
+
+project("AEVE_Plugins")
+
+# Enable C++20 standard
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# -------------------- Platform-specific configuration --------------------
+
+# macOS/Xcode specific settings
+if(CMAKE_GENERATOR STREQUAL "Xcode")
+  set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
+  set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
+  set(MAC_PLATFORM TRUE)
+endif()
+
+# Windows/Visual Studio specific settings
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+  add_compile_options(/utf-8)
+  set(WIN_PLATFORM TRUE)
+endif()
+
+# -------------------- After Effects SDK configuration --------------------
+
+set(AE_SDK_PATH "./AfterEffectsSDK")
+get_filename_component(AE_SDK_PATH_ABS "${CMAKE_CURRENT_SOURCE_DIR}/${AE_SDK_PATH}" ABSOLUTE)
+
+add_subdirectory("AfterEffectsSDK")
+
+# -------------------- Plugin configuration --------------------
+
+# Set the output directory for plugins
+set(PLUGIN_OUTPUT_DIR ${CMAKE_BINARY_DIR}/Plugins)
+file(MAKE_DIRECTORY ${PLUGIN_OUTPUT_DIR}) # Create the output directory if it doesn't exist
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
+
+# Add common library for all plugins
+add_subdirectory("FsLibrary")
+
+# ---------------- Plugin build function --------------------
+
+# TODO
+
+# ---------------- Plugin source files --------------------
+
+# Add each plugin project as a subdirectory
+add_subdirectory("AlphaFix")
+add_subdirectory("AlphaThreshold")

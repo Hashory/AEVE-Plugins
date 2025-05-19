@@ -8,8 +8,8 @@ This folder is for storing the SDK used for Adobe After Effects plugin developme
 
 1. Adobe 公式サイトから After Effects SDK をダウンロードしてください。\
    Download the After Effects SDK from the official Adobe website.
-2. このフォルダに SDK の内容を展開してください。
-   Extract the contents of the SDK into this folder.
+2. このフォルダに SDK の内容（`Headers`, `Resources`, `Util`, `GPUUtils`）を配置してください。\
+   Place the contents of the SDK (Headers, Resources, Util, GPUUtils) into this folder.
 
 ## リンク / Links
 
