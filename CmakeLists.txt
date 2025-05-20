@@ -176,21 +176,21 @@ add_subdirectory("ChannelNoise")
 add_subdirectory("ChannelShift")
 add_subdirectory("ChromaticAberration")
 add_subdirectory("ColorChange")
-add_subdirectory("ColorChangeFromPoint")
+# add_subdirectory("ColorChangeFromPoint") # Compile error
 add_subdirectory("ColorChangeSimple")
 add_subdirectory("ColorKey")
-add_subdirectory("ColorMatKey")
+# add_subdirectory("ColorMatKey") # Compile error
 add_subdirectory("colorThreshold")
 add_subdirectory("CreateAlpha")
 add_subdirectory("EdgeBlur")
 add_subdirectory("EdgeLine")
-add_subdirectory("EdgeLine-Hi")
+# add_subdirectory("EdgeLine-Hi") # Compile error
 add_subdirectory("ExpsColors")
 add_subdirectory("ExpsPos")
 add_subdirectory("Extract-Hi")
 add_subdirectory("Extract_Edge")
 add_subdirectory("FillColor")
-add_subdirectory("Filter")
+# add_subdirectory("Filter") # Link error
 add_subdirectory("Flare")
 add_subdirectory("Frame")
 add_subdirectory("FsSSFrame")
@@ -201,19 +201,19 @@ add_subdirectory("graytoneToColorize")
 add_subdirectory("grayToWaveLine")
 add_subdirectory("GuideFrame")
 add_subdirectory("HLS_Reverse")
-add_subdirectory("IroTore")
+# add_subdirectory("IroTore") # Compile error
 add_subdirectory("IroToreAdjacent")
 add_subdirectory("LineDetection")
 add_subdirectory("LineTrace")
 add_subdirectory("MainLineRepaint")
-add_subdirectory("MainLineRepaint_old")
+# add_subdirectory("MainLineRepaint_old") # Link error
 add_subdirectory("MaskFromRGB")
 add_subdirectory("MaskFromRGB_Multi")
 add_subdirectory("Max")
 add_subdirectory("Max_Kasumi")
 add_subdirectory("Mosaic")
-add_subdirectory("NamiGarasu")
-add_subdirectory("NFsSkelton")
+# add_subdirectory("NamiGarasu") # Link error
+# add_subdirectory("NFsSkelton") # Compile error
 add_subdirectory("NoiseHiLo_Alpha")
 add_subdirectory("NoiseHiLo_RGB")
 add_subdirectory("OpticalDiffusion")
@@ -221,7 +221,7 @@ add_subdirectory("OutLine")
 add_subdirectory("Paint")
 add_subdirectory("PaintMultPoint")
 add_subdirectory("PaperPlaneGetWeight")
-add_subdirectory("PaperPlaneGetWeightInfo")
+# add_subdirectory("PaperPlaneGetWeightInfo") # Link error
 add_subdirectory("PixelExtend")
 add_subdirectory("PixelReplace")
 add_subdirectory("PixelSelector")
@@ -239,8 +239,8 @@ add_subdirectory("ScreenShakeDir")
 add_subdirectory("ScreenShakeMM")
 add_subdirectory("SelectColor")
 add_subdirectory("SelectedBlur")
-add_subdirectory("Shine")
-add_subdirectory("ShineParallel")
+# add_subdirectory("Shine") # Compile error
+# add_subdirectory("ShineParallel") # Compile error
 add_subdirectory("ShitsuKanBlur")
 add_subdirectory("smokeThreshold")
 add_subdirectory("Spark")
@@ -259,12 +259,12 @@ add_subdirectory("Thin")
 add_subdirectory("ToGray")
 add_subdirectory("Tone")
 add_subdirectory("Toner")
-add_subdirectory("TouchDraw")
-add_subdirectory("TouchDrawCenter")
-add_subdirectory("TouchDrawStraght")
-add_subdirectory("Unmult_KNSW_Fake")
-add_subdirectory("Unmult_RG_Fake")
-add_subdirectory("UsedColorList")
+# add_subdirectory("TouchDraw") # Link error
+# add_subdirectory("TouchDrawCenter") # Link error
+# add_subdirectory("TouchDrawStraght") # Link error
+# add_subdirectory("Unmult_KNSW_Fake") # Compile error
+# add_subdirectory("Unmult_RG_Fake") # Compile error
+# add_subdirectory("UsedColorList") # Compile error
 add_subdirectory("VideoGrid")
 add_subdirectory("VideoLine")
 add_subdirectory("VideoLine2nd")
