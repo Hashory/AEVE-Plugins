@@ -9,6 +9,10 @@
 の高速化・モダン化実装です。\
 【🚧現在進行中🚧】
 
+## ダウンロード
+
+最新版は [GitHubのReleaseページ](https://github.com/Hashory/AEVE-Plugins/releases) からダウンロードできます。
+
 ## TODOs
 
 - [x] UTF-8化

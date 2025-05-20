@@ -10,6 +10,10 @@ AfterEffects plugin
 production.\
 🚧 Work in progress 🚧
 
+## Download
+
+The latest version can be downloaded from the [GitHub Releases page](https://github.com/Hashory/AEVE-Plugins/releases).
+
 ## TODOs
 
 - [x] Convert to UTF-8
