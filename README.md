@@ -14,7 +14,7 @@
 - [x] UTF-8化
 - [ ] clang-formatの適用
 - [ ] clang-tidyの適用
-- [ ] CMake化
+- [x] CMake化([after_effects_cmake](https://github.com/mobile-bungalow/after_effects_cmake)を参考にさせていただきました。一部完了していない箇所については[#1](https://github.com/Hashory/AEVE-Plugins/pull/1#issue-3075971090)を参照してください。)
 - [ ] ドキュメントの作成
 - [ ] Github Actions の作成
 - [ ] MacOSの対応

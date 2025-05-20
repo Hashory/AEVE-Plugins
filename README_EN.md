@@ -15,7 +15,7 @@ production.\
 - [x] Convert to UTF-8
 - [ ] Set up clang-format
 - [ ] Set up clang-tidy
-- [ ] Migrate to CMake
+- [x] Migrate to CMake (Thanks to [after_effects_cmake](https://github.com/mobile-bungalow/after_effects_cmake) for reference. For unfinished parts, see [#1](https://github.com/Hashory/AEVE-Plugins/pull/1#issue-3075971090).)
 - [ ] Create documentation
 - [ ] Set up Github Actions
 - [ ] MacOS support
