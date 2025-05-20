@@ -1,0 +1,272 @@
+cmake_minimum_required(VERSION 3.18.2)
+
+project("AEVE_Plugins")
+
+# Enable C++20 standard
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# -------------------- Platform-specific configuration --------------------
+
+# macOS/Xcode specific settings
+if(CMAKE_GENERATOR STREQUAL "Xcode")
+  set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
+  set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
+  set(MAC_PLATFORM TRUE)
+endif()
+
+# Windows/Visual Studio specific settings
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+  add_compile_options(/utf-8)
+  set(WIN_PLATFORM TRUE)
+endif()
+
+# -------------------- After Effects SDK configuration --------------------
+
+set(AE_SDK_PATH "./AfterEffectsSDK")
+get_filename_component(AE_SDK_PATH_ABS "${CMAKE_CURRENT_SOURCE_DIR}/${AE_SDK_PATH}" ABSOLUTE)
+
+add_subdirectory("AfterEffectsSDK")
+
+# -------------------- Plugin configuration --------------------
+
+# Set the output directory for plugins
+set(PLUGIN_OUTPUT_DIR ${CMAKE_BINARY_DIR}/Plugins)
+file(MAKE_DIRECTORY ${PLUGIN_OUTPUT_DIR}) # Create the output directory if it doesn't exist
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
+
+# Add common library for all plugins
+add_subdirectory("FsLibrary")
+
+# ---------------- Plugin build function --------------------
+
+function(build_ae_plugin PLUGIN_NAME)
+  # Bundle identifier and copyright variable definitions
+  set(MY_BUNDLE_GUI_IDENTIFIER "io.github.hashory.AEVE-Plugins.${PLUGIN_NAME}")
+  string(TIMESTAMP BUILD_YEAR "%Y")
+  set(MY_BUNDLE_COPYRIGHT "MIT LICENSED ${BUILD_YEAR}.")
+
+  # PiPL resource filenames
+  set(PIPL_RSRC ${PLUGIN_NAME}PiPL.rsrc)
+  set(PIPL_R ${PLUGIN_NAME}PiPL.r)
+
+  add_library(${PLUGIN_NAME} MODULE ${${PLUGIN_NAME}_SOURCES})
+
+  # Link the library
+  target_link_libraries(${PLUGIN_NAME} PRIVATE AfterEffectsSDK)
+  target_link_libraries(${PLUGIN_NAME} PRIVATE FsLibrary)
+
+  # -------------------- Platform-specific build logic --------------------
+
+  # Xcode(macOS) logic
+  if(MAC_PLATFORM)
+    target_link_libraries(${PLUGIN_NAME} "-framework Cocoa")
+
+    set_target_properties(${PLUGIN_NAME} PROPERTIES
+      XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
+    )
+
+    find_program(AFX_REZ rez /Developer/Tools)
+
+    add_custom_command(
+      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC}
+      COMMAND ${AFX_REZ}
+      ARGS ${CMAKE_CURRENT_SOURCE_DIR}/${PIPL_R}
+        -o ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC}
+        -useDF
+        -i "${AE_SDK_PATH_ABS}/Headers"
+        -i "${AE_SDK_PATH_ABS}/Headers/SP"
+        -i "${AE_SDK_PATH_ABS}/Util"
+        -i "${AE_SDK_PATH_ABS}/Resources"
+        -D __MACH__
+    )
+
+    set_source_files_properties(
+      ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC}
+      PROPERTIES
+      MACOSX_PACKAGE_LOCATION Resources/
+    )
+
+    target_sources(${PLUGIN_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC})
+
+    set_target_properties(${PLUGIN_NAME} PROPERTIES PREFIX "")
+    set_target_properties(${PLUGIN_NAME} PROPERTIES SUFFIX "")
+    set_target_properties(${PLUGIN_NAME} PROPERTIES
+      BUNDLE True
+      MACOSX_BUNDLE_BUNDLE_NAME ${PLUGIN_NAME}
+      BUNDLE_EXTENSION "plugin"
+      MACOSX_BUNDLE_INFO_STRING "${PLUGIN_NAME}"
+      MACOSX_BUNDLE_GUI_IDENTIFIER "${MY_BUNDLE_GUI_IDENTIFIER}"
+      MACOSX_BUNDLE_COPYRIGHT "${MY_BUNDLE_COPYRIGHT}"
+    )
+
+    # PkgInfo
+    add_custom_command(
+      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/PkgInfo
+      COMMAND echo "eFKTFXTC" >> ${CMAKE_CURRENT_BINARY_DIR}/PkgInfo
+    )
+
+    set_source_files_properties(
+      ${CMAKE_CURRENT_BINARY_DIR}/PkgInfo
+      PROPERTIES
+      MACOSX_PACKAGE_LOCATION ""
+    )
+
+    target_sources(${PLUGIN_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/PkgInfo)
+  endif()
+
+  # Windows logic
+  if(WIN_PLATFORM)
+    set_target_properties(${PLUGIN_NAME} PROPERTIES SUFFIX ".aex")
+    get_filename_component(
+      AFX_REZ
+      "${AE_SDK_PATH_ABS}/Resources/PiPLtool.exe"
+      ABSOLUTE
+      CACHE
+    )
+
+    set(RR_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.rr")
+    set(RRC_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.rrc")
+    set(RC_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.rc")
+
+    add_custom_command(
+      OUTPUT ${RR_FILE}
+      COMMAND
+      cl /utf-8
+        /I "${AE_SDK_PATH_ABS}/Headers"
+        /I "${AE_SDK_PATH_ABS}/Headers/SP"
+        /I "${AE_SDK_PATH_ABS}/Util"
+        /I "${AE_SDK_PATH_ABS}/Resources"
+        /EP "${CMAKE_CURRENT_SOURCE_DIR}/${PIPL_R}" > "${RR_FILE}"
+    )
+
+    add_custom_command(
+      DEPENDS ${RR_FILE}
+      OUTPUT ${RRC_FILE}
+      COMMAND ${AFX_REZ} "${RR_FILE}" "${RRC_FILE}"
+    )
+
+    add_custom_command(
+      DEPENDS ${RRC_FILE}
+      OUTPUT ${RC_FILE}
+      COMMAND cl /utf-8 /D "MSWindows" /EP "${RRC_FILE}" > "${RC_FILE}"
+    )
+
+    target_sources(
+      ${PLUGIN_NAME} PRIVATE
+      "${RC_FILE}"
+    )
+  endif()
+endfunction()
+
+# ---------------- Plugin source files --------------------
+
+# Add each plugin project as a subdirectory
+add_subdirectory("AlphaFix")
+add_subdirectory("AlphaThreshold")
+add_subdirectory("AnimatedNoise")
+add_subdirectory("CCplus")
+add_subdirectory("CellGrad")
+add_subdirectory("ChannelBlur")
+add_subdirectory("ChannelNoise")
+add_subdirectory("ChannelShift")
+add_subdirectory("ChromaticAberration")
+add_subdirectory("ColorChange")
+# add_subdirectory("ColorChangeFromPoint") # Compile error
+add_subdirectory("ColorChangeSimple")
+add_subdirectory("ColorKey")
+# add_subdirectory("ColorMatKey") # Compile error
+add_subdirectory("colorThreshold")
+add_subdirectory("CreateAlpha")
+add_subdirectory("EdgeBlur")
+add_subdirectory("EdgeLine")
+# add_subdirectory("EdgeLine-Hi") # Compile error
+add_subdirectory("ExpsColors")
+add_subdirectory("ExpsPos")
+add_subdirectory("Extract-Hi")
+add_subdirectory("Extract_Edge")
+add_subdirectory("FillColor")
+# add_subdirectory("Filter") # Link error
+add_subdirectory("Flare")
+add_subdirectory("Frame")
+add_subdirectory("FsSSFrame")
+add_subdirectory("Grad_Test")
+add_subdirectory("grayToColorize")
+add_subdirectory("grayToCountourLine")
+add_subdirectory("graytoneToColorize")
+add_subdirectory("grayToWaveLine")
+add_subdirectory("GuideFrame")
+add_subdirectory("HLS_Reverse")
+# add_subdirectory("IroTore") # Compile error
+add_subdirectory("IroToreAdjacent")
+add_subdirectory("LineDetection")
+add_subdirectory("LineTrace")
+add_subdirectory("MainLineRepaint")
+# add_subdirectory("MainLineRepaint_old") # Link error
+add_subdirectory("MaskFromRGB")
+add_subdirectory("MaskFromRGB_Multi")
+add_subdirectory("Max")
+add_subdirectory("Max_Kasumi")
+add_subdirectory("Mosaic")
+# add_subdirectory("NamiGarasu") # Link error
+# add_subdirectory("NFsSkelton") # Compile error
+add_subdirectory("NoiseHiLo_Alpha")
+add_subdirectory("NoiseHiLo_RGB")
+add_subdirectory("OpticalDiffusion")
+add_subdirectory("OutLine")
+add_subdirectory("Paint")
+add_subdirectory("PaintMultPoint")
+add_subdirectory("PaperPlaneGetWeight")
+# add_subdirectory("PaperPlaneGetWeightInfo") # Link error
+add_subdirectory("PixelExtend")
+add_subdirectory("PixelReplace")
+add_subdirectory("PixelSelector")
+add_subdirectory("PluginSkeleton")
+add_subdirectory("Posterization8bit")
+add_subdirectory("Premultiply")
+add_subdirectory("RandomLineNoise")
+add_subdirectory("RandomMosaic")
+add_subdirectory("RandomMosaic2nd")
+add_subdirectory("RandomShift")
+add_subdirectory("RGBAControl")
+add_subdirectory("RgbToAlpha")
+add_subdirectory("Scanline")
+add_subdirectory("ScreenShakeDir")
+add_subdirectory("ScreenShakeMM")
+add_subdirectory("SelectColor")
+add_subdirectory("SelectedBlur")
+# add_subdirectory("Shine") # Compile error
+# add_subdirectory("ShineParallel") # Compile error
+add_subdirectory("ShitsuKanBlur")
+add_subdirectory("smokeThreshold")
+add_subdirectory("Spark")
+add_subdirectory("SparkGrand")
+add_subdirectory("SparkMult")
+add_subdirectory("SparkRing")
+add_subdirectory("SparkStorm")
+add_subdirectory("Spark_Test")
+add_subdirectory("sputteringAlpha")
+add_subdirectory("sputteringCircle")
+add_subdirectory("sputteringRect")
+add_subdirectory("sputteringSplash")
+add_subdirectory("Star")
+add_subdirectory("Star_Colorful")
+add_subdirectory("Thin")
+add_subdirectory("ToGray")
+add_subdirectory("Tone")
+add_subdirectory("Toner")
+# add_subdirectory("TouchDraw") # Link error
+# add_subdirectory("TouchDrawCenter") # Link error
+# add_subdirectory("TouchDrawStraght") # Link error
+# add_subdirectory("Unmult_KNSW_Fake") # Compile error
+# add_subdirectory("Unmult_RG_Fake") # Compile error
+# add_subdirectory("UsedColorList") # Compile error
+add_subdirectory("VideoGrid")
+add_subdirectory("VideoLine")
+add_subdirectory("VideoLine2nd")
+add_subdirectory("whiteInOut")
+add_subdirectory("YuvControl")
