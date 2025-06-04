@@ -21,8 +21,8 @@ The latest version can be downloaded from the [GitHub Releases page](https://git
 - [ ] Set up clang-tidy
 - [x] Migrate to CMake (Thanks to [after_effects_cmake](https://github.com/mobile-bungalow/after_effects_cmake) for reference. For unfinished parts, see [#1](https://github.com/Hashory/AEVE-Plugins/pull/1#issue-3075971090).)
 - [ ] Create documentation
-- [ ] Set up Github Actions
-- [ ] MacOS support
+- [ ] (🟡 In progress) Set up Github Actions (Currently confirming license with [Adobe Community](https://community.adobe.com/t5/after-effects-discussions/can-i-use-private-storage-for-ae-sdk-with-github-actions/m-p/15339535) and support.)
+- [ ] (🟡 In progress) MacOS support
 - [ ] OpenFX support
 - [ ] Accelerate and modernize source code →
       [Feature Update List](#feature-update-list)
