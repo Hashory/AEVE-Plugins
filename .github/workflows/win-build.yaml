@@ -14,9 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup AWS CLI
-        uses: aws-actions/setup-aws-cli@v2
-
       - name: Download After Effects SDK
         run: |
           aws s3 cp "s3://ae-sdk/AfterEffectsSDK_25.2_20_win.zip" "./AfterEffectsSDK_25.2_20_win.zip" --endpoint-url "${{ secrets.AESDK_ENDPOINT_URL }}"
@@ -52,6 +49,6 @@ jobs:
         shell: powershell
           
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: dist/AEVE-Plugins_*.zip
