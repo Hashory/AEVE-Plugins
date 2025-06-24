@@ -27,9 +27,9 @@ jobs:
       - name: Unzip and Place After Effects SDK
         run: |
           Expand-Archive -Path "AfterEffectsSDK_25.2_20_win.zip" -Force
-          cd ".\AfterEffectsSDK_25.2_20_win\ae25.2_20.64bit.AfterEffectsSDK"
+          pushd ".\AfterEffectsSDK_25.2_20_win\ae25.2_20.64bit.AfterEffectsSDK"
           .\extractzstd.bat
-          cd "..\.."
+          popd
           Move-Item -Path "AfterEffectsSDK_25.2_20_win\ae25.2_20.64bit.AfterEffectsSDK\AfterEffectsSDK\Examples\*" -Destination ".\AfterEffectsSDK" -Force
         shell: powershell
 
