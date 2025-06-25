@@ -23,7 +23,8 @@ jobs:
       
       - name: Unzip and Place After Effects SDK
         run: |
-          unzip -q "AfterEffectsSDK_25.2_20_mac.zip"
+          mkdir -p "AfterEffectsSDK_25.2_20_mac"
+          unzip -q "AfterEffectsSDK_25.2_20_mac.zip" -d "AfterEffectsSDK_25.2_20_mac"
           cd "AfterEffectsSDK_25.2_20_mac/ae25.2_20.64bit.AfterEffectsSDK"
           # Execute extractzstd.sh to extract compressed files
           chmod +x extractzstd.sh
