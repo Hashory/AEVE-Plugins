@@ -1,0 +1,57 @@
+name: macOS Build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download After Effects SDK
+        run: |
+          aws s3 cp "s3://ae-sdk/AfterEffectsSDK_25.2_20_mac.zip" "./AfterEffectsSDK_25.2_20_mac.zip" --endpoint-url "${{ secrets.AESDK_ENDPOINT_URL }}"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AESDK_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AESDK_SECRET_ACCESS_KEY }}
+      
+      - name: Unzip and Place After Effects SDK
+        run: |
+          unzip -q "AfterEffectsSDK_25.2_20_mac.zip"
+          cd "AfterEffectsSDK_25.2_20_mac/ae25.2_20.64bit.AfterEffectsSDK"
+          # Execute extractzstd.sh to extract compressed files
+          chmod +x extractzstd.sh
+          ./extractzstd.sh
+          cd ../..
+          cp -r "AfterEffectsSDK_25.2_20_mac/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples/"* "./AfterEffectsSDK/"
+
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1
+
+      - name: Configure CMake
+        run: cmake -S . -B build -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Archive artifacts
+        run: |
+          date=$(date +"%Y.%m.%d")
+          zipName="AEVE-Plugins_${date}_macOS_Universal.zip"
+          mkdir -p dist
+          cp build/Plugins/Release/*.plugin dist/ 2>/dev/null || cp build/Plugins/*.plugin dist/ 2>/dev/null || echo "No .plugin files found, checking for other extensions..."
+          # After Effects plugins on macOS might have different extensions
+          find build -name "*.bundle" -exec cp {} dist/ \; 2>/dev/null || true
+          find build -name "*.plugin" -exec cp {} dist/ \; 2>/dev/null || true
+          cd dist && zip -r "$zipName" ./*
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: dist/AEVE-Plugins_*.zip
