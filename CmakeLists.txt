@@ -78,6 +78,7 @@ function(build_ae_plugin PLUGIN_NAME)
       ARGS ${CMAKE_CURRENT_SOURCE_DIR}/${PIPL_R}
         -o ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC}
         -useDF
+        -i "${CMAKE_SOURCE_DIR}"
         -i "${AE_SDK_PATH_ABS}/Headers"
         -i "${AE_SDK_PATH_ABS}/Headers/SP"
         -i "${AE_SDK_PATH_ABS}/Util"
