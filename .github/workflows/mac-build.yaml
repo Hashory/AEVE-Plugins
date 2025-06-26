@@ -36,7 +36,7 @@ jobs:
         uses: jwlawson/actions-setup-cmake@v1
 
       - name: Configure CMake
-        run: cmake -S . -B build -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
+        run: cmake -S . -B build -G Xcode
 
       - name: Build
         run: cmake --build build --config Release
