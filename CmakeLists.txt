@@ -64,7 +64,7 @@ function(build_ae_plugin PLUGIN_NAME)
 
   # Xcode(macOS) logic
   if(MAC_PLATFORM)
-    target_link_libraries(${PLUGIN_NAME} "-framework Cocoa")
+    target_link_libraries(${PLUGIN_NAME} PRIVATE "-framework Cocoa")
 
     set_target_properties(${PLUGIN_NAME} PROPERTIES
       XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
