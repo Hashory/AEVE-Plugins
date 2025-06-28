@@ -40,6 +40,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
 
 # Add common library for all plugins
+get_filename_component(FS_LIBRARY_PATH_ABS "${CMAKE_CURRENT_SOURCE_DIR}/FsLibrary" ABSOLUTE)
 add_subdirectory("FsLibrary")
 
 # ---------------- Plugin build function --------------------
@@ -64,10 +65,11 @@ function(build_ae_plugin PLUGIN_NAME)
 
   # Xcode(macOS) logic
   if(MAC_PLATFORM)
-    target_link_libraries(${PLUGIN_NAME} "-framework Cocoa")
+    target_link_libraries(${PLUGIN_NAME} PRIVATE "-framework Cocoa")
 
     set_target_properties(${PLUGIN_NAME} PROPERTIES
       XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
+      XCODE_ATTRIBUTE_GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS "YES"
     )
 
     find_program(AFX_REZ rez /Developer/Tools)
@@ -78,6 +80,8 @@ function(build_ae_plugin PLUGIN_NAME)
       ARGS ${CMAKE_CURRENT_SOURCE_DIR}/${PIPL_R}
         -o ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC}
         -useDF
+        -i "${CMAKE_SOURCE_DIR}"
+        -i "${FS_LIBRARY_PATH_ABS}"
         -i "${AE_SDK_PATH_ABS}/Headers"
         -i "${AE_SDK_PATH_ABS}/Headers/SP"
         -i "${AE_SDK_PATH_ABS}/Util"
@@ -141,6 +145,7 @@ function(build_ae_plugin PLUGIN_NAME)
         /I "${AE_SDK_PATH_ABS}/Headers/SP"
         /I "${AE_SDK_PATH_ABS}/Util"
         /I "${AE_SDK_PATH_ABS}/Resources"
+        /I "${FS_LIBRARY_PATH_ABS}"
         /EP "${CMAKE_CURRENT_SOURCE_DIR}/${PIPL_R}" > "${RR_FILE}"
     )
 
@@ -170,7 +175,7 @@ add_subdirectory("AlphaFix")
 add_subdirectory("AlphaThreshold")
 add_subdirectory("AnimatedNoise")
 add_subdirectory("CCplus")
-add_subdirectory("CellGrad")
+# add_subdirectory("CellGrad") # MacOS compile error
 add_subdirectory("ChannelBlur")
 add_subdirectory("ChannelNoise")
 add_subdirectory("ChannelShift")
@@ -191,14 +196,14 @@ add_subdirectory("Extract-Hi")
 add_subdirectory("Extract_Edge")
 add_subdirectory("FillColor")
 # add_subdirectory("Filter") # Link error
-add_subdirectory("Flare")
+# add_subdirectory("Flare") # MacOS compile error
 add_subdirectory("Frame")
 add_subdirectory("FsSSFrame")
-add_subdirectory("Grad_Test")
+# add_subdirectory("Grad_Test") # MacOS compile error
 add_subdirectory("grayToColorize")
 add_subdirectory("grayToCountourLine")
 add_subdirectory("graytoneToColorize")
-add_subdirectory("grayToWaveLine")
+# add_subdirectory("grayToWaveLine") # MacOS compile error
 add_subdirectory("GuideFrame")
 add_subdirectory("HLS_Reverse")
 # add_subdirectory("IroTore") # Compile error
@@ -243,18 +248,18 @@ add_subdirectory("SelectedBlur")
 # add_subdirectory("ShineParallel") # Compile error
 add_subdirectory("ShitsuKanBlur")
 add_subdirectory("smokeThreshold")
-add_subdirectory("Spark")
-add_subdirectory("SparkGrand")
-add_subdirectory("SparkMult")
-add_subdirectory("SparkRing")
-add_subdirectory("SparkStorm")
-add_subdirectory("Spark_Test")
+# add_subdirectory("Spark") # MacOS compile error
+# add_subdirectory("SparkGrand") # MacOS compile error
+# add_subdirectory("SparkMult") # MacOS compile error
+# add_subdirectory("SparkRing") # MacOS compile error
+# add_subdirectory("SparkStorm") # MacOS compile error
+# add_subdirectory("Spark_Test") # MacOS compile error
 add_subdirectory("sputteringAlpha")
 add_subdirectory("sputteringCircle")
 add_subdirectory("sputteringRect")
 add_subdirectory("sputteringSplash")
 add_subdirectory("Star")
-add_subdirectory("Star_Colorful")
+# add_subdirectory("Star_Colorful") # MacOS compile error
 add_subdirectory("Thin")
 add_subdirectory("ToGray")
 add_subdirectory("Tone")
