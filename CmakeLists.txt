@@ -40,6 +40,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
 
 # Add common library for all plugins
+get_filename_component(FS_LIBRARY_PATH_ABS "${CMAKE_CURRENT_SOURCE_DIR}/FsLibrary" ABSOLUTE)
 add_subdirectory("FsLibrary")
 
 # ---------------- Plugin build function --------------------
@@ -80,6 +81,7 @@ function(build_ae_plugin PLUGIN_NAME)
         -o ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC}
         -useDF
         -i "${CMAKE_SOURCE_DIR}"
+        -i "${FS_LIBRARY_PATH_ABS}"
         -i "${AE_SDK_PATH_ABS}/Headers"
         -i "${AE_SDK_PATH_ABS}/Headers/SP"
         -i "${AE_SDK_PATH_ABS}/Util"
@@ -143,6 +145,7 @@ function(build_ae_plugin PLUGIN_NAME)
         /I "${AE_SDK_PATH_ABS}/Headers/SP"
         /I "${AE_SDK_PATH_ABS}/Util"
         /I "${AE_SDK_PATH_ABS}/Resources"
+        /I "${FS_LIBRARY_PATH_ABS}"
         /EP "${CMAKE_CURRENT_SOURCE_DIR}/${PIPL_R}" > "${RR_FILE}"
     )
 

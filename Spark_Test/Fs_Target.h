@@ -36,7 +36,7 @@
 #define SUPPORT_SMARTFX			//これを有効にするとSmartFX+Float_Colorに対応する
 //#define NO_USE_FSGRAPHICS	//これを有効にするとFsGraphics関係がインクルードされない
 
-#include "../FsLibrary/FsVersion.h"
+#include "FsVersion.h"
 
 //-----------------------------------------------------------------------------------
 //out_flags
