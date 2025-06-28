@@ -50,4 +50,4 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          path: dist/AEVE-Plugins_*.zip
+          path: AEVE-Plugins_*.zip
