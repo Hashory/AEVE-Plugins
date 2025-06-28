@@ -11,17 +11,22 @@
 
 ## ダウンロード
 
-最新版は [GitHubのReleaseページ](https://github.com/Hashory/AEVE-Plugins/releases) からダウンロードできます。
+最新版は [GitHubのReleaseページ](https://github.com/Hashory/AEVE-Plugins/releases) からダウンロードできます。 (一部含まれていないのがあります。)
+
+### ビルドステータス
+
+[![macOS Build](https://github.com/Hashory/AEVE-Plugins/actions/workflows/mac-build.yaml/badge.svg?branch=main)](https://github.com/Hashory/AEVE-Plugins/actions/workflows/mac-build.yaml)
+[![Windows Build](https://github.com/Hashory/AEVE-Plugins/actions/workflows/win-build.yaml/badge.svg?branch=main)](https://github.com/Hashory/AEVE-Plugins/actions/workflows/win-build.yaml)
 
 ## TODOs
 
 - [x] UTF-8化
 - [ ] clang-formatの適用
 - [ ] clang-tidyの適用
-- [x] CMake化([after_effects_cmake](https://github.com/mobile-bungalow/after_effects_cmake)を参考にさせていただきました。一部完了していない箇所については[#1](https://github.com/Hashory/AEVE-Plugins/pull/1#issue-3075971090)を参照してください。)
+- [x] CMake化([after_effects_cmake](https://github.com/mobile-bungalow/after_effects_cmake)を参考にさせていただきました。)
 - [ ] ドキュメントの作成
-- [ ] (🟡 進行中) Github Actions の作成 (現在この件について、 [Adobe Community](https://community.adobe.com/t5/after-effects-discussions/can-i-use-private-storage-for-ae-sdk-with-github-actions/m-p/15339535) と サポート にライセンスの確認しています。)
-- [ ] (🟡 進行中) MacOSの対応
+- [x] Github Actions の作成 (この件について、 [Adobe Community と サポート](https://community.adobe.com/t5/after-effects-discussions/can-i-use-private-storage-for-ae-sdk-with-github-actions/m-p/15339535) にライセンスの確認しました。)
+- [x] MacOSの対応
 - [ ] OpenFXの対応
 - [ ] ソースコードの高速化・モダン化 → [機能別更新リスト](#機能別更新リスト)
 
