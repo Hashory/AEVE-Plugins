@@ -41,7 +41,7 @@ The latest version can be downloaded from the [GitHub Releases page](https://git
 
 | Feature Name            | Accelerate & modernize |
 | :---------------------- | :--------------------: |
-| AlphaFix                |           ❌           |
+| AlphaFix                |           🟡           |
 | AlphaThreshold          |           ❌           |
 | AnimatedNoise           |           ❌           |
 | CCplus                  |           ❌           |

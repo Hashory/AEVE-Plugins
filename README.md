@@ -38,7 +38,7 @@
 
 | 機能名                  | 高速化・モダン化 |
 | :---------------------- | :--------------: |
-| AlphaFix                |        ❌        |
+| AlphaFix                |        🟡        |
 | AlphaThreshold          |        ❌        |
 | AnimatedNoise           |        ❌        |
 | CCplus                  |        ❌        |
