@@ -12,7 +12,7 @@ else()
 endif()
 
 # source files
-set(SOURCE_FILES
+target_sources(AfterEffectsSDK PRIVATE
   "Util/AEFX_ArbParseHelper.c"
   "Util/AEFX_SuiteHelper.c"
   "Util/AEGP_SuiteHandler.cpp"
@@ -25,26 +25,26 @@ set(SOURCE_FILES
   # "Util/String_Utils.c"
 )
 
-add_library(AfterEffectsSDK STATIC ${SOURCE_FILES})
-
 # headers
-target_include_directories(AfterEffectsSDK SYSTEM PUBLIC FILE_SET HEADERS
-  BASE_DIRS
-    "Headers"
-    "Headers/SP"
-    "Util"
-    "Resources"
-    "GPUUtils"
-    "GPUUtils/PrGPU/KernelSupport"
-  FILES
-    "Headers/AEConfig.h"
-    "Headers/AE_Effect.h"
-    "Headers/AE_EffectCB.h"
-    "Headers/AE_EffectCBSuites.h"
-    "Headers/AE_Macros.h"
-    "Util/entry.h"
-    "Util/AEGP_SuiteHandler.h"
-    "Util/Param_Utils.h"
-    "Util/Smart_Utils.h"
-    # "Util/String_Utils.h"
+target_include_directories(AfterEffectsSDK 
+  SYSTEM PUBLIC 
+    # FILE_SET HEADERS
+    #   BASE_DIRS
+    #     "Headers"
+    #     "Headers/SP"
+    #     "Util"
+    #     "Resources"
+    #     "GPUUtils"
+    #     "GPUUtils/PrGPU/KernelSupport"
+    #   FILES
+        "Headers/AEConfig.h"
+        "Headers/AE_Effect.h"
+        "Headers/AE_EffectCB.h"
+        "Headers/AE_EffectCBSuites.h"
+        "Headers/AE_Macros.h"
+        "Util/entry.h"
+        "Util/AEGP_SuiteHandler.h"
+        "Util/Param_Utils.h"
+        "Util/Smart_Utils.h"
+        # "Util/String_Utils.h"
 )
