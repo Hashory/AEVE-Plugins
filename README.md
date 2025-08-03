@@ -26,7 +26,10 @@
 - [x] CMake化([after_effects_cmake](https://github.com/mobile-bungalow/after_effects_cmake)を参考にさせていただきました。)
 - [ ] ドキュメントの作成
 - [x] Github Actions の作成 (この件について、 [Adobe Community と サポート](https://community.adobe.com/t5/after-effects-discussions/can-i-use-private-storage-for-ae-sdk-with-github-actions/m-p/15339535) にライセンスの確認しました。)
-- [x] MacOSの対応
+- [ ] MacOSの対応
+  - [x] ビルド
+  - [ ] 配布
+- [x] Windowsの対応
 - [ ] OpenFXの対応
 - [ ] ソースコードの高速化・モダン化 → [機能別更新リスト](#機能別更新リスト)
 

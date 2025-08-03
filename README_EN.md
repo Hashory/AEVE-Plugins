@@ -28,7 +28,10 @@ The latest version can be downloaded from the [GitHub Releases page](https://git
 - [x] Migrate to CMake (Thanks to [after_effects_cmake](https://github.com/mobile-bungalow/after_effects_cmake) for reference.)
 - [ ] Create documentation
 - [x] Set up Github Actions (For this, I have confirmed the license with [Adobe Community and Support](https://community.adobe.com/t5/after-effects-discussions/can-i-use-private-storage-for-ae-sdk-with-github-actions/m-p/15339535).)
-- [x] MacOS support
+- [ ] MacOS support
+  - [x] Build
+  - [ ] Distribution
+- [x] Windows support
 - [ ] OpenFX support
 - [ ] Accelerate and modernize source code →
       [Feature Update List](#feature-update-list)
