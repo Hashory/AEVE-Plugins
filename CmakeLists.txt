@@ -40,8 +40,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
 
 # Add common library for all plugins
-get_filename_component(FS_LIBRARY_PATH_ABS "${CMAKE_CURRENT_SOURCE_DIR}/FsLibrary" ABSOLUTE)
-add_subdirectory("FsLibrary")
+get_filename_component(FS_LIBRARY_PATH_ABS "${CMAKE_CURRENT_SOURCE_DIR}/Source/Effects/FsLibrary" ABSOLUTE)
+add_subdirectory("Source/Effects/FsLibrary")
 
 # ---------------- Plugin build function --------------------
 
@@ -171,107 +171,107 @@ endfunction()
 # ---------------- Plugin source files --------------------
 
 # Add each plugin project as a subdirectory
-add_subdirectory("AlphaFix")
-add_subdirectory("AlphaThreshold")
-add_subdirectory("AnimatedNoise")
-add_subdirectory("CCplus")
-# add_subdirectory("CellGrad") # MacOS compile error
-add_subdirectory("ChannelBlur")
-add_subdirectory("ChannelNoise")
-add_subdirectory("ChannelShift")
-add_subdirectory("ChromaticAberration")
-add_subdirectory("ColorChange")
-# add_subdirectory("ColorChangeFromPoint") # Compile error
-add_subdirectory("ColorChangeSimple")
-add_subdirectory("ColorKey")
-# add_subdirectory("ColorMatKey") # Compile error
-add_subdirectory("colorThreshold")
-add_subdirectory("CreateAlpha")
-add_subdirectory("EdgeBlur")
-add_subdirectory("EdgeLine")
-# add_subdirectory("EdgeLine-Hi") # Compile error
-add_subdirectory("ExpsColors")
-add_subdirectory("ExpsPos")
-add_subdirectory("Extract-Hi")
-add_subdirectory("Extract_Edge")
-add_subdirectory("FillColor")
-# add_subdirectory("Filter") # Link error
-# add_subdirectory("Flare") # MacOS compile error
-add_subdirectory("Frame")
-add_subdirectory("FsSSFrame")
-# add_subdirectory("Grad_Test") # MacOS compile error
-add_subdirectory("grayToColorize")
-add_subdirectory("grayToCountourLine")
-add_subdirectory("graytoneToColorize")
-# add_subdirectory("grayToWaveLine") # MacOS compile error
-add_subdirectory("GuideFrame")
-add_subdirectory("HLS_Reverse")
-# add_subdirectory("IroTore") # Compile error
-add_subdirectory("IroToreAdjacent")
-add_subdirectory("LineDetection")
-add_subdirectory("LineTrace")
-add_subdirectory("MainLineRepaint")
-# add_subdirectory("MainLineRepaint_old") # Link error
-add_subdirectory("MaskFromRGB")
-add_subdirectory("MaskFromRGB_Multi")
-add_subdirectory("Max")
-add_subdirectory("Max_Kasumi")
-add_subdirectory("Mosaic")
-# add_subdirectory("NamiGarasu") # Link error
-# add_subdirectory("NFsSkelton") # Compile error
-add_subdirectory("NoiseHiLo_Alpha")
-add_subdirectory("NoiseHiLo_RGB")
-add_subdirectory("OpticalDiffusion")
-add_subdirectory("OutLine")
-add_subdirectory("Paint")
-add_subdirectory("PaintMultPoint")
-add_subdirectory("PaperPlaneGetWeight")
-# add_subdirectory("PaperPlaneGetWeightInfo") # Link error
-add_subdirectory("PixelExtend")
-add_subdirectory("PixelReplace")
-add_subdirectory("PixelSelector")
-add_subdirectory("PluginSkeleton")
-add_subdirectory("Posterization8bit")
-add_subdirectory("Premultiply")
-add_subdirectory("RandomLineNoise")
-add_subdirectory("RandomMosaic")
-add_subdirectory("RandomMosaic2nd")
-add_subdirectory("RandomShift")
-add_subdirectory("RGBAControl")
-add_subdirectory("RgbToAlpha")
-add_subdirectory("Scanline")
-add_subdirectory("ScreenShakeDir")
-add_subdirectory("ScreenShakeMM")
-add_subdirectory("SelectColor")
-add_subdirectory("SelectedBlur")
-# add_subdirectory("Shine") # Compile error
-# add_subdirectory("ShineParallel") # Compile error
-add_subdirectory("ShitsuKanBlur")
-add_subdirectory("smokeThreshold")
-# add_subdirectory("Spark") # MacOS compile error
-# add_subdirectory("SparkGrand") # MacOS compile error
-# add_subdirectory("SparkMult") # MacOS compile error
-# add_subdirectory("SparkRing") # MacOS compile error
-# add_subdirectory("SparkStorm") # MacOS compile error
-# add_subdirectory("Spark_Test") # MacOS compile error
-add_subdirectory("sputteringAlpha")
-add_subdirectory("sputteringCircle")
-add_subdirectory("sputteringRect")
-add_subdirectory("sputteringSplash")
-add_subdirectory("Star")
-# add_subdirectory("Star_Colorful") # MacOS compile error
-add_subdirectory("Thin")
-add_subdirectory("ToGray")
-add_subdirectory("Tone")
-add_subdirectory("Toner")
-# add_subdirectory("TouchDraw") # Link error
-# add_subdirectory("TouchDrawCenter") # Link error
-# add_subdirectory("TouchDrawStraght") # Link error
-# add_subdirectory("Unmult_KNSW_Fake") # Compile error
-# add_subdirectory("Unmult_RG_Fake") # Compile error
-# add_subdirectory("UsedColorList") # Compile error
-add_subdirectory("VideoGrid")
-add_subdirectory("VideoLine")
-add_subdirectory("VideoLine2nd")
-add_subdirectory("whiteInOut")
-add_subdirectory("YuvControl")
+add_subdirectory("Source/Effects/FsAlphaFix")
+add_subdirectory("Source/Effects/FsAlphaThreshold")
+add_subdirectory("Source/Effects/FsAnimatedNoise")
+add_subdirectory("Source/Effects/FsCCplus")
+# add_subdirectory("Source/Effects/FsCellGrad") # MacOS compile error
+add_subdirectory("Source/Effects/FsChannelBlur")
+add_subdirectory("Source/Effects/FsChannelNoise")
+add_subdirectory("Source/Effects/FsChannelShift")
+add_subdirectory("Source/Effects/FsChromaticAberration")
+add_subdirectory("Source/Effects/FsColorChange")
+# add_subdirectory("Source/Effects/FsColorChangeFromPoint") # Compile error
+add_subdirectory("Source/Effects/FsColorChangeSimple")
+add_subdirectory("Source/Effects/FsColorKey")
+# add_subdirectory("Source/Effects/FsColorMatKey") # Compile error
+add_subdirectory("Source/Effects/FsColorThreshold")
+add_subdirectory("Source/Effects/FsCreateAlpha")
+add_subdirectory("Source/Effects/FsEdgeBlur")
+add_subdirectory("Source/Effects/FsEdgeLine")
+# add_subdirectory("Source/Effects/FsEdgeLine-Hi") # Compile error
+add_subdirectory("Source/Effects/FsExpsColors")
+add_subdirectory("Source/Effects/FsExpsPos")
+add_subdirectory("Source/Effects/FsExtract-Hi")
+add_subdirectory("Source/Effects/FsExtract_Edge")
+add_subdirectory("Source/Effects/FsFillColor")
+# add_subdirectory("Source/Effects/FsFilter") # Link error
+# add_subdirectory("Source/Effects/FsFlare") # MacOS compile error
+add_subdirectory("Source/Effects/FsFrame")
+add_subdirectory("Source/Effects/FsSSFrame")
+# add_subdirectory("Source/Effects/FsGrad_Test") # MacOS compile error
+add_subdirectory("Source/Effects/FsGrayToColorize")
+add_subdirectory("Source/Effects/FsGrayToCountourLine")
+add_subdirectory("Source/Effects/FsGraytoneToColorize")
+# add_subdirectory("Source/Effects/FsGrayToWaveLine") # MacOS compile error
+add_subdirectory("Source/Effects/FsGuideFrame")
+add_subdirectory("Source/Effects/FsHLS_Reverse")
+# add_subdirectory("Source/Effects/FsIroTore") # Compile error
+add_subdirectory("Source/Effects/FsIroToreAdjacent")
+add_subdirectory("Source/Effects/FsLineDetection")
+add_subdirectory("Source/Effects/FsLineTrace")
+add_subdirectory("Source/Effects/FsMainLineRepaint")
+# add_subdirectory("Source/Effects/FsMainLineRepaint_old") # Link error
+add_subdirectory("Source/Effects/FsMaskFromRGB")
+add_subdirectory("Source/Effects/FsMaskFromRGB_Multi")
+add_subdirectory("Source/Effects/FsMax")
+add_subdirectory("Source/Effects/FsMax_Kasumi")
+add_subdirectory("Source/Effects/FsMosaic")
+# add_subdirectory("Source/Effects/FsNamiGarasu") # Link error
+# add_subdirectory("Source/Effects/NFsSkelton") # Compile error
+add_subdirectory("Source/Effects/FsNoiseHiLo_Alpha")
+add_subdirectory("Source/Effects/FsNoiseHiLo_RGB")
+add_subdirectory("Source/Effects/FsOpticalDiffusion")
+add_subdirectory("Source/Effects/FsOutLine")
+add_subdirectory("Source/Effects/FsPaint")
+add_subdirectory("Source/Effects/FsPaintMultPoint")
+add_subdirectory("Source/Effects/FsPaperPlaneGetWeight")
+# add_subdirectory("Source/Effects/FsPaperPlaneGetWeightInfo") # Link error
+add_subdirectory("Source/Effects/FsPixelExtend")
+add_subdirectory("Source/Effects/FsPixelReplace")
+add_subdirectory("Source/Effects/FsPixelSelector")
+add_subdirectory("Source/Effects/FsPluginSkeleton")
+add_subdirectory("Source/Effects/FsPosterization8bit")
+add_subdirectory("Source/Effects/FsPremultiply")
+add_subdirectory("Source/Effects/FsRandomLineNoise")
+add_subdirectory("Source/Effects/FsRandomMosaic")
+add_subdirectory("Source/Effects/FsRandomMosaic2nd")
+add_subdirectory("Source/Effects/FsRandomShift")
+add_subdirectory("Source/Effects/FsRGBAControl")
+add_subdirectory("Source/Effects/FsRgbToAlpha")
+add_subdirectory("Source/Effects/FsScanline")
+add_subdirectory("Source/Effects/FsScreenShakeDir")
+add_subdirectory("Source/Effects/FsScreenShakeMM")
+add_subdirectory("Source/Effects/FsSelectColor")
+add_subdirectory("Source/Effects/FsSelectedBlur")
+# add_subdirectory("Source/Effects/FsShine") # Compile error
+# add_subdirectory("Source/Effects/FsShineParallel") # Compile error
+add_subdirectory("Source/Effects/FsShitsuKanBlur")
+add_subdirectory("Source/Effects/FsSmokeThreshold")
+# add_subdirectory("Source/Effects/FsSpark") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSparkGrand") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSparkMult") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSparkRing") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSparkStorm") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSpark_Test") # MacOS compile error
+add_subdirectory("Source/Effects/FsSputteringAlpha")
+add_subdirectory("Source/Effects/FsSputteringCircle")
+add_subdirectory("Source/Effects/FsSputteringRect")
+add_subdirectory("Source/Effects/FsSputteringSplash")
+add_subdirectory("Source/Effects/FsStar")
+# add_subdirectory("Source/Effects/FsStar_Colorful") # MacOS compile error
+add_subdirectory("Source/Effects/FsThin")
+add_subdirectory("Source/Effects/FsToGray")
+add_subdirectory("Source/Effects/FsTone")
+add_subdirectory("Source/Effects/FsToner")
+# add_subdirectory("Source/Effects/FsTouchDraw") # Link error
+# add_subdirectory("Source/Effects/FsTouchDrawCenter") # Link error
+# add_subdirectory("Source/Effects/FsTouchDrawStraght") # Link error
+# add_subdirectory("Source/Effects/FsUnmult_KNSW_Fake") # Compile error
+# add_subdirectory("Source/Effects/FsUnmult_RG_Fake") # Compile error
+# add_subdirectory("Source/Effects/FsUsedColorList") # Compile error
+add_subdirectory("Source/Effects/FsVideoGrid")
+add_subdirectory("Source/Effects/FsVideoLine")
+add_subdirectory("Source/Effects/FsVideoLine2nd")
+add_subdirectory("Source/Effects/FsWhiteInOut")
+add_subdirectory("Source/Effects/FsYuvControl")
