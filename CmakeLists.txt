@@ -185,7 +185,7 @@ add_subdirectory("Source/Effects/FsColorChange")
 add_subdirectory("Source/Effects/FsColorChangeSimple")
 add_subdirectory("Source/Effects/FsColorKey")
 # add_subdirectory("Source/Effects/FsColorMatKey") # Compile error
-add_subdirectory("Source/Effects/FscolorThreshold")
+add_subdirectory("Source/Effects/FsColorThreshold")
 add_subdirectory("Source/Effects/FsCreateAlpha")
 add_subdirectory("Source/Effects/FsEdgeBlur")
 add_subdirectory("Source/Effects/FsEdgeLine")
