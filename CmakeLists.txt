@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.22)
+
+project("AEVE_Plugins")
+
+option(AEVE_ENABLE_NEW_BUILD_PROCESS "Enable new build process" OFF)
+
+if(AEVE_ENABLE_NEW_BUILD_PROCESS)
+  message(STATUS "Using new build process")
+  include(new-build-process.cmake)
+else()
+  message(STATUS "Using old build process")
+  include(prev-build-process.cmake)
+endif()

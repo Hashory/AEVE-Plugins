@@ -1,6 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
-
-project("AEVE_Plugins")
+# prev-build-process.cmake
 
 # Enable C++20 standard
 set(CMAKE_CXX_STANDARD 20)
