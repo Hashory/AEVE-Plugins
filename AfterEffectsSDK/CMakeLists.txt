@@ -7,6 +7,7 @@ if(WIN32)
 endif()
 
 # Suppress warnings for this library across different compilers
+# For reason: This SDK is written in a old way and may produce warnings
 if(MSVC)
   # For Microsoft Visual C++
   target_compile_options(${PROJECT_NAME} PRIVATE /W0)
