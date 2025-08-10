@@ -15,12 +15,12 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
 
 # Windows specific settings
+# TODO: MacOS settings
 if(WIN32)
-  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-  add_compile_definitions(_WINDOWS=1)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS _WINDOWS=1)
   set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".aex")
   if(MSVC)
-    add_compile_options(/utf-8)
+    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)
   endif()
 endif()
 
@@ -48,4 +48,5 @@ target_include_directories(${PROJECT_NAME}
 
 # For example:
 # add_subdirectory("Source/Effects/EffectsName")
+# target_link_libraries(${PROJECT_NAME} PRIVATE EffectsName)
 # target_link_libraries(${PROJECT_NAME} PRIVATE EffectsName)
