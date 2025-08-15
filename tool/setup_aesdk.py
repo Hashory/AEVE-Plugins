@@ -86,7 +86,7 @@ def extract_and_setup_sdk(zip_path, unzip_dir, post_extract_script, dest_sdk_pat
             subprocess.run(["./" + post_extract_script], check=True, cwd=script_dir)
         else: # On Windows
             # Execute batch script
-            subprocess.run([script_path], check=True, cwd=script_dir, shell=True)
+            subprocess.run([post_extract_script], check=True, cwd=script_dir, shell=True)
 
         print("Post-extraction script executed successfully.")
     except (subprocess.CalledProcessError, FileNotFoundError) as e:
