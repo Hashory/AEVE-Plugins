@@ -1,0 +1,275 @@
+# prev-build-process.cmake
+
+# Enable C++20 standard
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# -------------------- Platform-specific configuration --------------------
+
+# macOS/Xcode specific settings
+if(CMAKE_GENERATOR STREQUAL "Xcode")
+  set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
+  set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
+  set(MAC_PLATFORM TRUE)
+endif()
+
+# Windows/Visual Studio specific settings
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+  add_compile_options(/utf-8)
+  set(WIN_PLATFORM TRUE)
+endif()
+
+# -------------------- After Effects SDK configuration --------------------
+
+set(AE_SDK_PATH "./AfterEffectsSDK")
+get_filename_component(AE_SDK_PATH_ABS "${CMAKE_CURRENT_SOURCE_DIR}/${AE_SDK_PATH}" ABSOLUTE)
+
+add_subdirectory("AfterEffectsSDK")
+
+# -------------------- Plugin configuration --------------------
+
+# Set the output directory for plugins
+set(PLUGIN_OUTPUT_DIR ${CMAKE_BINARY_DIR}/Plugins)
+file(MAKE_DIRECTORY ${PLUGIN_OUTPUT_DIR}) # Create the output directory if it doesn't exist
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PLUGIN_OUTPUT_DIR})
+
+# Add common library for all plugins
+get_filename_component(FS_LIBRARY_PATH_ABS "${CMAKE_CURRENT_SOURCE_DIR}/Source/Effects/FsLibrary" ABSOLUTE)
+add_subdirectory("Source/Effects/FsLibrary")
+
+# ---------------- Plugin build function --------------------
+
+function(build_ae_plugin PLUGIN_NAME)
+  # Bundle identifier and copyright variable definitions
+  set(MY_BUNDLE_GUI_IDENTIFIER "io.github.hashory.AEVE-Plugins.${PLUGIN_NAME}")
+  string(TIMESTAMP BUILD_YEAR "%Y")
+  set(MY_BUNDLE_COPYRIGHT "MIT LICENSED ${BUILD_YEAR}.")
+
+  # PiPL resource filenames
+  set(PIPL_RSRC ${PLUGIN_NAME}PiPL.rsrc)
+  set(PIPL_R ${PLUGIN_NAME}PiPL.r)
+
+  add_library(${PLUGIN_NAME} MODULE ${${PLUGIN_NAME}_SOURCES})
+
+  # Link the library
+  target_link_libraries(${PLUGIN_NAME} PRIVATE AfterEffectsSDK)
+  target_link_libraries(${PLUGIN_NAME} PRIVATE FsLibrary)
+
+  # -------------------- Platform-specific build logic --------------------
+
+  # Xcode(macOS) logic
+  if(MAC_PLATFORM)
+    target_link_libraries(${PLUGIN_NAME} PRIVATE "-framework Cocoa")
+
+    set_target_properties(${PLUGIN_NAME} PROPERTIES
+      XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
+      XCODE_ATTRIBUTE_GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS "YES"
+    )
+
+    find_program(AFX_REZ rez /Developer/Tools)
+
+    add_custom_command(
+      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC}
+      COMMAND ${AFX_REZ}
+      ARGS ${CMAKE_CURRENT_SOURCE_DIR}/${PIPL_R}
+        -o ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC}
+        -useDF
+        -i "${CMAKE_SOURCE_DIR}"
+        -i "${FS_LIBRARY_PATH_ABS}"
+        -i "${AE_SDK_PATH_ABS}/Headers"
+        -i "${AE_SDK_PATH_ABS}/Headers/SP"
+        -i "${AE_SDK_PATH_ABS}/Util"
+        -i "${AE_SDK_PATH_ABS}/Resources"
+        -D __MACH__
+    )
+
+    set_source_files_properties(
+      ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC}
+      PROPERTIES
+      MACOSX_PACKAGE_LOCATION Resources/
+    )
+
+    target_sources(${PLUGIN_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/${PIPL_RSRC})
+
+    set_target_properties(${PLUGIN_NAME} PROPERTIES PREFIX "")
+    set_target_properties(${PLUGIN_NAME} PROPERTIES SUFFIX "")
+    set_target_properties(${PLUGIN_NAME} PROPERTIES
+      BUNDLE True
+      MACOSX_BUNDLE_BUNDLE_NAME ${PLUGIN_NAME}
+      BUNDLE_EXTENSION "plugin"
+      MACOSX_BUNDLE_INFO_STRING "${PLUGIN_NAME}"
+      MACOSX_BUNDLE_GUI_IDENTIFIER "${MY_BUNDLE_GUI_IDENTIFIER}"
+      MACOSX_BUNDLE_COPYRIGHT "${MY_BUNDLE_COPYRIGHT}"
+    )
+
+    # PkgInfo
+    add_custom_command(
+      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/PkgInfo
+      COMMAND echo "eFKTFXTC" >> ${CMAKE_CURRENT_BINARY_DIR}/PkgInfo
+    )
+
+    set_source_files_properties(
+      ${CMAKE_CURRENT_BINARY_DIR}/PkgInfo
+      PROPERTIES
+      MACOSX_PACKAGE_LOCATION ""
+    )
+
+    target_sources(${PLUGIN_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/PkgInfo)
+  endif()
+
+  # Windows logic
+  if(WIN_PLATFORM)
+    set_target_properties(${PLUGIN_NAME} PROPERTIES SUFFIX ".aex")
+    get_filename_component(
+      AFX_REZ
+      "${AE_SDK_PATH_ABS}/Resources/PiPLtool.exe"
+      ABSOLUTE
+      CACHE
+    )
+
+    set(RR_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.rr")
+    set(RRC_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.rrc")
+    set(RC_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PLUGIN_NAME}.rc")
+
+    add_custom_command(
+      OUTPUT ${RR_FILE}
+      COMMAND
+      cl /utf-8
+        /I "${AE_SDK_PATH_ABS}/Headers"
+        /I "${AE_SDK_PATH_ABS}/Headers/SP"
+        /I "${AE_SDK_PATH_ABS}/Util"
+        /I "${AE_SDK_PATH_ABS}/Resources"
+        /I "${FS_LIBRARY_PATH_ABS}"
+        /EP "${CMAKE_CURRENT_SOURCE_DIR}/${PIPL_R}" > "${RR_FILE}"
+    )
+
+    add_custom_command(
+      DEPENDS ${RR_FILE}
+      OUTPUT ${RRC_FILE}
+      COMMAND ${AFX_REZ} "${RR_FILE}" "${RRC_FILE}"
+    )
+
+    add_custom_command(
+      DEPENDS ${RRC_FILE}
+      OUTPUT ${RC_FILE}
+      COMMAND cl /utf-8 /D "MSWindows" /EP "${RRC_FILE}" > "${RC_FILE}"
+    )
+
+    target_sources(
+      ${PLUGIN_NAME} PRIVATE
+      "${RC_FILE}"
+    )
+  endif()
+endfunction()
+
+# ---------------- Plugin source files --------------------
+
+# Add each plugin project as a subdirectory
+add_subdirectory("Source/Effects/FsAlphaFix")
+add_subdirectory("Source/Effects/FsAlphaThreshold")
+add_subdirectory("Source/Effects/FsAnimatedNoise")
+add_subdirectory("Source/Effects/FsCCplus")
+# add_subdirectory("Source/Effects/FsCellGrad") # MacOS compile error
+add_subdirectory("Source/Effects/FsChannelBlur")
+add_subdirectory("Source/Effects/FsChannelNoise")
+add_subdirectory("Source/Effects/FsChannelShift")
+add_subdirectory("Source/Effects/FsChromaticAberration")
+add_subdirectory("Source/Effects/FsColorChange")
+# add_subdirectory("Source/Effects/FsColorChangeFromPoint") # Compile error
+add_subdirectory("Source/Effects/FsColorChangeSimple")
+add_subdirectory("Source/Effects/FsColorKey")
+# add_subdirectory("Source/Effects/FsColorMatKey") # Compile error
+add_subdirectory("Source/Effects/FsColorThreshold")
+add_subdirectory("Source/Effects/FsCreateAlpha")
+add_subdirectory("Source/Effects/FsEdgeBlur")
+add_subdirectory("Source/Effects/FsEdgeLine")
+# add_subdirectory("Source/Effects/FsEdgeLine-Hi") # Compile error
+add_subdirectory("Source/Effects/FsExpsColors")
+add_subdirectory("Source/Effects/FsExpsPos")
+add_subdirectory("Source/Effects/FsExtract-Hi")
+add_subdirectory("Source/Effects/FsExtract_Edge")
+add_subdirectory("Source/Effects/FsFillColor")
+# add_subdirectory("Source/Effects/FsFilter") # Link error
+# add_subdirectory("Source/Effects/FsFlare") # MacOS compile error
+add_subdirectory("Source/Effects/FsFrame")
+add_subdirectory("Source/Effects/FsSSFrame")
+# add_subdirectory("Source/Effects/FsGrad_Test") # MacOS compile error
+add_subdirectory("Source/Effects/FsGrayToColorize")
+add_subdirectory("Source/Effects/FsGrayToCountourLine")
+add_subdirectory("Source/Effects/FsGraytoneToColorize")
+# add_subdirectory("Source/Effects/FsGrayToWaveLine") # MacOS compile error
+add_subdirectory("Source/Effects/FsGuideFrame")
+add_subdirectory("Source/Effects/FsHLS_Reverse")
+# add_subdirectory("Source/Effects/FsIroTore") # Compile error
+add_subdirectory("Source/Effects/FsIroToreAdjacent")
+add_subdirectory("Source/Effects/FsLineDetection")
+add_subdirectory("Source/Effects/FsLineTrace")
+add_subdirectory("Source/Effects/FsMainLineRepaint")
+# add_subdirectory("Source/Effects/FsMainLineRepaint_old") # Link error
+add_subdirectory("Source/Effects/FsMaskFromRGB")
+add_subdirectory("Source/Effects/FsMaskFromRGB_Multi")
+add_subdirectory("Source/Effects/FsMax")
+add_subdirectory("Source/Effects/FsMax_Kasumi")
+add_subdirectory("Source/Effects/FsMosaic")
+# add_subdirectory("Source/Effects/FsNamiGarasu") # Link error
+# add_subdirectory("Source/Effects/NFsSkelton") # Compile error
+add_subdirectory("Source/Effects/FsNoiseHiLo_Alpha")
+add_subdirectory("Source/Effects/FsNoiseHiLo_RGB")
+add_subdirectory("Source/Effects/FsOpticalDiffusion")
+add_subdirectory("Source/Effects/FsOutLine")
+add_subdirectory("Source/Effects/FsPaint")
+add_subdirectory("Source/Effects/FsPaintMultPoint")
+add_subdirectory("Source/Effects/FsPaperPlaneGetWeight")
+# add_subdirectory("Source/Effects/FsPaperPlaneGetWeightInfo") # Link error
+add_subdirectory("Source/Effects/FsPixelExtend")
+add_subdirectory("Source/Effects/FsPixelReplace")
+add_subdirectory("Source/Effects/FsPixelSelector")
+add_subdirectory("Source/Effects/FsPluginSkeleton")
+add_subdirectory("Source/Effects/FsPosterization8bit")
+add_subdirectory("Source/Effects/FsPremultiply")
+add_subdirectory("Source/Effects/FsRandomLineNoise")
+add_subdirectory("Source/Effects/FsRandomMosaic")
+add_subdirectory("Source/Effects/FsRandomMosaic2nd")
+add_subdirectory("Source/Effects/FsRandomShift")
+add_subdirectory("Source/Effects/FsRGBAControl")
+add_subdirectory("Source/Effects/FsRgbToAlpha")
+add_subdirectory("Source/Effects/FsScanline")
+add_subdirectory("Source/Effects/FsScreenShakeDir")
+add_subdirectory("Source/Effects/FsScreenShakeMM")
+add_subdirectory("Source/Effects/FsSelectColor")
+add_subdirectory("Source/Effects/FsSelectedBlur")
+# add_subdirectory("Source/Effects/FsShine") # Compile error
+# add_subdirectory("Source/Effects/FsShineParallel") # Compile error
+add_subdirectory("Source/Effects/FsShitsuKanBlur")
+add_subdirectory("Source/Effects/FsSmokeThreshold")
+# add_subdirectory("Source/Effects/FsSpark") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSparkGrand") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSparkMult") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSparkRing") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSparkStorm") # MacOS compile error
+# add_subdirectory("Source/Effects/FsSpark_Test") # MacOS compile error
+add_subdirectory("Source/Effects/FsSputteringAlpha")
+add_subdirectory("Source/Effects/FsSputteringCircle")
+add_subdirectory("Source/Effects/FsSputteringRect")
+add_subdirectory("Source/Effects/FsSputteringSplash")
+add_subdirectory("Source/Effects/FsStar")
+# add_subdirectory("Source/Effects/FsStar_Colorful") # MacOS compile error
+add_subdirectory("Source/Effects/FsThin")
+add_subdirectory("Source/Effects/FsToGray")
+add_subdirectory("Source/Effects/FsTone")
+add_subdirectory("Source/Effects/FsToner")
+# add_subdirectory("Source/Effects/FsTouchDraw") # Link error
+# add_subdirectory("Source/Effects/FsTouchDrawCenter") # Link error
+# add_subdirectory("Source/Effects/FsTouchDrawStraght") # Link error
+# add_subdirectory("Source/Effects/FsUnmult_KNSW_Fake") # Compile error
+# add_subdirectory("Source/Effects/FsUnmult_RG_Fake") # Compile error
+# add_subdirectory("Source/Effects/FsUsedColorList") # Compile error
+add_subdirectory("Source/Effects/FsVideoGrid")
+add_subdirectory("Source/Effects/FsVideoLine")
+add_subdirectory("Source/Effects/FsVideoLine2nd")
+add_subdirectory("Source/Effects/FsWhiteInOut")
+add_subdirectory("Source/Effects/FsYuvControl")
