@@ -1,9 +1,3 @@
-//-----------------------------------------------------------------------------------
-/*
-	PluginSkeleton for VS2010
-*/
-//-----------------------------------------------------------------------------------
-
 #pragma once
 #ifndef ChannelShift_H
 #define ChannelShift_H
@@ -100,7 +94,7 @@ enum {
 	edge_mirror
 };
 
-//プラグイン独自のパラメータを集めた構造体
+//A structure that collects original parameters for the plugin
 typedef struct{
 	PF_Fixed			r_angle;
 	PF_Fixed			r_length;
@@ -115,10 +109,6 @@ typedef struct{
 	getPixelPrm			gp;
 } ParamInfo;
 
-
-
-//-------------------------------------------------------
-
 extern "C" {
 
 DllExport	PF_Err 
@@ -131,6 +121,5 @@ EntryPointFunc (
 	void			*extraP);
 
 }
-//-----------------------------------------------------------------------------------
 
 #endif // ChannelShift_H

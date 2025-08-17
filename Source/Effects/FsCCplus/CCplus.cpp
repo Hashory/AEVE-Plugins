@@ -1,14 +1,7 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
 #include "CCplus.h"
 
-
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
+//Notify parameters to After Effects
+//Refer to Param_Utils.h
 static PF_Err ParamsSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -18,7 +11,6 @@ static PF_Err ParamsSetup (
 	PF_Err			err = PF_Err_NONE;
 	PF_ParamDef		def;
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(StrORG_REV1,
 					StrORG_REV2,
@@ -27,7 +19,6 @@ static PF_Err ParamsSetup (
 					ID_ORG_REV
 					);
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_COLOR(	StrCOLOR_START, 
 					0xFF,
@@ -35,7 +26,6 @@ static PF_Err ParamsSetup (
 					0xFF,
 					ID_COLOR_START
 					);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_COLOR(	StrCOLOR_CENTER, 
 					0x80,
@@ -43,7 +33,6 @@ static PF_Err ParamsSetup (
 					0xFF,
 					ID_COLOR_CENTER
 					);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_COLOR(	StrCOLOR_END, 
 					0x0,
@@ -51,63 +40,58 @@ static PF_Err ParamsSetup (
 					0xFF,
 					ID_COLOR_END
 					);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	StrCOLOR_CENTER_POS,	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					100,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					50,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	StrCOLOR_CENTER_POS,	//Parameter name
+					0, 				//Minimum value for numerical input
+					100,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					50,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_COLOR_CENTER_POS
 					);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	StrALPHA_START,	//パラメータの名前
-					-200, 				//数値入力する場合の最小値
-					200,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					100,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	StrALPHA_START,	//Parameter name
+					-200, 				//Minimum value for numerical input
+					200,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					100,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_ALPHA_START
 					);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	StrALPHA_END,	//パラメータの名前
-					-200, 				//数値入力する場合の最小値
-					200,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					0,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	StrALPHA_END,	//Parameter name
+					-200, 				//Minimum value for numerical input
+					200,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					0,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_ALPHA_END
 					);
 
-//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(	StrNOISE_VALUE,	//パラメータの名前
-					0, 		//数値入力する場合の最小値
-					64,		//数値入力する場合の最大値
-					0,		//スライダーの最小値 
-					8,		//スライダーの最大値
-					2,		//デフォルトの値
+	PF_ADD_SLIDER(	StrNOISE_VALUE,	//Parameter name
+					0, 		//Minimum value for numerical input
+					64,		//Maximum value for numerical input
+					0,		//Minimum value of slider
+					8,		//Maximum value of slider
+					2,		//Default value
 					ID_NOISE_VALUE
 					);
 
-	//----------------------------------------------------------------
 	out_data->num_params = 	ID_NUM_PARAMS; 
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err
 HandleChangedParam(
 	PF_InData					*in_data,
@@ -120,7 +104,6 @@ HandleChangedParam(
 						err2				= PF_Err_NONE;
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 QueryDynamicFlags(	
 	PF_InData		*in_data,	
@@ -132,7 +115,6 @@ QueryDynamicFlags(
 			err2 	= PF_Err_NONE;
 	return err;
 }
-//---------------------------------------------------------------------------------------------
 PF_Pixel colorValue8(CCPInfo *infoP, A_u_char value)
 {
 	PF_Pixel r;
@@ -161,7 +143,6 @@ PF_Pixel colorValue8(CCPInfo *infoP, A_u_char value)
 	r.alpha = RoundByteLong(infoP->alpha_start + (infoP->alpha_end -infoP->alpha_start) * value /  PF_MAX_CHAN8);
 	return r;
 }
-//---------------------------------------------------------------------------------------------
 PF_Pixel16 colorValue16(CCPInfo16 *infoP, A_u_short value)
 {
 	PF_Pixel16 r;
@@ -190,7 +171,6 @@ PF_Pixel16 colorValue16(CCPInfo16 *infoP, A_u_short value)
 	r.alpha = RoundShortFpLong(infoP->alpha_start + (infoP->alpha_end -infoP->alpha_start) * value /  PF_MAX_CHAN16);
 	return r;
 }
-//---------------------------------------------------------------------------------------------
 PF_PixelFloat colorValue32(CCPInfo32 *infoP, PF_FpShort value)
 {
 	PF_PixelFloat r;
@@ -219,22 +199,19 @@ PF_PixelFloat colorValue32(CCPInfo32 *infoP, PF_FpShort value)
 	r.alpha = RoundFpShortDouble(infoP->alpha_start + (infoP->alpha_end -infoP->alpha_start) * value);
 	return r;
 }
-//---------------------------------------------------------------------------------------------
-//カラーテーブルの作成
+//Create color table
 void makeColorTbl8(CCPInfo *infoP)
 {
 	for ( A_long i=0; i<PF_MAX_CHAN8; i++)
 		infoP->colorTbl[i] = colorValue8(infoP,(A_u_char)i);
 }
-//---------------------------------------------------------------------------------------------
-//カラーテーブルの作成
+//Create color table
 void makeColorTbl16(CCPInfo16 *infoP)
 {
 	for ( A_long i=0; i<PF_MAX_CHAN16; i++)
 		infoP->colorTbl[i] = colorValue16(infoP,(A_u_short)i);
 }
 
-//-----------------------------------------------------------------------------------------------
 static PF_Err 
 AddColor8 (
 	refconType	refcon, 
@@ -269,7 +246,6 @@ AddColor8 (
 
 	return err;
 }
-//-----------------------------------------------------------------------------------------------
 static PF_Err 
 AddColor16 (
 	refconType	refcon, 
@@ -303,7 +279,6 @@ AddColor16 (
 
 	return err;
 }
-//-----------------------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err 
 AddColor32 (
@@ -334,7 +309,6 @@ AddColor32 (
 	return err;
 }
 #endif
-//-----------------------------------------------------------------------------------------------
 static PF_Err 
 AddNoise8 (
 	refconType	refcon, 
@@ -358,7 +332,6 @@ AddNoise8 (
 
 	return err;
 }
-//-----------------------------------------------------------------------------------------------
 static PF_Err 
 AddNoise16 (
 	refconType	refcon, 
@@ -382,7 +355,6 @@ AddNoise16 (
 
 	return err;
 }
-//-----------------------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err 
 AddNoise32 (
@@ -408,7 +380,6 @@ AddNoise32 (
 	return err;
 }
 #endif
-//-------------------------------------------------------------------------------------------------
 static CCPInfo16 to16(CCPInfo *prm)
 {
 	CCPInfo16 prm16;
@@ -444,8 +415,6 @@ static CCPInfo32 to32(CCPInfo *prm)
 	return prm32;
 }
 #endif
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 static PF_Err GetParams(CFsAE *ae, CCPInfo *infoP)
 {
 	PF_Err		err 		= PF_Err_NONE;
@@ -487,7 +456,6 @@ static PF_Err GetParams(CFsAE *ae, CCPInfo *infoP)
 	infoP->colorTbl			= NULL;
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 	Exec (CFsAE *ae , CCPInfo *infoP)
 {
@@ -551,8 +519,7 @@ static PF_Err
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
-//レンダリングのメイン
+//Main part of rendering
 static PF_Err Render (
 	PF_InData			*in_data,
 	PF_OutData		*out_data,
@@ -574,7 +541,6 @@ static PF_Err Render (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
 PreRender(
@@ -599,7 +565,6 @@ PreRender(
 	}
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err
 SmartRender(
 	PF_InData				*in_data,

@@ -1,5 +1,6 @@
-/* 定義はFs_Target.hで行なっている。このファイルは編集する必要なし */
+// Definitions are made in Fs_Target.h. No need to edit this file
 #include "Fs_Target.h"
+
 
 #include "AEConfig.h"
 #include "AE_EffectVers.h"
@@ -16,12 +17,12 @@ resource 'PiPL' (16000) {
 		},
 		/* [2] */
 		Name {
-			/*AEのメニューに使われる */
+			// Used in AE's menu
 			FS_NAME
 		},
 		/* [3] */
 		Category {
-			/*AEのメニューに使われる */
+			// Used in AE's menu
 			FS_CATEGORY
 		},
 		
@@ -38,6 +39,8 @@ resource 'PiPL' (16000) {
 		CodeMacIntel64 {"EntryPointFunc"},
 	#endif
 #endif
+
+
 		/* [6] */
 		AE_PiPL_Version {
 			2,
@@ -67,7 +70,7 @@ resource 'PiPL' (16000) {
 
 		/* [11] */
 		AE_Effect_Match_Name {
-			/*プラグインの識別に使われる */
+			// Used to identify the plugin
 			FS_NAME
 		},
 		/* [12] */
@@ -76,4 +79,3 @@ resource 'PiPL' (16000) {
 		}
 	}
 };
-

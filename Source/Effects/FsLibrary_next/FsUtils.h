@@ -22,7 +22,7 @@
 
 #define F_RAND_D1()		(2 * xorShiftDouble() -1)
 
-//Cのライブラリ
+// C library
 //#define F_SRAND(s) srand(s);for(int b=0; b<100;b++) rand()
 //#ifdef AE_OS_WIN
 //	//#define F_RAND() (xorShift())

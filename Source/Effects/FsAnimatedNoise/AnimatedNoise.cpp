@@ -1,15 +1,9 @@
-/*
-	AnimatedNoise
-*/
-
 #include "AnimatedNoise.h"
 
 void (*mosicSub)(PrmTbl *prm);
 void (*noiseSub)(PrmTbl *prm);
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// Aboutダイアログ
+// About dialog
 static PF_Err About (	PF_InData		*in_data,
 						PF_OutData		*out_data,
 						PF_ParamDef		*params[],
@@ -21,7 +15,6 @@ static PF_Err About (	PF_InData		*in_data,
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 GlobalSetup (
 	PF_InData		*in_data,
@@ -34,7 +27,6 @@ GlobalSetup (
 	err = ae.GlobalSetup(in_data,out_data,params,output);
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err GlobalSetdown(
 	PF_InData	*in_data)
 {
@@ -43,7 +35,6 @@ static PF_Err GlobalSetdown(
 	err = ae.GlobalSetdown(in_data);
 	return PF_Err_NONE;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -53,7 +44,6 @@ static PF_Err SequenceSetup (
 
 	return PF_Err_NONE;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceSetdown (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -64,7 +54,6 @@ static PF_Err SequenceSetdown (
 }
 
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceResetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -74,9 +63,8 @@ static PF_Err SequenceResetup (
 	return PF_Err_NONE;
 }
 
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
+//Notify parameters to After Effects
+//Refer to Param_Utils.h
 static PF_Err ParamsSetup (PF_InData		*in_data,
 					PF_OutData		*out_data,
 					PF_ParamDef		*params[],
@@ -85,135 +73,123 @@ static PF_Err ParamsSetup (PF_InData		*in_data,
 	PF_Err			err = PF_Err_NONE;
 	PF_ParamDef		def;
 
-	//----------------------------------------------------------------
-	//１個目のパラメータ
-	//チェックボックス
+	//First parameter
+	//Checkbox
 	AEFX_CLR_STRUCT(def);
 	def.flags		=	PF_ParamFlag_SUPERVISE			|
 						PF_ParamFlag_CANNOT_INTERP;
 						
 	//def.ui_flags	=	PF_PUI_STD_CONTROL_ONLY; 
-	PF_ADD_CHECKBOX("毎フレームでノイズ変化",
+	PF_ADD_CHECKBOX("Noise change every frame",
 					"ON",
 					TRUE,
 					0,
 					ID_ANIMATED_CB
 					);
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	def.ui_flags = PF_PUI_DISABLED;
-	PF_ADD_SLIDER(	"ノイズの動き",	//パラメータの名前
-					0 , 				//数値入力する場合の最小値
-					F_RAND_MAX,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					F_RAND_MAX/10,			//スライダーの最大値
-					0,				//デフォルトの値
+	PF_ADD_SLIDER(	"Noise animation",	//Parameter name
+					0 , 				//Minimum value for numerical input
+					F_RAND_MAX,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					F_RAND_MAX/10,			//Maximum value of slider
+					0,				//Default value
 					ID_ANIMATED_ADD
 					);
-	//----------------------------------------------------------------
-	//２個目のパラメータ
-	//整数のスライダーバー
+	//Second parameter
+	//Integer slider bar
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(	"ノイズの量",	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					100,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					10,				//デフォルトの値
+	PF_ADD_SLIDER(	"Noise amount",	//Parameter name
+					0, 				//Minimum value for numerical input
+					100,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					10,				//Default value
 					ID_VALUE_ADD
 					);
-	//----------------------------------------------------------------
-	//３個目のパラメータ
-	//固定小数のスライダーバー
+	//Third parameter
+	//Fixed-point decimal slider bar
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	"ノイズの強さ",	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					100,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					20,				//デフォルトの値
-					2,//数値表示に関するフラグ 
+	PF_ADD_FIXED(	"Noise strength",	//Parameter name
+					0, 				//Minimum value for numerical input
+					100,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					20,				//Default value
+					2,//Flag for numerical display
 					0,
 					0,
 					ID_LENGTH_FIXED
 					);
-	//----------------------------------------------------------------
-	//４個目のパラメータ
-	//チェックボックス
+	//Fourth parameter
+	//Checkbox
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX("カラーノイズ",
+	PF_ADD_CHECKBOX("Color noise",
 					"ON",
 					(PF_ParamValue)FALSE,
 					0,
 					ID_COLOR_CB
 					);
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	"ブロックの量",	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					300,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					5,				//スライダーの最大値
-					1,				//デフォルトの値
-					1,//数値表示に関するフラグ 
+	PF_ADD_FIXED(	"Block amount",	//Parameter name
+					0, 				//Minimum value for numerical input
+					300,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					5,				//Maximum value of slider
+					1,				//Default value
+					1,//Flag for numerical display
 					0,
 					0,
 					ID_BLOCK_VALUE_FIXED
 					);
-	//----------------------------------------------------------------
-	//整数のスライダーバー
+	//Integer slider bar
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	"ブロックの強さ",	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					100,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					50,				//スライダーの最大値
-					5,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	"Block strength",	//Parameter name
+					0, 				//Minimum value for numerical input
+					100,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					50,				//Maximum value of slider
+					5,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_BLOCK_LENGTH_FIXED
 					);
-	//----------------------------------------------------------------
-	//整数のスライダーバー
+	//Integer slider bar
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(	"ブロックの横幅(px)",	//パラメータの名前
-					3, 				//数値入力する場合の最小値
-					512,			//数値入力する場合の最大値
-					3,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					16,				//デフォルトの値
+	PF_ADD_SLIDER(	"Block width(px)",	//Parameter name
+					3, 				//Minimum value for numerical input
+					512,			//Maximum value for numerical input
+					3,				//Minimum value of slider
+					100,			//Maximum value of slider
+					16,				//Default value
 					ID_BLOCK_WIDTH_ADD
 					);
-	//----------------------------------------------------------------
-	//整数のスライダーバー
+	//Integer slider bar
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(	"ブロックの縦幅(px)",	//パラメータの名前
-					3, 				//数値入力する場合の最小値
-					512,			//数値入力する場合の最大値
-					3,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					16,				//デフォルトの値
+	PF_ADD_SLIDER(	"Block height(px)",	//Parameter name
+					3, 				//Minimum value for numerical input
+					512,			//Maximum value for numerical input
+					3,				//Minimum value of slider
+					100,			//Maximum value of slider
+					16,				//Default value
 					ID_BLOCK_HEIGHT_ADD
 					);
-	//----------------------------------------------------------------
-	//チェックボックス
+	//Checkbox
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX("カラーブロック",
+	PF_ADD_CHECKBOX("Color block",
 					"ON",
 					FALSE,
 					0,
 					ID_BLOCK_COLOR_CB
 					);
 
-	//----------------------------------------------------------------
 	out_data->num_params = 	ID_NUM_PARAMS; 
 
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 HandleChangedParam(
 	PF_InData					*in_data,
@@ -241,7 +217,6 @@ HandleChangedParam(
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 QueryDynamicFlags(	
 	PF_InData		*in_data,	
@@ -251,8 +226,8 @@ QueryDynamicFlags(
 {
 	PF_Err 	err 	= PF_Err_NONE,
 			err2 	= PF_Err_NONE;
-	//PF_OutFlag_NON_PARAM_VARYの値をout_flagsへ設定して
-	//毎フレームごとの描画をするか切り替える。
+	//Set the value of PF_OutFlag_NON_PARAM_VARY to out_flags
+	//Switch whether to draw every frame.
 	CFsAE ae;
 	err = ae.QueryDynamicFlags(in_data,out_data,params,extra,ID_NUM_PARAMS);
 	if (!err){
@@ -265,7 +240,6 @@ QueryDynamicFlags(
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
 static void NoiseMain8(PrmTbl *prm)
 {
 	PF_Pixel8 *data;
@@ -341,7 +315,6 @@ static void NoiseMain8(PrmTbl *prm)
 
 
 }
-//-------------------------------------------------------------------------------------------------
 static void NoiseMain16(PrmTbl *prm)
 {
 	PF_Pixel16 *data16;
@@ -490,7 +463,6 @@ static void NoiseMain32(PrmTbl *prm)
 	data[t].green	= RoundFpShortDouble(data[t].green	+ ag3);
 	data[t].blue	= RoundFpShortDouble(data[t].blue	+ ab3);
 }
-//-------------------------------------------------------------------------------------------------
 static void NoiseBlock8(PrmTbl *prm)
 {
 	PF_Pixel *data;
@@ -559,7 +531,6 @@ static void NoiseBlock8(PrmTbl *prm)
 		target+=offset;
 	}
 }
-//-------------------------------------------------------------------------------------------------
 static void NoiseBlock16(PrmTbl *prm)
 {
 	PF_Pixel16 *data16;
@@ -627,7 +598,6 @@ static void NoiseBlock16(PrmTbl *prm)
 		target+=offset;
 	}
 }
-//-------------------------------------------------------------------------------------------------
 static void NoiseBlock32(PrmTbl *prm)
 {
 	PF_PixelFloat *data;
@@ -696,7 +666,6 @@ static void NoiseBlock32(PrmTbl *prm)
 	}
 
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err GetParams(CFsAE *ae, PrmTbl *infoP)
 {
 	PF_Err		err 		= PF_Err_NONE;
@@ -716,13 +685,12 @@ static PF_Err GetParams(CFsAE *ae, PrmTbl *infoP)
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 	Exec (CFsAE *ae , PrmTbl *infoP)
 {
 	PF_Err	err = PF_Err_NONE;
 
-	//画面をコピー
+	//Copy screen
 	ERR(ae->CopyInToOut());
 
 	infoP->data		= ae->output->data;
@@ -774,8 +742,7 @@ static PF_Err
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
-//レンダリングのメイン
+//Main part of rendering
 static PF_Err Render (	PF_InData		*in_data,
 						PF_OutData		*out_data,
 						PF_ParamDef		*params[],
@@ -793,7 +760,6 @@ static PF_Err Render (	PF_InData		*in_data,
 
 	return err;
 }
-//-----------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
 PreRender(
@@ -818,7 +784,6 @@ PreRender(
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 SmartRender(
 	PF_InData				*in_data,
@@ -843,7 +808,6 @@ SmartRender(
 	return err;
 }
 #endif
-//-----------------------------------------------------------------------------------
 static PF_Err 
 RespondtoAEGP ( 	
 	PF_InData		*in_data,
@@ -862,7 +826,6 @@ RespondtoAEGP (
 
 	return err;
 }
-//-----------------------------------------------------------------------------------
 DllExport	PF_Err 
 EntryPointFunc (
 	PF_Cmd			cmd,
@@ -936,5 +899,3 @@ EntryPointFunc (
 	}
 	return err;
 }
-
-//-------------------------------------------------------------------------------------------------

@@ -8,8 +8,7 @@
 #include <stdio.h>
 #include "PixelReplace_def.h"
 
-//-------------------------------------------------------------------------------------------------
-//About表示
+// About display
 static PF_Err About (	PF_InData		*in_data,
 						PF_OutData		*out_data,
 						PF_ParamDef		*params[],
@@ -21,7 +20,6 @@ static PF_Err About (	PF_InData		*in_data,
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err GlobalSetup (	PF_InData		*in_data,
 							PF_OutData		*out_data,
 							PF_ParamDef		*params[],
@@ -32,7 +30,6 @@ static PF_Err GlobalSetup (	PF_InData		*in_data,
 	err = ae.GlobalSetup(in_data,out_data,params,output);
 	return err;
 }
-//-----------------------------------------------------------------------------
 static PF_Err	
 GlobalSetdown(
 	PF_InData		*in_data)
@@ -42,7 +39,6 @@ GlobalSetdown(
 	err = ae.GlobalSetdown(in_data);
 	return PF_Err_NONE;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -52,7 +48,6 @@ static PF_Err SequenceSetup (
 
 	return PF_Err_NONE;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceSetdown (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -63,7 +58,6 @@ static PF_Err SequenceSetdown (
 }
 
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceResetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -74,7 +68,6 @@ static PF_Err SequenceResetup (
 }
 
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err
 HandleChangedParam(
 	PF_InData					*in_data,
@@ -120,7 +113,6 @@ HandleChangedParam(
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 QueryDynamicFlags(	
 	PF_InData		*in_data,	
@@ -130,8 +122,8 @@ QueryDynamicFlags(
 {
 	PF_Err 	err 	= PF_Err_NONE,
 			err2 	= PF_Err_NONE;
-	//PF_OutFlag_NON_PARAM_VARYの値をout_flagsへ設定して
-	//毎フレームごとの描画をするか切り替える。
+	// Set the value of PF_OutFlag_NON_PARAM_VARY to out_flags
+	// and switch whether to draw every frame.
 	/*
 	CFsAE ae;
 	err = ae.QueryDynamicFlags(in_data,out_data,params,extra,ID_NUM_PARAMS);
@@ -146,7 +138,6 @@ QueryDynamicFlags(
 	return err;
 }
 
-//-----------------------------------------------------------------------------
 static PF_Err ParamsSetup (	PF_InData		*in_data,
 							PF_OutData		*out_data,
 							PF_ParamDef		*params[],
@@ -203,7 +194,6 @@ static PF_Err ParamsSetup (	PF_InData		*in_data,
 		//*************************************************
 	}
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDER(UI_LV,	//Name
 						0,							//VALID_MIN
@@ -227,8 +217,8 @@ static PF_Err ParamsSetup (	PF_InData		*in_data,
 						
 	//def.ui_flags	=	PF_PUI_STD_CONTROL_ONLY; 
 	PF_ADD_POPUP(UI_POP1, 
-				PR_PRM_COUNT,	//メニューの数
-				PR_PRM_COUNT,	//デフォルト
+				PR_PRM_COUNT,	//Number of menus
+				PR_PRM_COUNT,	//Default
 				UI_POP2,
 				PixelReplace_POP
 				);

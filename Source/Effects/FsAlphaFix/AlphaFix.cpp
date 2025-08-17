@@ -1,14 +1,6 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010 and VS2012
-*/
-//-----------------------------------------------------------------------------------
-
 #include "AlphaFix.h"
 
-
-//-------------------------------------------------------------------------------------------------
-// Aboutダイアログ
+// About dialog
 static PF_Err About (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -21,7 +13,6 @@ static PF_Err About (
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err GlobalSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -33,7 +24,6 @@ static PF_Err GlobalSetup (
 	err = ae.GlobalSetup(in_data,out_data,params,output);
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err GlobalSetdown(
 	PF_InData	*in_data)
 {
@@ -42,7 +32,6 @@ static PF_Err GlobalSetdown(
 	err = ae.GlobalSetdown(in_data);
 	return PF_Err_NONE;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceSetup (	PF_InData		*in_data,
 								PF_OutData		*out_data,
 								PF_ParamDef		*params[],
@@ -68,9 +57,8 @@ static PF_Err SequenceResetup (	PF_InData		*in_data,
 {
 	return PF_Err_NONE;
 }
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
+//Notify parameters to After Effects
+//Refer to Param_Utils.h
 static PF_Err ParamsSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -80,10 +68,9 @@ static PF_Err ParamsSetup (
 	PF_Err			err = PF_Err_NONE;
 	PF_ParamDef		def;
 
-	//----------------------------------------------------------------
-	//色の指定
+	//Specify color
 	AEFX_CLR_STRUCT(def);
-	def.flags = PF_ParamFlag_CANNOT_TIME_VARY;//これをつけるとキーフレームが撃てなくなる
+	def.flags = PF_ParamFlag_CANNOT_TIME_VARY;//If you add this, you can't set keyframes
 	PF_ADD_COLOR(	STR_BASE_COLOR, 
 					0x00,
 					0x00,
@@ -92,12 +79,10 @@ static PF_Err ParamsSetup (
 					);
 	
 
-	//----------------------------------------------------------------
 	out_data->num_params = 	ID_NUM_PARAMS; 
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err
 HandleChangedParam(
 	PF_InData					*in_data,
@@ -109,7 +94,6 @@ HandleChangedParam(
 	PF_Err				err = PF_Err_NONE;
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 QueryDynamicFlags(	
 	PF_InData		*in_data,	
@@ -121,7 +105,6 @@ QueryDynamicFlags(
 	return err;
 }
 
-//-----------------------------------------------------------------------------------
 static PF_Err 
 FilterImage8 (
 	refconType		refcon, 
@@ -150,7 +133,6 @@ FilterImage8 (
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err 
 FilterImage16 (
 	refconType		refcon, 
@@ -181,7 +163,6 @@ FilterImage16 (
 	return err;
 }
 
-//-----------------------------------------------------------------------------------
 static PF_Err 
 FilterImage32 (
 	refconType		refcon, 
@@ -210,7 +191,6 @@ FilterImage32 (
 	}
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err GetParams(CFsAE *ae, ParamInfo8 *infoP)
 {
 	PF_Err		err 		= PF_Err_NONE;
@@ -218,7 +198,6 @@ static PF_Err GetParams(CFsAE *ae, ParamInfo8 *infoP)
 	ERR(ae->GetCOLOR(ID_BASE_COLOR,&infoP->base_color));
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 	Exec (CFsAE *ae , ParamInfo8 *infoP)
 {
@@ -245,8 +224,7 @@ static PF_Err
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
-//レンダリングのメイン
+//Main part of rendering
 static PF_Err 
 Render ( 
 	PF_InData		*in_dataP,
@@ -267,7 +245,6 @@ Render (
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
 PreRender(
@@ -292,7 +269,6 @@ PreRender(
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 SmartRender(
 	PF_InData				*in_data,
@@ -317,7 +293,6 @@ SmartRender(
 	return err;
 }
 #endif
-//-----------------------------------------------------------------------------------
 static PF_Err 
 RespondtoAEGP ( 	
 	PF_InData		*in_data,
@@ -338,7 +313,6 @@ RespondtoAEGP (
 }
 
 
-//-----------------------------------------------------------------------------------
 DllExport	PF_Err 
 EntryPointFunc (
 	PF_Cmd			cmd,
@@ -413,4 +387,3 @@ EntryPointFunc (
 	}
 	return err;
 }
-//-------------------------------------------------------------------------------------------------

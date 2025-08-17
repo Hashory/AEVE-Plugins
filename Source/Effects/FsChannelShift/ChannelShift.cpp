@@ -1,23 +1,7 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
 #include "ChannelShift.h"
 
-
-/*
-PF_Pixel (*getPixel8_sub)(getPixelPrm *prm,A_long x,A_long y);
-PF_Pixel16 (*getPixel16_sub)(getPixelPrm *prm,A_long x,A_long y);
-#if defined(SUPPORT_SMARTFX)
-PF_PixelFloat (*getPixel32_sub)(getPixelPrm *prm,A_long x,A_long y);
-#endif
-*/
-
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
+//Notify parameters to After Effects
+//Refer to Param_Utils.h
 static PF_Err ParamsSetup (PF_InData		*in_data,
 					PF_OutData		*out_data,
 					PF_ParamDef		*params[],
@@ -26,7 +10,6 @@ static PF_Err ParamsSetup (PF_InData		*in_data,
 	PF_Err			err = PF_Err_NONE;
 	PF_ParamDef		def;
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);	
 	//def.flags 	= 	PF_ParamFlag_START_COLLAPSED;
 	PF_ADD_TOPIC(STR_RED_TOPIC, ID_RED_TOPIC);
@@ -38,20 +21,19 @@ static PF_Err ParamsSetup (PF_InData		*in_data,
 					);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	STR_RED_LENGTH,	//パラメータの名前
-					-30000, 				//数値入力する場合の最小値
-					30000,	//数値入力する場合の最大値
-					-100,				//スライダーの最小値 
-					100,		//スライダーの最大値
-					0,		//デフォルトの値
-					1,//数値表示に関するフラグ 
+	PF_ADD_FIXED(	STR_RED_LENGTH,	//Parameter name
+					-30000, 				//Minimum value for numerical input
+					30000,	//Maximum value for numerical input
+					-100,				//Minimum value of slider
+					100,		//Maximum value of slider
+					0,		//Default value
+					1,//Flag for numerical display
 					0,
 					0,
 					ID_RED_LENGTH
 					);
 	AEFX_CLR_STRUCT(def);
 	PF_END_TOPIC(ID_RED_TOPIC_END);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);	
 	//def.flags 	= 	PF_ParamFlag_START_COLLAPSED;
 	PF_ADD_TOPIC(STR_GREEN_TOPIC, ID_GREEN_TOPIC);
@@ -63,20 +45,19 @@ static PF_Err ParamsSetup (PF_InData		*in_data,
 					);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	STR_GREEN_LENGTH,	//パラメータの名前
-					-30000, 				//数値入力する場合の最小値
-					30000,	//数値入力する場合の最大値
-					-100,				//スライダーの最小値 
-					100,		//スライダーの最大値
-					0,		//デフォルトの値
-					1,//数値表示に関するフラグ 
+	PF_ADD_FIXED(	STR_GREEN_LENGTH,	//Parameter name
+					-30000, 				//Minimum value for numerical input
+					30000,	//Maximum value for numerical input
+					-100,				//Minimum value of slider
+					100,		//Maximum value of slider
+					0,		//Default value
+					1,//Flag for numerical display
 					0,
 					0,
 					ID_GREEN_LENGTH
 					);
 	AEFX_CLR_STRUCT(def);
 	PF_END_TOPIC(ID_GREEN_TOPIC_END);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);	
 	//def.flags 	= 	PF_ParamFlag_START_COLLAPSED;
 	PF_ADD_TOPIC(STR_BLUE_TOPIC, ID_BLUE_TOPIC);
@@ -88,20 +69,19 @@ static PF_Err ParamsSetup (PF_InData		*in_data,
 					);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	STR_BLUE_LENGTH,	//パラメータの名前
-					-30000, 				//数値入力する場合の最小値
-					30000,	//数値入力する場合の最大値
-					-100,				//スライダーの最小値 
-					100,		//スライダーの最大値
-					0,		//デフォルトの値
-					1,//数値表示に関するフラグ 
+	PF_ADD_FIXED(	STR_BLUE_LENGTH,	//Parameter name
+					-30000, 				//Minimum value for numerical input
+					30000,	//Maximum value for numerical input
+					-100,				//Minimum value of slider
+					100,		//Maximum value of slider
+					0,		//Default value
+					1,//Flag for numerical display
 					0,
 					0,
 					ID_BLUE_LENGTH
 					);
 	AEFX_CLR_STRUCT(def);
 	PF_END_TOPIC(ID_BLUE_TOPIC_END);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);	
 	//def.flags 	= 	PF_ParamFlag_START_COLLAPSED;
 	PF_ADD_TOPIC(STR_ALPHA_TOPIC, ID_ALPHA_TOPIC);
@@ -113,34 +93,31 @@ static PF_Err ParamsSetup (PF_InData		*in_data,
 					);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	STR_ALPHA_LENGTH,	//パラメータの名前
-					-30000, 				//数値入力する場合の最小値
-					30000,	//数値入力する場合の最大値
-					-100,				//スライダーの最小値 
-					100,		//スライダーの最大値
-					0,		//デフォルトの値
-					1,//数値表示に関するフラグ 
+	PF_ADD_FIXED(	STR_ALPHA_LENGTH,	//Parameter name
+					-30000, 				//Minimum value for numerical input
+					30000,	//Maximum value for numerical input
+					-100,				//Minimum value of slider
+					100,		//Maximum value of slider
+					0,		//Default value
+					1,//Flag for numerical display
 					0,
 					0,
 					ID_ALPHA_LENGTH
 					);
 	AEFX_CLR_STRUCT(def);
 	PF_END_TOPIC(ID_ALPHA_TOPIC_END);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);	
 	PF_ADD_POPUP(		STR_EDGE_POP1, 
-						4,	//メニューの数
-						1,	//デフォルト
+						4,	//Number of menus
+						1,	//Default
 						STR_EDGE_POP2,
 						ID_EDGE_POP
 						);
-	//----------------------------------------------------------------
 	out_data->num_params = 	ID_NUM_PARAMS; 
 
 	return err;
 }
 
-//-----------------------------------------------------------------------------------
 static PF_Err 
 FilterImage8 (
 	refconType		refcon, 
@@ -160,7 +137,6 @@ FilterImage8 (
 
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err 
 FilterImage16 (
 	refconType		refcon, 
@@ -180,7 +156,6 @@ FilterImage16 (
 
 	return err;
 }
-//-----------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err 
 FilterImage32 (
@@ -202,12 +177,10 @@ FilterImage32 (
 	return err;
 }
 #endif
-//-------------------------------------------------------------------------------------------------
 static void PramSet(CFsAE *ae, ParamInfo *infoP)
 {
 
-	//---------------------------------------------------------------
-	//移動距離をXYに分ける
+	//Divide the moving distance into XY
 	CRotCalc rt(ae->in_data);
 	rt.SetRotLength(infoP->a_angle, infoP->a_length);
 	infoP->cs.a= rt.pos();
@@ -217,7 +190,6 @@ static void PramSet(CFsAE *ae, ParamInfo *infoP)
 	infoP->cs.g= rt.pos();
 	rt.SetRotLength(infoP->b_angle, infoP->b_length);
 	infoP->cs.b= rt.pos();
-	//---------------------------------------------------------------
 	infoP->gp.data		= ae->input->data;
 	infoP->gp.width		= ae->input->width;
 	infoP->gp.height	= ae->input->height;
@@ -255,7 +227,6 @@ static void PramSet(CFsAE *ae, ParamInfo *infoP)
 		break;
 	}
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 GetParams ( CFsAE *ae, ParamInfo * infoP)
 {
@@ -283,7 +254,6 @@ GetParams ( CFsAE *ae, ParamInfo * infoP)
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err Exec(CFsAE *ae, ParamInfo *infoP)
 {
 	PF_Err			err = PF_Err_NONE;
@@ -312,8 +282,7 @@ static PF_Err Exec(CFsAE *ae, ParamInfo *infoP)
 	}
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
-//レンダリングのメイン
+//Main part of rendering
 static PF_Err 
 Render ( 
 	PF_InData		*in_data,
@@ -335,7 +304,6 @@ Render (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
 PreRender(
@@ -361,7 +329,6 @@ PreRender(
 	return err;
 }
 #endif
-//-----------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
 SmartRender(

@@ -1,11 +1,4 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010 and VS2012
-
-*/
-//-----------------------------------------------------------------------------------
 #pragma once
-
 
 #ifndef AlphaFix_H
 #define AlphaFix_H
@@ -41,11 +34,11 @@
 	#include <Windows.h>
 #endif
 
-#define	STR_BASE_COLOR	"背景色"
+#define	STR_BASE_COLOR	"Background Color"
 
 #include "../FsLibrary/FsAE.h"
 	
-//プラグイン独自のパラメータを集めた構造体
+//A structure that collects original parameters for the plugin
 typedef struct ParamInfo8{
 	PF_Pixel8	base_color;	
 } ParamInfo8, *ParamInfo8P, **ParamInfo8H;
@@ -58,15 +51,14 @@ typedef struct ParamInfo32{
 	PF_PixelFloat	base_color;	
 } ParamInfo32, *ParamInfo32P, **ParamInfo32H;
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+//User interface ID
+//Becomes the ID for the params parameter of the ParamsSetup and Render functions
 enum {
 	ID_INPUT = 0,	// default input layer 
 	ID_BASE_COLOR,	//
 	ID_NUM_PARAMS
 	};
 
-//-----------------------------------------------------------------------------------
 inline	PF_Pixel16 toPixel16(PF_Pixel s)
 {
 		PF_Pixel16 r;
@@ -76,7 +68,6 @@ inline	PF_Pixel16 toPixel16(PF_Pixel s)
 		r.blue	= (A_u_short)CONVERT8TO16(s.blue);
 		return r;
 }
-//-----------------------------------------------------------------------------------
 inline	PF_PixelFloat toPixelFloat(PF_Pixel s)
 {
 	PF_PixelFloat r;
@@ -86,7 +77,6 @@ inline	PF_PixelFloat toPixelFloat(PF_Pixel s)
 	r.blue	= ((PF_FpShort)s.blue / PF_MAX_CHAN8);
 	return r;
 }
-//-------------------------------------------------------------------
 extern "C" {
 
 DllExport 
@@ -99,7 +89,5 @@ EntryPointFunc (
 	PF_LayerDef		*output,
 	void			*extra);
 }
-
-//-------------------------------------------------------------------
 
 #endif // AlphaFix_H

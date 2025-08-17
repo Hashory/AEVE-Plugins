@@ -1,10 +1,3 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
-
 #pragma once
 
 #ifndef CCplus_H
@@ -61,81 +54,62 @@
 #define	StrCOLOR_END			"end_color"//PF_Pixel
 #define	StrCOLOR_CENTER_POS		"center_color_pos(%)"
 
-#define	StrALPHA_START			"start_alpha(%)"	//透明にする
-#define	StrALPHA_END			"end_alpha(%)"//透明にする
+#define	StrALPHA_START			"start_alpha(%)"	//Make transparent
+#define	StrALPHA_END			"end_alpha(%)"//Make transparent
 
-#define	StrNOISE_VALUE			"noise_value"//ノイズを強さ
+#define	StrNOISE_VALUE			"noise_value"//Noise strength
 
-#define	StrERR_getFsAEParams	"画像バッファーサイズエラーです。御免なさい。"
-#define	StrERR_getParams		"パラメータエラーです。御免なさい。"
-
-
+#define	StrERR_getFsAEParams	"Image buffer size error. I'm sorry."
+#define	StrERR_getParams		"Parameter error. I'm sorry."
 
 
-//AfterEffectsの情報をまとめた構造体
+
+
+//Structure that summarizes After Effects information
 typedef struct{
 	PF_InData		*in_data;
 	PF_OutData		*out_data;
 
 	PF_EffectWorld 	*input;
 	PF_EffectWorld	*output;
-	PF_PixelPtr  	inData;			//入力画像のアドレス	
-	PF_PixelPtr  	outData;		//出力画像のアドレス	
-	A_long			width;					//対象画像の横幅(pixel)
-	A_long			height;					//対象画像の縦	幅(pixel)
+	PF_PixelPtr  	inData;			//Address of input image
+	PF_PixelPtr  	outData;		//Address of output image
+	A_long			width;					//Width of target image (pixel)
+	A_long			height;					//Height of target image (pixel)
 	
-	A_long			inWidth;				//入力画像の横幅の実サイズpixel)
-	A_long			outWidth;				//出力画像の横幅の実サイズpixel)
-	A_long			offsetInWidth;	// inWidth - width	補正サイズ	
+	A_long			inWidth;				//Actual width of input image (pixel)
+	A_long			outWidth;				//Actual width of output image (pixel)
+	A_long			offsetInWidth;	// inWidth - width	Correction size
 	A_long			offsetOutWidth;	// outWidth - width
-	A_long			Frame;					//描画中のフレーム（０スタート）
-	PF_Boolean		is16Bit;		//モードが16BitならTRUE
+	A_long			Frame;					//Frame being drawn (starts from 0)
+	PF_Boolean		is16Bit;		//TRUE if mode is 16Bit
 	A_u_char		reserve1;
 	A_u_short		reserve2;
 	A_long			reserve3;
 	A_long			reserve4;
-	/* 無理やり64byteにする*/
+	/* Force to 64 bytes*/
 } FsAEParams;
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+//User interface ID
+//Becomes the ID for the params parameter of the ParamsSetup and Render functions
 enum {
 	ID_INPUT = 0,	// default input layer 
 
-	ID_ORG_REV,		//元絵を白黒反転
+	ID_ORG_REV,		//Invert original image to black and white
 
 	ID_COLOR_START,		//PF_Pixel
 	ID_COLOR_CENTER,	//PF_Pixel
 	ID_COLOR_END,		//PF_Pixel
 	ID_COLOR_CENTER_POS,
 
-	ID_ALPHA_START,		//透明にする
-	ID_ALPHA_END,		//透明にする
+	ID_ALPHA_START,		//Make transparent
+	ID_ALPHA_END,		//Make transparent
 
-	ID_NOISE_VALUE,		//ノイズの量
+	ID_NOISE_VALUE,		//Noise amount
 	ID_NUM_PARAMS
 
 	};
-/*
-//プラグイン独自のパラメータを集めた構造体
-typedef struct{
-	PF_Boolean		org_rev;
-	
-	PF_Pixel  		color_start;
-	PF_Pixel  		color_center;
-	PF_Pixel  		color_end;
-	PF_Fixed		color_center_pos;
 
-	PF_Fixed		alpha_start;
-	PF_Fixed		alpha_end;
-
-	A_long			noise_value;
-
-	PF_PixelPtr		colorTbl;
-	PF_Handle		colorTblH;
-		
-} ID_Params;
-*/
 typedef struct CCPInfo{
 	PF_Boolean		org_rev;
 	PF_Pixel		color_start;
@@ -186,7 +160,6 @@ typedef struct {
 
 
 
-//-------------------------------------------------------
 extern "C" {
 DllExport	
 PF_Err 
@@ -198,8 +171,7 @@ EntryPointFunc (
 	PF_LayerDef		*output,
 	void			*extraP);
 }
-//-------------------------------------------------------
-// FsAEParams構造体を作成する
+// Create FsAEParams struct
 PF_Err getFsAEParams (	
 	PF_InData		*in_data,
 	PF_OutData		*out_data,

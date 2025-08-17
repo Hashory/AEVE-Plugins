@@ -1,16 +1,7 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
-
 #include "ChannelBlur.h"
 
-
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
+//Notify parameters to After Effects
+//Refer to Param_Utils.h
 static PF_Err ParamsSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -19,62 +10,55 @@ static PF_Err ParamsSetup (
 {
 	PF_Err			err = PF_Err_NONE;
 	PF_ParamDef		def;
-	//----------------------------------------------------------------
-	//ポップアップメニュー
+	//Popup menu
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_POPUP(STR_MODE,
-		STR_MODE_COUNT,	//メニューの数
-		STR_MODE_DFLT,	//デフォルト
+		STR_MODE_COUNT,	//Number of menus
+		STR_MODE_DFLT,	//Default
 		STR_MODE_ITEMS,
 		ID_MODE
 	);
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(STR_0CH_R,	//パラメータの名前
-		0, 		//数値入力する場合の最小値
-		500,			//数値入力する場合の最大値
-		0,				//スライダーの最小値 
-		100,			//スライダーの最大値
-		0,				//デフォルトの値
+	PF_ADD_SLIDER(STR_0CH_R,	//Parameter name
+		0, 		//Minimum value for numerical input
+		500,			//Maximum value for numerical input
+		0,				//Minimum value of slider
+		100,			//Maximum value of slider
+		0,				//Default value
 		ID_0CH_R
 	);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(STR_1CH_G,	//パラメータの名前
-		0, 		//数値入力する場合の最小値
-		500,			//数値入力する場合の最大値
-		0,				//スライダーの最小値 
-		100,			//スライダーの最大値
-		0,				//デフォルトの値
+	PF_ADD_SLIDER(STR_1CH_G,	//Parameter name
+		0, 		//Minimum value for numerical input
+		500,			//Maximum value for numerical input
+		0,				//Minimum value of slider
+		100,			//Maximum value of slider
+		0,				//Default value
 		ID_1CH_G
 	);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(STR_2CH_B,	//パラメータの名前
-		0, 		//数値入力する場合の最小値
-		500,			//数値入力する場合の最大値
-		0,				//スライダーの最小値 
-		100,			//スライダーの最大値
-		0,				//デフォルトの値
+	PF_ADD_SLIDER(STR_2CH_B,	//Parameter name
+		0, 		//Minimum value for numerical input
+		500,			//Maximum value for numerical input
+		0,				//Minimum value of slider
+		100,			//Maximum value of slider
+		0,				//Default value
 		ID_2CH_B
 	);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(STR_3CH_A,	//パラメータの名前
-		0, 		//数値入力する場合の最小値
-		500,			//数値入力する場合の最大値
-		0,				//スライダーの最小値 
-		100,			//スライダーの最大値
-		0,				//デフォルトの値
+	PF_ADD_SLIDER(STR_3CH_A,	//Parameter name
+		0, 		//Minimum value for numerical input
+		500,			//Maximum value for numerical input
+		0,				//Minimum value of slider
+		100,			//Maximum value of slider
+		0,				//Default value
 		ID_3CH_A
 	);
-	//----------------------------------------------------------------
 	out_data->num_params = 	ID_NUM_PARAMS; 
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err
 HandleChangedParam(
 	PF_InData					*in_data,
@@ -86,7 +70,6 @@ HandleChangedParam(
 	PF_Err				err = PF_Err_NONE;
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 QueryDynamicFlags(	
 	PF_InData		*in_data,	
@@ -97,7 +80,6 @@ QueryDynamicFlags(
 	PF_Err 	err = PF_Err_NONE;
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage8 (
 	refconType		refcon, 
@@ -112,7 +94,6 @@ FilterImage8 (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage16 (
 	refconType	refcon, 
@@ -127,7 +108,6 @@ FilterImage16 (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage32 (
 	refconType	refcon, 
@@ -141,7 +121,6 @@ FilterImage32 (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err GetParams(CFsAE *ae, ParamInfo *infoP)
 {
 	PF_Err		err 		= PF_Err_NONE;
@@ -154,13 +133,12 @@ static PF_Err GetParams(CFsAE *ae, ParamInfo *infoP)
 	
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 	Exec (CFsAE *ae , ParamInfo *infoP)
 {
 	PF_Err	err = PF_Err_NONE;
 
-	//画面をコピー
+	//Copy screen
 	ERR(ae->CopyInToOut());
 	switch(ae->pixelFormat())
 	{
@@ -177,11 +155,10 @@ static PF_Err
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
-//レンダリングのメイン
+//Main part of rendering
 /*
-	SmartFXに対応していないホスト(After Effects7以前のもの)はこの関数が呼び出されて描画する
-	この関数を書いておけば一応v6.5対応になる
+	Hosts that do not support SmartFX (After Effects 7 or earlier) call this function to draw
+	If you write this function, it will be compatible with v6.5 for the time being
 */
 static PF_Err 
 Render ( 
@@ -203,9 +180,8 @@ Render (
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 /*
-	SmartFX対応の場合、まずこの関数が呼ばれてパラメータの獲得を行う
+	For SmartFX support, this function is called first to get the parameters
 */
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
@@ -232,7 +208,6 @@ PreRender(
 	return err;
 }
 #endif
-//-----------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
 SmartRender(

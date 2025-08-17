@@ -1,9 +1,3 @@
-//-----------------------------------------------------------------------------------
-/*
-	ChannelBlur for VS2010
-*/
-//-----------------------------------------------------------------------------------
-
 #pragma once
 #ifndef ChannelBlur_H
 #define ChannelBlur_H
@@ -37,8 +31,8 @@
 
 #include "../FsLibrary/FsAE.h"
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+//User interface ID
+//Becomes the ID for the params parameter of the ParamsSetup and Render functions
 enum {
 	ID_INPUT = 0,	// default input layer
 
@@ -52,7 +46,7 @@ enum {
 	ID_NUM_PARAMS
 };
 
-//UIの表示文字列
+//UI display string
 #define	STR_MODE			"Mode"
 #define	STR_MODE_ITEMS		"RGB|HLS|Yuv"
 #define	STR_MODE_COUNT		3
@@ -66,7 +60,7 @@ enum {
 
 
 
-//UIのパラメータ
+//UI parameters
 typedef struct ParamInfo {
 	A_long		mode;
 	A_long		r_blur;
@@ -82,10 +76,7 @@ typedef struct ParamInfo8 {
 
 } ParamInfo8, *ParamInfo8P, **ParamInfo8H;
 
-//-------------------------------------------------------
 
-
-//-----------------------------------------------------------------------------------
 extern "C" {
 
 DllExport 

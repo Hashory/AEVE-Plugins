@@ -1,9 +1,3 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
 #pragma once
 #ifndef ColorChange_H
 #define ColorChange_H
@@ -14,12 +8,11 @@
 #include "AEConfig.h"
 #include "entry.h"
 
-
 /*
-	CS5でコンパイルする時は、TARGETCS5を有効にして
-	Supporting codeのCS4onlyをビルドから除外、CS5onlyをビルド有効にする
+When compiling with CS5, enable TARGETCS5.
+Exclude CS4only from the build in Supporting code, and enable CS5only for build.
 
-	そして、プラットフォームをx64へプロパティを変更する事
+Then, change the platform to x64 in the properties.
 */
 
 
@@ -94,41 +87,41 @@ enum {
 };
 
 
-#define STR_LV		"許容値"
-#define STR_MODE1	"モード"
-#define STR_EXEC	"実行する"
+#define STR_LV		"Tolerance"
+#define STR_MODE1	"Mode"
+#define STR_EXEC	"Execute"
 
 #define STR_TARGET0	"Target0"
-#define STR_SRCCOL0	"元の色0"
-#define STR_DSTCOL0	"新しい色0"
+#define STR_SRCCOL0	"Original Color 0"
+#define STR_DSTCOL0	"New Color 0"
 
 #define STR_TARGET1	"Target1"
-#define STR_SRCCOL1	"元の色1"
-#define STR_DSTCOL1	"新しい色1"
+#define STR_SRCCOL1	"Original Color 1"
+#define STR_DSTCOL1	"New Color 1"
 
 #define STR_TARGET2	"Target2"
-#define STR_SRCCOL2	"元の色2"
-#define STR_DSTCOL2	"新しい色2"
+#define STR_SRCCOL2	"Original Color 2"
+#define STR_DSTCOL2	"New Color 2"
 
 #define STR_TARGET3	"Target3"
-#define STR_SRCCOL3	"元の色3"
-#define STR_DSTCOL3	"新しい色3"
+#define STR_SRCCOL3	"Original Color 3"
+#define STR_DSTCOL3	"New Color 3"
 
 #define STR_TARGET4	"Target4"
-#define STR_SRCCOL4	"元の色4"
-#define STR_DSTCOL4	"新しい色4"
+#define STR_SRCCOL4	"Original Color 4"
+#define STR_DSTCOL4	"New Color 4"
 
 #define STR_TARGET5	"Target5"
-#define STR_SRCCOL5	"元の色5"
-#define STR_DSTCOL5	"新しい色5"
+#define STR_SRCCOL5	"Original Color 5"
+#define STR_DSTCOL5	"New Color 5"
 
 #define STR_TARGET6	"Target6"
-#define STR_SRCCOL6	"元の色6"
-#define STR_DSTCOL6	"新しい色6"
+#define STR_SRCCOL6	"Original Color 6"
+#define STR_DSTCOL6	"New Color 6"
 
 #define STR_TARGET7	"Target7"
-#define STR_SRCCOL7	"元の色7"
-#define STR_DSTCOL7	"新しい色7"
+#define STR_SRCCOL7	"Original Color 7"
+#define STR_DSTCOL7	"New Color 7"
 
 
 typedef struct ParamInfo{

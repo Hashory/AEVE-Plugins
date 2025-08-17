@@ -1,10 +1,3 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins-cs4 for VS2008
-*/
-//-----------------------------------------------------------------------------------
-
-
 #pragma once
 #ifndef AnimatedNoise_H
 #define AnimatedNoise_H
@@ -39,28 +32,28 @@
 
 #include "../FsLibrary/FsAE.h"
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+//User interface ID
+//Becomes the ID for the params parameter of the ParamsSetup and Render functions
 enum {
 	ID_INPUT = 0,			// default input layer 
-	ID_ANIMATED_CB,			//動き
-	ID_ANIMATED_ADD,		//動き
-	ID_VALUE_ADD,			//ノイズの量
-	ID_LENGTH_FIXED,		//ノイズの強さ
-	ID_COLOR_CB,			//カラーかモノクロか
-	ID_BLOCK_VALUE_FIXED,	//ブロックノイズの量
-	ID_BLOCK_LENGTH_FIXED,	//ブロックノイズの強さ
-	ID_BLOCK_WIDTH_ADD,		//ブロックノイズ横幅
-	ID_BLOCK_HEIGHT_ADD,	//ブロックノイズ縦幅
-	ID_BLOCK_COLOR_CB,		//カラーかモノクロか
+	ID_ANIMATED_CB,			//Animation
+	ID_ANIMATED_ADD,		//Animation
+	ID_VALUE_ADD,			//Noise amount
+	ID_LENGTH_FIXED,		//Noise strength
+	ID_COLOR_CB,			//Color or monochrome
+	ID_BLOCK_VALUE_FIXED,	//Block noise amount
+	ID_BLOCK_LENGTH_FIXED,	//Block noise strength
+	ID_BLOCK_WIDTH_ADD,		//Block noise width
+	ID_BLOCK_HEIGHT_ADD,	//Block noise height
+	ID_BLOCK_COLOR_CB,		//Color or monochrome
 
 	ID_NUM_PARAMS
 	};
 typedef struct PrmTbl{
-	PF_PixelPtr	data;		//画像
-	A_long 		width;		//画像の横幅
-	A_long 		height;		//画像の高さ
-	A_long 		w;			//ターゲット
+	PF_PixelPtr	data;		//Image
+	A_long 		width;		//Image width
+	A_long 		height;		//Image height
+	A_long 		w;			//Target
 	A_long 		h;
 	A_long 		target;
 
@@ -88,7 +81,6 @@ static void NoiseBlock8(PrmTbl *prm);
 static void NoiseBlock16(PrmTbl *prm);
 static void NoiseBlock32(PrmTbl *prm);
 
-//-------------------------------------------------------------------------------------------------
 extern "C" {
 DllExport
 PF_Err 
@@ -100,5 +92,4 @@ EntryPointFunc (
 	PF_LayerDef		*output,
 	void			*extraP);
 }
-//-------------------------------------------------------
 #endif // AnimatedNoise_H

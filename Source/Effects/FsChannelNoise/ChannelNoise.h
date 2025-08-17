@@ -1,8 +1,3 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
 #pragma once
 #ifndef ChannelNoise_H
 #define ChannelNoise_H
@@ -47,8 +42,8 @@
 #define	Str_BLUE_OPT		"Blue Opacity(%)"
 	
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+//User interface ID
+//Becomes the ID for the params parameter of the ParamsSetup and Render functions
 enum {
 	ID_INPUT = 0,	// default input layer 
 	
@@ -74,7 +69,6 @@ typedef struct ParamInfo{
 	PF_FpShort			blue_opt;
 } ParamInfo,*ParamInfoP,**ParamInfoH;
 
-//-------------------------------------------------------
 extern "C" {
 DllExport	
 PF_Err 

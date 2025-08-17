@@ -1,9 +1,3 @@
-//-----------------------------------------------------------------------------------
-/*
-	CellGrad for VS2010
-*/
-//-----------------------------------------------------------------------------------
-
 #pragma once
 #ifndef CellGrad_H
 #define CellGrad_H
@@ -18,8 +12,8 @@
 #include "FWorldGrad.h"
 #include "FRectGrad.h"
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+//User interface ID
+//Becomes the ID for the params parameter of the ParamsSetup and Render functions
 enum {
 	ID_INPUT = 0,	// default input layer
 
@@ -49,7 +43,7 @@ enum {
 	ID_NUM_PARAMS
 };
 
-//UIの表示文字列
+//UI display string
 #define	STR_TARGET_TOPIC	"target"
 #define	STR_TARGET_LEVEL	"targetLevel"
 #define	STR_TARGET_COUNT	"targetCount"
@@ -74,7 +68,7 @@ enum {
 #define	STR_GUIDE_COLOR		"showGuide"
 #define	STR_ON				"on"
 
-//UIのパラメータ
+//UI parameters
 typedef struct ParamInfo {
 	A_long			targetCount;
 	A_u_char		tagetLevel;
@@ -95,10 +89,6 @@ typedef struct ParamInfo {
 
 } ParamInfo, *ParamInfoP, **ParamInfoH;
 
-//-------------------------------------------------------
-
-
-//-----------------------------------------------------------------------------------
 extern "C" {
 
 DllExport 

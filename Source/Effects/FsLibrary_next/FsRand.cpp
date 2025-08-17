@@ -1,13 +1,13 @@
 #include "FsG.h"
 //***********************************************************************************
 /*
-	乱数
-	xorShiftに関しては以下のHPの記事を参考にしました。
+	Random number
+	For xorShift, I referred to the articles on the following websites:
 
-	★小川暇つぶしチラ裏　2008年10月31日　ランダム
+	"Ogawa's Time-Killing Scribbles, October 31, 2008, Random"
 	http://ogawa-sankinkoutai.seesaa.net/article/108848981.html
 
-	★銀天随筆集　Xorshift の初期化は
+	"Silver Heaven Essays: Initializing Xorshift"
 	http://d.hatena.ne.jp/gintenlabo/20100930/1285859540
 */
 static A_u_long			FsRand_tbl[4];

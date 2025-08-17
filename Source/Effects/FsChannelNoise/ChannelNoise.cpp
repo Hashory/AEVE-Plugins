@@ -1,14 +1,6 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
 #include "ChannelNoise.h"
 
-
-//-------------------------------------------------------------------------------------------------
-// Aboutダイアログ
+// About dialog
 static PF_Err About (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -21,7 +13,6 @@ static PF_Err About (
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err GlobalSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -33,7 +24,6 @@ static PF_Err GlobalSetup (
 	err = ae.GlobalSetup(in_data,out_data,params,output);
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err GlobalSetdown(
 	PF_InData	*in_data)
 {
@@ -43,7 +33,6 @@ static PF_Err GlobalSetdown(
 	return PF_Err_NONE;
 }
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -53,7 +42,6 @@ static PF_Err SequenceSetup (
 	return PF_Err_NONE;
 }
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceSetdown (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -63,7 +51,6 @@ static PF_Err SequenceSetdown (
 	return PF_Err_NONE;
 }
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceResetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -73,9 +60,8 @@ static PF_Err SequenceResetup (
 	return PF_Err_NONE;
 }
 
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
+//Notify parameters to After Effects
+//Refer to Param_Utils.h
 static PF_Err ParamsSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -85,91 +71,83 @@ static PF_Err ParamsSetup (
 	PF_Err			err = PF_Err_NONE;
 	PF_ParamDef		def;
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	Str_RED_VALUE,	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					300,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					0,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	Str_RED_VALUE,	//Parameter name
+					0, 				//Minimum value for numerical input
+					300,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					0,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_RED_NOISE
 					);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	Str_RED_OPT,	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					200,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					100,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	Str_RED_OPT,	//Parameter name
+					0, 				//Minimum value for numerical input
+					200,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					100,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_RED_OPT
 					);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	Str_GREEN_VALUE,	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					300,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					0,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	Str_GREEN_VALUE,	//Parameter name
+					0, 				//Minimum value for numerical input
+					300,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					0,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_GREEN_NOISE
 					);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	Str_GREEN_OPT,	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					200,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					100,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	Str_GREEN_OPT,	//Parameter name
+					0, 				//Minimum value for numerical input
+					200,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					100,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_GREEN_OPT
 					);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	Str_BLUE_VALUE,	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					300,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					0,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	Str_BLUE_VALUE,	//Parameter name
+					0, 				//Minimum value for numerical input
+					300,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					0,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_BLUE_NOISE
 					);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FIXED(	Str_BLUE_OPT,	//パラメータの名前
-					0, 				//数値入力する場合の最小値
-					200,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					100,			//スライダーの最大値
-					100,				//デフォルトの値
-					1,				//数値表示に関するフラグ 
+	PF_ADD_FIXED(	Str_BLUE_OPT,	//Parameter name
+					0, 				//Minimum value for numerical input
+					200,			//Maximum value for numerical input
+					0,				//Minimum value of slider
+					100,			//Maximum value of slider
+					100,				//Default value
+					1,				//Flag for numerical display
 					0,
 					0,
 					ID_BLUE_OPT
 					);
 
-	//----------------------------------------------------------------
 	out_data->num_params = 	ID_NUM_PARAMS; 
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err
 HandleChangedParam(
 	PF_InData					*in_data,
@@ -180,25 +158,8 @@ HandleChangedParam(
 {
 	PF_Err				err					= PF_Err_NONE,
 						err2				= PF_Err_NONE;
-	/*
-	try{
-		CFsAE ae;
-		err =ae.HandleChangedParam(in_data,out_data,params,outputP,extraP,ID_NUM_PARAMS);
-		if (!err){
-			PF_Boolean b = FALSE;
-			ERR(ae.GetCHECKBOX(ID_NOISE_FRAME,&b));
-			ERR(ae.UI_DISABLE(ID_NOISE_OFFSET, b));
-			if (!err){
-				out_data->out_flags |= PF_OutFlag_FORCE_RERENDER | PF_OutFlag_REFRESH_UI;
-			}
-		}
-	}catch ( PF_Err & errP){
-		err = errP;
-	}
-	*/
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 QueryDynamicFlags(	
 	PF_InData		*in_data,	
@@ -208,28 +169,13 @@ QueryDynamicFlags(
 {
 	PF_Err 	err 	= PF_Err_NONE,
 			err2 	= PF_Err_NONE;
-	//PF_OutFlag_NON_PARAM_VARYの値をout_flagsへ設定して
-	//毎フレームごとの描画をするか切り替える。
-	/*
-	CFsAE ae;
-	err = ae.QueryDynamicFlags(in_data,out_data,params,extra,ID_NUM_PARAMS);
-	if (!err){
-		PF_ParamDef def;
-		AEFX_CLR_STRUCT(def);
-		ERR(ae.checkout_param(ID_NOISE_FRAME,&def));
-		ERR(ae.SetOutFlag_NON_PARAM_VARY((PF_Boolean)def.u.bd.value));
-		ERR(ae.checkin_param(&def));
-	}
-	*/
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
 inline A_long randValue(A_long v)
 {
 	return F_RAND2(-v,v);
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage8 (
 	refconType		refcon, 
@@ -271,15 +217,14 @@ FilterImage8 (
 				F_RAND();
 			}
 		}else{
-			F_RAND();//乱数の数合わせ
+			F_RAND();//Adjusting the number of random numbers
 			F_RAND();
-			F_RAND();//乱数の数合わせ
+			F_RAND();//Adjusting the number of random numbers
 		}
 	}
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage16 (
 	refconType		refcon, 
@@ -321,16 +266,15 @@ FilterImage16 (
 				F_RAND();
 			}
 		}else{
-			F_RAND();//乱数の数合わせ
+			F_RAND();//Adjusting the number of random numbers
 			F_RAND();
-			F_RAND();//乱数の数合わせ
+			F_RAND();//Adjusting the number of random numbers
 		}
 	}
 
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage32 (
 	refconType		refcon, 
@@ -372,15 +316,14 @@ FilterImage32 (
 				F_RAND();
 			}
 		}else{
-			F_RAND();//乱数の数合わせ
+			F_RAND();//Adjusting the number of random numbers
 			F_RAND();
-			F_RAND();//乱数の数合わせ
+			F_RAND();//Adjusting the number of random numbers
 		}
 	}
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 
 PF_Err GetParams(CFsAE *ae, ParamInfo *infoP)
 {
@@ -406,7 +349,6 @@ PF_Err GetParams(CFsAE *ae, ParamInfo *infoP)
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 	Exec (CFsAE *ae , ParamInfo *infoP)
 {
@@ -444,8 +386,7 @@ static PF_Err
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
-//レンダリングのメイン
+//Main part of rendering
 static PF_Err Render (
 	PF_InData			*in_data,
 	PF_OutData		*out_data,
@@ -464,7 +405,6 @@ static PF_Err Render (
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 PreRender(
 	PF_InData			*in_data,
@@ -488,7 +428,6 @@ PreRender(
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 SmartRender(
 	PF_InData				*in_data,
@@ -514,7 +453,6 @@ SmartRender(
 
 }
 
-//-----------------------------------------------------------------------------------
 static PF_Err 
 RespondtoAEGP ( 	
 	PF_InData		*in_data,
@@ -534,7 +472,6 @@ RespondtoAEGP (
 	return err;
 }
 
-//-----------------------------------------------------------------------------------
 DllExport	PF_Err 
 EntryPointFunc (
 	PF_Cmd			cmd,
@@ -608,5 +545,3 @@ EntryPointFunc (
 	}
 	return err;
 }
-
-//-------------------------------------------------------------------------------------------------

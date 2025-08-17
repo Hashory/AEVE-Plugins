@@ -1,16 +1,7 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
-
 #include "ChromaticAberration.h"
 
-
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
+//Notify parameters to After Effects
+//Refer to Param_Utils.h
 static PF_Err ParamsSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -20,7 +11,6 @@ static PF_Err ParamsSetup (
 	PF_Err			err = PF_Err_NONE;
 	PF_ParamDef		def;
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDER(STR_R,	//Name
 		0,						//VALID_MIN
@@ -34,7 +24,6 @@ static PF_Err ParamsSetup (
 		0,						//WANT_PHASE
 		ID_R
 		);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDER(STR_G,	//Name
 		0,						//VALID_MIN
@@ -48,7 +37,6 @@ static PF_Err ParamsSetup (
 		0,						//WANT_PHASE
 		ID_G
 	);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDER(STR_B,	//Name
 		0,						//VALID_MIN
@@ -63,8 +51,7 @@ static PF_Err ParamsSetup (
 		ID_B
 	);
 
-	//----------------------------------------------------------------
-	//位置の指定
+	//Specify position
 	AEFX_CLR_STRUCT(def);	
 	PF_ADD_POINT(STR_CENTER,			/*"New Center"*/
 				50,	// X
@@ -72,12 +59,10 @@ static PF_Err ParamsSetup (
 				0,	// Flag
 				ID_CENTER
 				);
-	//----------------------------------------------------------------
 	out_data->num_params = 	ID_NUM_PARAMS; 
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err
 HandleChangedParam(
 	PF_InData					*in_data,
@@ -90,7 +75,6 @@ HandleChangedParam(
 
 	return err;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 QueryDynamicFlags(	
 	PF_InData		*in_data,	
@@ -102,7 +86,6 @@ QueryDynamicFlags(
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage8 (
 	refconType		refcon, 
@@ -150,7 +133,6 @@ FilterImage8 (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage16 (
 	refconType	refcon, 
@@ -211,7 +193,6 @@ FilterImage16 (
 	outP->alpha = a;
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage32 (
 	refconType	refcon, 
@@ -258,7 +239,6 @@ FilterImage32 (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err GetParams(CFsAE *ae, ParamInfo *infoP)
 {
 	PF_Err		err 		= PF_Err_NONE;
@@ -291,7 +271,6 @@ static PF_Err GetParams(CFsAE *ae, ParamInfo *infoP)
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 	Exec (CFsAE *ae , ParamInfo *infoP)
 {
@@ -299,7 +278,7 @@ static PF_Err
 
 
 	infoP->ae = ae;
-	//画面をコピー
+	//Copy screen
 
 	ERR(ae->NewTmpWorld());
 	ERR(ae->Copy(ae->input, ae->tmpP));
@@ -326,11 +305,10 @@ static PF_Err
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
-//レンダリングのメイン
+//Main part of rendering
 /*
-	SmartFXに対応していないホスト(After Effects7以前のもの)はこの関数が呼び出されて描画する
-	この関数を書いておけば一応v6.5対応になる
+	Hosts that do not support SmartFX (After Effects 7 or earlier) call this function to draw
+	If you write this function, it will be compatible with v6.5 for the time being
 */
 static PF_Err 
 Render ( 
@@ -352,9 +330,8 @@ Render (
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 /*
-	SmartFX対応の場合、まずこの関数が呼ばれてパラメータの獲得を行う
+	For SmartFX support, this function is called first to get the parameters
 */
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
@@ -381,7 +358,6 @@ PreRender(
 	return err;
 }
 #endif
-//-----------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
 SmartRender(

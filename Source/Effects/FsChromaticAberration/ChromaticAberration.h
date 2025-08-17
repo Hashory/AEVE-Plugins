@@ -1,9 +1,3 @@
-//-----------------------------------------------------------------------------------
-/*
-	ChromaticAberration for VS2010
-*/
-//-----------------------------------------------------------------------------------
-
 #pragma once
 #ifndef ChromaticAberration_H
 #define ChromaticAberration_H
@@ -15,8 +9,8 @@
 
 #include "../FsLibrary/FsAE.h"
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+//User interface ID
+//Becomes the ID for the params parameter of the ParamsSetup and Render functions
 enum {
 	ID_INPUT = 0,	// default input layer
 
@@ -27,13 +21,13 @@ enum {
 	ID_NUM_PARAMS
 };
 
-//UIの表示文字列
+//UI display string
 #define	STR_R				"red"
 #define	STR_G				"green"
 #define	STR_B				"blue"
 #define	STR_CENTER			"center"
 
-//UIのパラメータ
+//UI parameters
 typedef struct ParamInfo {
 	PF_FpLong	r;
 	PF_FpLong	g;
@@ -46,10 +40,7 @@ typedef struct ParamInfo {
 
 } ParamInfo, *ParamInfoP, **ParamInfoH;
 
-//-------------------------------------------------------
 
-
-//-----------------------------------------------------------------------------------
 extern "C" {
 
 DllExport 

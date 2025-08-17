@@ -1,9 +1,3 @@
-//-----------------------------------------------------------------------------------
-/*
-	alphaThreshold for VS2010
-*/
-//-----------------------------------------------------------------------------------
-
 #pragma once
 #ifndef alphaThreshold_H
 #define alphaThreshold_H
@@ -38,8 +32,8 @@
 #include "../FsLibrary/FsAE.h"
 //#include "FsAE.h"
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+//User interface ID
+//Becomes the ID for the params parameter of the ParamsSetup and Render functions
 enum {
 	ID_INPUT = 0,	// default input layer
 
@@ -47,20 +41,16 @@ enum {
 	ID_NUM_PARAMS
 };
 
-//UIの表示文字列
+//UI display string
 #define	STR_A				"AlphaThreshold"
 
 
-//UIのパラメータ
+//UI parameters
 typedef struct ParamInfo {
 	PF_FpLong	a;
 	
 } ParamInfo, *ParamInfoP, **ParamInfoH;
 
-//-------------------------------------------------------
-
-
-//-----------------------------------------------------------------------------------
 extern "C" {
 
 DllExport 

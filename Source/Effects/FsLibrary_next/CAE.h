@@ -15,7 +15,7 @@
 
 //******************************************************************************
 
-//呼び出される関数の定数
+// Constants for functions to be called
 enum
 {
 	AE_NONE = 0,
@@ -40,7 +40,7 @@ enum
 #define AE_ERR	PF_Err_BAD_CALLBACK_PARAM
 //-----------------------------------------------------------------------------------
 /*
-	プラグインID獲得のための構造体
+	Structure for obtaining plugin ID
 */
 typedef struct {
 	PF_Boolean		initializedB;
@@ -151,7 +151,7 @@ public:
 		}else{
 			m_format		= PF_PixelFormat_ARGB32;
 		}
-		//カレントフレームを求める画頭は０
+		// Get the current frame number, starting from 0
 		if ((in_dataP->current_time >= 0) && (in_dataP->time_step > 0)) {
 			m_frame = (in_dataP->current_time / in_dataP->time_step);
 		}
@@ -211,7 +211,7 @@ public:
 		CAE::PRextraP		= extraP;
 		m_paramsCount		= paramsCount;
 
-		//カレントフレームを求める画頭は０
+		// Get the current frame number, starting from 0
 		if ((in_dataP->current_time >= 0) && (in_dataP->time_step > 0)) {
 			m_frame = (in_dataP->current_time / in_dataP->time_step);
 		}
@@ -263,7 +263,7 @@ public:
 			return m_resultErr;
 		}
 
-		//カレントフレームを求める画頭は０
+		// Get the current frame number, starting from 0
 		if ((in_dataP->current_time >= 0) && (in_dataP->time_step > 0)) {
 			m_frame = (in_dataP->current_time / in_dataP->time_step);
 		}
@@ -323,7 +323,7 @@ public:
 		CAE::out_data = out_dataP;
 		m_paramsCount = paramsCount;
 
-		//カレントフレームを求める画頭は０
+		// Get the current frame number, starting from 0
 		if ((in_dataP->current_time >= 0) && (in_dataP->time_step > 0)) {
 			m_frame = (in_dataP->current_time / in_dataP->time_step);
 		}
@@ -342,7 +342,7 @@ public:
 	}
 	//*********************************************************************************
 	//*********************************************************************************
-	//その他の処理
+	// Other processing
 	//*********************************************************************************
 	PF_Err About
 	(
@@ -357,12 +357,12 @@ public:
 			ae_plugin_idH	= in_data->global_data;
 			ae_plugin_idP = reinterpret_cast<ae_global_dataP>(DH(in_data->global_data));
 		}
-		//カレントフレームを求める画頭は０
+		// Get the current frame number, starting from 0
 		if ((in_data->current_time >= 0) && (in_data->time_step > 0)) {
 			m_frame = (in_data->current_time / in_data->time_step);
 		}
 		if (ae_plugin_idP!=NULL){
-			//スクリプトでダイアログ表示だけど使わない
+			// Display dialog using script, but not used
 			A_char scriptCode[1024*4] = {'\0'}; 
 			PF_SPRINTF(	scriptCode,FS_ABOUT_STR,
 				FS_NAME, 
@@ -399,13 +399,13 @@ public:
 		PF_Err	err				= PF_Err_NONE;
 		CAE::suitesP			= new AEGP_SuiteHandler(in_data->pica_basicP);
 
-		//***_Target.hで定義
+		//Defined in ***_Target.h
 		out_data->my_version	=	FS_VERSION;
 		out_data->out_flags		=	FS_OUT_FLAGS;
 		out_data->out_flags2	=	FS_OUT_FLAGS2;
 
 		/**********************************************************
-		プラグインIDを獲得して、グローバルにアクセスできるように保存
+		Get the plugin ID and save it for global access
 		*/
 		ae_plugin_idH	=	suitesP->HandleSuite1()->host_new_handle(sizeof(ae_global_data));
 	
@@ -471,7 +471,7 @@ public:
 			}
 			CAE::output		= outputP;
 		}
-		//カレントフレームを求める画頭は０
+		// Get the current frame number, starting from 0
 		if ((in_dataP->current_time >= 0) && (in_dataP->time_step > 0)) {
 			m_frame = (in_dataP->current_time / in_dataP->time_step);
 		}
@@ -481,7 +481,7 @@ public:
 			m_paramsCount		= paramsCount;
 		}
 
-		CAE::suitesP	= new AEGP_SuiteHandler(in_data->pica_basicP);
+		CAE::suitesP	= new AEGP_SuiteHandler(in_dataP->pica_basicP);
 		if (in_dataP->global_data){
 			ae_plugin_idH	= in_dataP->global_data;
 			ae_plugin_idP = reinterpret_cast<ae_global_dataP>(DH(in_dataP->global_data));
@@ -509,7 +509,7 @@ public:
 			m_resultErr = AE_ERR;
 			return m_resultErr;
 		}
-		//カレントフレームを求める画頭は０
+		// Get the current frame number, starting from 0
 		if ((in_dataP->current_time >= 0) && (in_dataP->time_step > 0)) {
 			m_frame = (in_dataP->current_time / in_dataP->time_step);
 		}
@@ -534,7 +534,7 @@ public:
 
 	}
 	//*********************************************************************************
-	//デストラクタ
+	//Destructor
 	//*********************************************************************************
 	~CAE(){
 		PF_Err 	err 	= PF_Err_NONE,
