@@ -37,7 +37,6 @@ __declspec(dllexport) PF_Err PluginDataEntryFunction2(
 
   // Set the effects below
 
-
   return result;
 }
 
