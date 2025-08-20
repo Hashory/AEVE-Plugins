@@ -24,7 +24,7 @@ Source/Effects/FsEdgeBlur/*
 Source/Effects/FsEdgeLine/*
 Source/Effects/FsEdgeLine-Hi/*
 Source/Effects/FsExpsColors/*
-Source/Effects/FsExpsPos/*
+#Source/Effects/FsExpsPos/*
 Source/Effects/FsExtract_Edge/*
 Source/Effects/FsExtract-Hi/*
 Source/Effects/FsFillColor/*
