@@ -1,5 +1,5 @@
 pre-commit:
   commands:
     clang-format:
-      glob: "*.{c,h,cpp,hpp,cc,hh,cxx,hxx,r}"
+      glob: "*.{c,h,cpp,hpp,cc,hh,cxx,hxx}"
       run: clang-format -i {staged_files} && git add {staged_files}
