@@ -1,45 +1,33 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
-
 #pragma once
-#ifndef Fs_TARGET_H
-#define Fs_TARGET_H
 
 
-//-----------------------------------------------------------------------------------
-//プラグインの識別に使われる名前
+// Name used to identify the plugin
 #define FS_NAME			"F's Thin"
 
-//-----------------------------------------------------------------------------------
-//プラグインの説明に使われる文字
-#define FS_DESCRIPTION	"ターゲット色を細線化します"
+// Description of the plugin
+#define FS_DESCRIPTION	"Thins the target color."
 
-	//-----------------------------------------------------------------------------------
-	//プラグインが表示されるメニュー名
-	//#define FS_CATEGORY "F's Plugins-Channel"
-	//#define FS_CATEGORY "F's Plugins-Draw"
-	//#define FS_CATEGORY "F's Plugins-Filter"
-	#define FS_CATEGORY "NF's Plugins-Cell"
-	//#define FS_CATEGORY "F's Plugins-Colorize"
-	//#define FS_CATEGORY "F's Plugins-Script"
-	//#define FS_CATEGORY "F's Plugins-Test"
+// Menu name where the plugin is displayed
+//#define FS_CATEGORY "F's Plugins-Channel"
+//#define FS_CATEGORY "F's Plugins-Draw"
+//#define FS_CATEGORY "F's Plugins-Filter"
+#define FS_CATEGORY "NF's Plugins-Cell"
+//#define FS_CATEGORY "F's Plugins-Colorize"
+//#define FS_CATEGORY "F's Plugins-Script"
+//#define FS_CATEGORY "F's Plugins-Test"
 
 
-//-----------------------------------------------------------
-#define SUPPORT_SMARTFX			//これを有効にするとSmartFX+Float_Colorに対応する
-//#define NO_USE_FSGRAPHICS	//これを有効にするとFsGraphics関係がインクルードされない
+// Enable this to support SmartFX + Float_Color
+#define SUPPORT_SMARTFX
+// Enable this to not include FsGraphics related files
+//#define NO_USE_FSGRAPHICS
 
-//-----------------------------------------------------------------------------------
-//プラグインのバージョン
-
+// Plugin version
+// clang-format off
 #include "FsVersion.h"
+// clang-format on
 
-//-----------------------------------------------------------------------------------
-//out_flags
+// out_flags
 /*
 out_data->out_flags
 	PF_OutFlag_PIX_INDEPENDENT		1024
@@ -50,12 +38,14 @@ out_data->out_flags
 	PF_OutFlag_I_DO_DIALOG				32
 */
 
-#define FS_OUT_FLAGS	33556032	//通常はこちら
-//#define FS_OUT_FLAGS	33556036	//こっちを有効にすると毎フレームごとに描画する。NON_PARAM_VARYを動作中に切り替えるときもこちらに
-//#define FS_OUT_FLAGS	1600		//8bitのみ
+// Usually this one
+#define FS_OUT_FLAGS	33556032
+// Enable this to draw every frame. Also use this when switching NON_PARAM_VARY during operation.
+//#define FS_OUT_FLAGS	33556036
+// For 8bit only
+//#define FS_OUT_FLAGS	1600
 
-//-----------------------------------------------------------------------------------
-//out_flags2
+// out_flags2
 /*
 out_data->out_flags2
 	PF_OutFlag2_FLOAT_COLOR_AWARE
@@ -68,8 +58,4 @@ out_data->out_flags2
 #define FS_OUT_FLAGS2 134222921
 #else
 #define FS_OUT_FLAGS2 134217801
-#endif
-
-
-//-----------------------------------------------------------------------------------
 #endif

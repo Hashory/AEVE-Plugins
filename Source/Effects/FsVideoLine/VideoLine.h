@@ -1,18 +1,7 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
-
 #pragma once
 
-#ifndef VideoLine_H
-#define VideoLine_H
-
-
+// clang-format off
 #include "Fs_Target.h"
-
 #include "AEConfig.h"
 #include "entry.h"
 //#include "PrSDKAESupport.h"
@@ -39,50 +28,41 @@
 
 #include "../FsLibrary/FsAE.h"
 //#include "FsAE.h"
-
+// clang-format on
 
 enum {
-	ID_INPUT = 0,		// default input layer 
-	ID_BRIGHT,
-	ID_HEIGHT,
-	ID_REV,
-	ID_INTER,
-	ID_DIR,
-	ID_OFFSET,
-	ID_NUM_PARAMS
+  ID_INPUT = 0,  // default input layer
+  ID_BRIGHT,
+  ID_HEIGHT,
+  ID_REV,
+  ID_INTER,
+  ID_DIR,
+  ID_OFFSET,
+  ID_NUM_PARAMS
 };
 
-#define	STR_BRIGHT "ラインの明るさ(%)"
-#define	STR_HEIGHT "ラインの高さ(dot)"
-#define	STR_REV1	"ラインの位置"
-#define	STR_REV2	"反転する"
-#define STR_INTER	"間隔補正(dot)"
-#define STR_DIR		"方向"
-#define STR_DIRSTR	"水平|垂直"
-#define STR_OFFSET	"オフセット"
+#define STR_BRIGHT "Line brightness (%)"
+#define STR_HEIGHT "Line height (dot)"
+#define STR_REV1 "Line position"
+#define STR_REV2 "Invert"
+#define STR_INTER "Interval correction (dot)"
+#define STR_DIR "Direction"
+#define STR_DIRSTR "Horizontal|Vertical"
+#define STR_OFFSET "Offset"
 
-typedef struct{
-	PF_FpShort	bright;
-	PF_Boolean	minus;
-	A_long		height;
-	A_long		inter;
-	PF_Boolean	revFlag;
-	PF_Boolean	vurFlag;
-	PF_FpShort	offset;
+typedef struct {
+  PF_FpShort bright;
+  PF_Boolean minus;
+  A_long height;
+  A_long inter;
+  PF_Boolean revFlag;
+  PF_Boolean vurFlag;
+  PF_FpShort offset;
 } ParamInfo;
 
-//-----------------------------------------------------------------------------------
 extern "C" {
 
-DllExport 
-PF_Err 
-EntryPointFunc (	
-	PF_Cmd			cmd,
-	PF_InData		*in_data,
-	PF_OutData		*out_data,
-	PF_ParamDef		*params[],
-	PF_LayerDef		*output,
-	void			*extra);
+DllExport PF_Err EntryPointFunc(PF_Cmd cmd, PF_InData *in_data,
+                                PF_OutData *out_data, PF_ParamDef *params[],
+                                PF_LayerDef *output, void *extra);
 }
-
-#endif // VideoLine_H
