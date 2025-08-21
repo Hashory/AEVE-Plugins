@@ -97,7 +97,7 @@ Source/Effects/FsStar_Colorful/*
 Source/Effects/FsThin/*
 Source/Effects/FsToGray/*
 Source/Effects/FsTone/*
-Source/Effects/FsToner/*
+#Source/Effects/FsToner/*
 Source/Effects/FsTouchDraw/*
 Source/Effects/FsTouchDrawCenter/*
 Source/Effects/FsTouchDrawStraght/*
