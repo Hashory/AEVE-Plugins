@@ -1,23 +1,11 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
 #pragma once
-#ifndef FS_TAGET_H
-#define FS_TAGET_H
 
+// Name used to identify the plugin
+#define FS_NAME "F's EdgeBlur"
+// Text used for the plugin description
+#define FS_DESCRIPTION "Blurs the edges of an image"
 
-//-----------------------------------------------------------------------------------
-//プラグインの識別に使われる名前
-#define FS_NAME			"F's EdgeBlur"
-//-----------------------------------------------------------------------------------
-//プラグインの説明に使われる文字
-#define FS_DESCRIPTION	"画像の縁をぼかします"
-
-//-----------------------------------------------------------------------------------
-//プラグインが表示されるメニュー名
+// Menu name where the plugin is displayed
 #define FS_CATEGORY "NF's Plugins-Channel"
 //#define FS_CATEGORY "F's Plugins-Draw"
 //#define FS_CATEGORY "F's Plugins-Filter"
@@ -26,15 +14,16 @@
 //#define FS_CATEGORY "F's Plugins-Script"
 //#define FS_CATEGORY "F's Plugins-Test"
 
-//-----------------------------------------------------------
-#define SUPPORT_SMARTFX			//これを有効にするとSmartFX+Float_Colorに対応する
-//#define NO_USE_FSGRAPHICS	//これを有効にするとFsGraphics関係がインクルードされない
+// Enable this to support SmartFX + Float_Color
+#define SUPPORT_SMARTFX
+// Enable this to not include FsGraphics related files
+//#define NO_USE_FSGRAPHICS
 
-//-----------------------------------------------------------------------------------
+// clang-format off
 #include "FsVersion.h"
+// clang-format on
 
-///-----------------------------------------------------------------------------------
-//out_flags
+// out_flags
 /*
 out_data->out_flags
 	PF_OutFlag_PIX_INDEPENDENT		1024
@@ -45,12 +34,14 @@ out_data->out_flags
 	PF_OutFlag_I_DO_DIALOG				32
 */
 
-#define FS_OUT_FLAGS	33556032	//通常はこちら
-//#define FS_OUT_FLAGS	33556036	//こっちを有効にすると毎フレームごとに描画する。NON_PARAM_VARYを動作中に切り替えるときもこちらに
-//#define FS_OUT_FLAGS	1600		//8bitのみ
+// Use this for normal operation
+#define FS_OUT_FLAGS 33556032
+// Enable this to render every frame. Also use this when switching NON_PARAM_VARY during operation.
+//#define FS_OUT_FLAGS	33556036
+// For 8bit only
+//#define FS_OUT_FLAGS	1600
 
-//-----------------------------------------------------------------------------------
-//out_flags2
+// out_flags2
 /*
 out_data->out_flags2
 	PF_OutFlag2_FLOAT_COLOR_AWARE
@@ -63,8 +54,4 @@ out_data->out_flags2
 #define FS_OUT_FLAGS2 134222921
 #else
 #define FS_OUT_FLAGS2 134217801
-#endif
-
-
-//-----------------------------------------------------------------------------------
 #endif

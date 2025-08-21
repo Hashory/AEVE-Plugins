@@ -1,13 +1,6 @@
-//-----------------------------------------------------------------------------------
-/*
-	Thin for VS2010
-*/
-//-----------------------------------------------------------------------------------
-
 #pragma once
-#ifndef Thin_H
-#define Thin_H
 
+// clang-format off
 #include "Fs_Target.h"
 
 #include "AEConfig.h"
@@ -37,33 +30,34 @@
 
 #include "../FsLibrary/FsAE.h"
 #include "../FsLibrary/FsDebug.h"
+// clang-format on
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+// User interface ID
+// ID for the params parameter of the ParamsSetup and Render functions
 enum {
-	ID_INPUT = 0,	// default input layer
+  ID_INPUT = 0, // default input layer
 
-	ID_Y,
+  ID_Y,
 
-	ID_COLOR1_ON,
-	ID_COLOR1,
-	ID_COLOR2_ON,
-	ID_COLOR2,
-	ID_COLOR3_ON,
-	ID_COLOR3,
-	ID_COLOR4_ON,
-	ID_COLOR4,
-	ID_LEVEL,
+  ID_COLOR1_ON,
+  ID_COLOR1,
+  ID_COLOR2_ON,
+  ID_COLOR2,
+  ID_COLOR3_ON,
+  ID_COLOR3,
+  ID_COLOR4_ON,
+  ID_COLOR4,
+  ID_LEVEL,
 
-	ID_WHITE,
-	ID_ALPHAZERO,
-	ID_EDGE,
+  ID_WHITE,
+  ID_ALPHAZERO,
+  ID_EDGE,
 
-	ID_NUM_PARAMS
+  ID_NUM_PARAMS
 };
 
-//UIの表示文字列
-#define	STR_Y			"ThinValue"
+// UI display string
+#define STR_Y "ThinValue"
 #define	STR_ON				"on"
 #define	STR_COLOR1_ON		"EnabledColor1"
 #define	STR_COLOR2_ON		"EnabledColor2"
@@ -82,7 +76,7 @@ enum {
 #define	STR_LEVEL			"level"
 
 #define COLOR_MAX	4
-//UIのパラメータ
+//UI parameter
 typedef struct ParamInfo {
 	A_long		value;
 	A_long		colorMax;
@@ -95,7 +89,6 @@ typedef struct ParamInfo {
 	PF_FpLong	level;
 } ParamInfo, *ParamInfoP, **ParamInfoH;
 
-//-------------------------------------------------------
 typedef struct thinInfo8 {
 	A_long		w;
 	A_long		wt;
@@ -180,7 +173,6 @@ typedef struct thinBak32 {
 	A_long		dir;
 } thinBak32;
 
-//--------------------------------------------------------------------xFF--------------
 extern "C" {
 
 DllExport 
@@ -198,4 +190,3 @@ EntryPointFunc (
 PF_Err thinExec8(CFsAE *ae , ParamInfo *infoP);
 PF_Err thinExec16(CFsAE *ae , ParamInfo *infoP);
 PF_Err thinExec32(CFsAE *ae , ParamInfo *infoP);
-#endif // Thin_H
