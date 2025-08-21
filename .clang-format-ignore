@@ -98,7 +98,7 @@ Source/Effects/FsThin/*
 Source/Effects/FsToGray/*
 Source/Effects/FsTone/*
 Source/Effects/FsToner/*
-Source/Effects/FsTouchDraw/*
+#Source/Effects/FsTouchDraw/*
 Source/Effects/FsTouchDrawCenter/*
 Source/Effects/FsTouchDrawStraght/*
 Source/Effects/FsUnmult_KNSW_Fake/*
