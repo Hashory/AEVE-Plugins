@@ -104,7 +104,7 @@ Source/Effects/FsTouchDrawCenter/*
 Source/Effects/FsUnmult_KNSW_Fake/*
 Source/Effects/FsUnmult_RG_Fake/*
 #Source/Effects/FsUsedColorList/*
-Source/Effects/FsVideoGrid/*
+#Source/Effects/FsVideoGrid/*
 #Source/Effects/FsVideoLine/*
 Source/Effects/FsVideoLine2nd/*
 Source/Effects/FsWhiteInOut/*
