@@ -1,7 +1,3 @@
-/*
-        Plugin Skeleton for VS2010
-*/
-
 #pragma once
 
 // clang-format off
