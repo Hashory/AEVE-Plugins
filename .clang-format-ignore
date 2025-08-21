@@ -99,7 +99,7 @@ Source/Effects/FsToGray/*
 Source/Effects/FsTone/*
 Source/Effects/FsToner/*
 Source/Effects/FsTouchDraw/*
-Source/Effects/FsTouchDrawCenter/*
+#Source/Effects/FsTouchDrawCenter/*
 Source/Effects/FsTouchDrawStraght/*
 Source/Effects/FsUnmult_KNSW_Fake/*
 Source/Effects/FsUnmult_RG_Fake/*
