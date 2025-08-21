@@ -1,146 +1,77 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
-
+// clang-format off
 #include "Thin.h"
+// clang-format on
 
 
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
-static PF_Err ParamsSetup (
-	PF_InData		*in_data,
-	PF_OutData		*out_data,
-	PF_ParamDef		*params[],
-	PF_LayerDef		*output)
-{
-	PF_Err			err = PF_Err_NONE;
-	PF_ParamDef		def;
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(	STR_Y,	//パラメータの名前
-					0, 			//数値入力する場合の最小値
-					16,			//数値入力する場合の最大値
-					0,			//スライダーの最小値 
-					4,			//スライダーの最大値
-					0,			//デフォルトの値
-					ID_Y
-					);
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(STR_COLOR1_ON,
-					STR_ON,
-					TRUE,
-					0,
-					ID_COLOR1_ON
-					);
-	//----------------------------------------------------------------
-	//色の指定
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_COLOR(	STR_COLOR1, 
-					0x05,
-					0x05,
-					0x05,
-					ID_COLOR1
-					);
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(STR_COLOR2_ON,
-					STR_ON,
-					FALSE,
-					0,
-					ID_COLOR2_ON
-					);
-	//----------------------------------------------------------------
-	//色の指定
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_COLOR(	STR_COLOR2, 
-					0x0A,
-					0x0A,
-					0x0A,
-					ID_COLOR2
-					);
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(STR_COLOR3_ON,
-					STR_ON,
-					FALSE,
-					0,
-					ID_COLOR3_ON
-					);
-	//----------------------------------------------------------------
-	//色の指定
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_COLOR(	STR_COLOR3, 
-					0xFF,
-					0x00,
-					0x00,
-					ID_COLOR3
-					);
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(STR_COLOR4_ON,
-					STR_ON,
-					FALSE,
-					0,
-					ID_COLOR4_ON
-					);
-	//----------------------------------------------------------------
-	//色の指定
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_COLOR(	STR_COLOR4, 
-					0x00,
-					0xFF,
-					0x00,
-					ID_COLOR4
-					);
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDER(STR_LEVEL,	//Name
-						0,						//VALID_MIN
-						100,						//VALID_MAX
-						0,						//SLIDER_MIN
-						10,						//SLIDER_MAX
-						1,						//CURVE_TOLERANCE
-						0,						//DFLT
-						1,						//PREC
-						0,						//DISP
-						0,						//WANT_PHASE
-						ID_LEVEL
-						);
+// Pass parameters to After Effects
+// See Param_Utils.h for details
+static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data,
+                          PF_ParamDef *params[], PF_LayerDef *output) {
+  PF_Err err = PF_Err_NONE;
+  PF_ParamDef def;
 
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(STR_WHITE,
-					STR_ON,
-					FALSE,
-					0,
-					ID_WHITE
-					);
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(STR_ALPHAZERO,
-					STR_ON,
-					FALSE,
-					0,
-					ID_ALPHAZERO
-					);
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_SLIDER(STR_Y, // Parameter name
+                0,     // Minimum value for numerical input
+                16,    // Maximum value for numerical input
+                0,     // Minimum value for slider
+                4,     // Maximum value for slider
+                0,     // Default value
+                ID_Y);
 
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(STR_EDGE,
-					STR_ON,
-					FALSE,
-					0,
-					ID_EDGE
-					);
-	//----------------------------------------------------------------
-	out_data->num_params = 	ID_NUM_PARAMS; 
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_CHECKBOX(STR_COLOR1_ON, STR_ON, TRUE, 0, ID_COLOR1_ON);
 
-	return err;
+  // Specify color
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_COLOR(STR_COLOR1, 0x05, 0x05, 0x05, ID_COLOR1);
+
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_CHECKBOX(STR_COLOR2_ON, STR_ON, FALSE, 0, ID_COLOR2_ON);
+
+  // Specify color
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_COLOR(STR_COLOR2, 0x0A, 0x0A, 0x0A, ID_COLOR2);
+
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_CHECKBOX(STR_COLOR3_ON, STR_ON, FALSE, 0, ID_COLOR3_ON);
+
+  // Specify color
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_COLOR(STR_COLOR3, 0xFF, 0x00, 0x00, ID_COLOR3);
+
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_CHECKBOX(STR_COLOR4_ON, STR_ON, FALSE, 0, ID_COLOR4_ON);
+
+  // Specify color
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_COLOR(STR_COLOR4, 0x00, 0xFF, 0x00, ID_COLOR4);
+
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_FLOAT_SLIDER(STR_LEVEL, // Name
+                      0,         // VALID_MIN
+                      100,       // VALID_MAX
+                      0,         // SLIDER_MIN
+                      10,        // SLIDER_MAX
+                      1,         // CURVE_TOLERANCE
+                      0,         // DFLT
+                      1,         // PREC
+                      0,         // DISP
+                      0,         // WANT_PHASE
+                      ID_LEVEL);
+
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_CHECKBOX(STR_WHITE, STR_ON, FALSE, 0, ID_WHITE);
+
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_CHECKBOX(STR_ALPHAZERO, STR_ON, FALSE, 0, ID_ALPHAZERO);
+
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_CHECKBOX(STR_EDGE, STR_ON, FALSE, 0, ID_EDGE);
+
+  out_data->num_params = ID_NUM_PARAMS;
+
+  return err;
 }
 //-------------------------------------------------------------------------------------------------
 static PF_Err
