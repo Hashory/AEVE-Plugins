@@ -108,11 +108,11 @@ PF_Err EdgeLineSub8(CFsAE *ae, ParamInfo *infoP) {
 
   PF_Err err = PF_Err_NONE;
 
-  // スキャンラインバッファーの確保
+  // Allocation of scanline
   A_long w = ae->out->width();
   if (ae->out->height() > w) w = ae->out->height();
   infoP->scanlineH =
-      PF_NEW_HANDLE(w * sizeof(PF_Pixel) * 2);  // 念のため2倍サイズ確保
+      PF_NEW_HANDLE(w * sizeof(PF_Pixel) * 2);  // Allocate double size just in case
   if (!infoP->scanlineH) return PF_Err_OUT_OF_MEMORY;
 
   EdgeLineHor8(ae, infoP);
