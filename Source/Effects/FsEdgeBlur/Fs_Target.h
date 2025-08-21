@@ -1,9 +1,5 @@
 #pragma once
 
-/*
-	F's Plugins for VS2010/VS2012
-*/
-
 // Name used to identify the plugin
 #define FS_NAME "F's EdgeBlur"
 // Text used for the plugin description

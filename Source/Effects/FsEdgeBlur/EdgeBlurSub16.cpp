@@ -1,7 +1,3 @@
-/*
-	F's Plugins-cs4 for VS2008
-*/
-
 // clang-format off
 #include "EdgeBlur.h"
 // clang-format on

@@ -1,9 +1,5 @@
 #pragma once
 
-/*
-	F's Plugins for VS2010/VS2012
-*/
-
 // clang-format off
 #include "Fs_Target.h"
 
