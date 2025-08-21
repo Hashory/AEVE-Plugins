@@ -19,7 +19,7 @@ Source/Effects/FsColorChangeSimple/*
 #Source/Effects/FsColorKey/*
 Source/Effects/FsColorMatKey/*
 Source/Effects/FsColorThreshold/*
-Source/Effects/FsCreateAlpha/*
+#Source/Effects/FsCreateAlpha/*
 Source/Effects/FsEdgeBlur/*
 Source/Effects/FsEdgeLine/*
 #Source/Effects/FsEdgeLine-Hi/*
