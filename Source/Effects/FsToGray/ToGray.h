@@ -1,7 +1,3 @@
-/*
-        F's Plugins for VS2010/VS2012
-*/
-
 #pragma once
 
 // clang-format off

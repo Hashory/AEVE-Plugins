@@ -1,7 +1,3 @@
-/*
-        F's Plugins for VS2010/VS2012
-*/
-
 // clang-format off
 #include "ToGray.h"
 // clang-format on
