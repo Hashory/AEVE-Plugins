@@ -1,21 +1,9 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-
-*/
-//-----------------------------------------------------------------------------------
-
-
 #pragma once
-#ifndef CreateAlpha_H
-#define CreateAlpha_H
 
+// clang-format off
 #include "Fs_Target.h"
-
 #include "AEConfig.h"
 #include "entry.h"
-
-//#include "PrSDKAESupport.h"
 #include "AE_Effect.h"
 #include "AE_EffectCB.h"
 #include "AE_EffectCBSuites.h"
@@ -24,41 +12,30 @@
 #include "String_Utils.h"
 #include "Param_Utils.h"
 #include "Smart_Utils.h"
-
 #if defined(PF_AE100_PLUG_IN_VERSION)
-	#include "AEFX_SuiteHelper.h"
-	#define refconType void*
+#include "AEFX_SuiteHelper.h"
+#define refconType void*
 #else
-	#include "PF_Suite_Helper.h"
-	#define refconType A_long
+#include "PF_Suite_Helper.h"
+#define refconType A_long
 #endif
 #ifdef AE_OS_WIN
-	#include <Windows.h>
+#include <Windows.h>
 #endif
-
 #include "../FsLibrary/FsAE.h"
-//#include "FsAE.h"
+// clang-format on
 
-
-
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+// IDs for user interface elements
+// These are also the IDs for the params array in the ParamsSetup and Render
+// functions
 enum {
-	ID_INPUT = 0,	// default input layer 
-	ID_NUM_PARAMS
-	};
+  ID_INPUT = 0,  // default input layer
+  ID_NUM_PARAMS
+};
 
 extern "C" {
 
-DllExport 
-PF_Err 
-EntryPointFunc (	
-	PF_Cmd			cmd,
-	PF_InData		*in_data,
-	PF_OutData		*out_data,
-	PF_ParamDef		*params[],
-	PF_LayerDef		*output,
-	void			*extra);
+DllExport PF_Err EntryPointFunc(PF_Cmd cmd, PF_InData *in_data,
+                                PF_OutData *out_data, PF_ParamDef *params[],
+                                PF_LayerDef *output, void *extra);
 }
-
-#endif // CreateAlpha_H
