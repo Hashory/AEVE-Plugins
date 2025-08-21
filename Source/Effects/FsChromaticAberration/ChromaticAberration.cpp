@@ -313,3 +313,5 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data,
   return err;
 }
 #endif
+
+#include "Fs_Entry.h"
