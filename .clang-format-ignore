@@ -103,7 +103,7 @@ Source/Effects/FsTouchDrawCenter/*
 Source/Effects/FsTouchDrawStraght/*
 Source/Effects/FsUnmult_KNSW_Fake/*
 Source/Effects/FsUnmult_RG_Fake/*
-Source/Effects/FsUsedColorList/*
+#Source/Effects/FsUsedColorList/*
 Source/Effects/FsVideoGrid/*
 Source/Effects/FsVideoLine/*
 Source/Effects/FsVideoLine2nd/*
