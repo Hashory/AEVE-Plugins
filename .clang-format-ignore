@@ -95,7 +95,7 @@ Source/Effects/FsSSFrame/*
 Source/Effects/FsStar/*
 #Source/Effects/FsStar_Colorful/*
 Source/Effects/FsThin/*
-Source/Effects/FsToGray/*
+#Source/Effects/FsToGray/*
 Source/Effects/FsTone/*
 #Source/Effects/FsToner/*
 #Source/Effects/FsTouchDraw/*
@@ -103,9 +103,9 @@ Source/Effects/FsTouchDrawCenter/*
 Source/Effects/FsTouchDrawStraght/*
 Source/Effects/FsUnmult_KNSW_Fake/*
 Source/Effects/FsUnmult_RG_Fake/*
-Source/Effects/FsUsedColorList/*
+#Source/Effects/FsUsedColorList/*
 Source/Effects/FsVideoGrid/*
-Source/Effects/FsVideoLine/*
+#Source/Effects/FsVideoLine/*
 Source/Effects/FsVideoLine2nd/*
 Source/Effects/FsWhiteInOut/*
 Source/Effects/FsYuvControl/*
