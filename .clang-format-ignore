@@ -92,7 +92,7 @@ Source/Effects/FsSputteringCircle/*
 Source/Effects/FsSputteringRect/*
 Source/Effects/FsSputteringSplash/*
 Source/Effects/FsSSFrame/*
-Source/Effects/FsStar/*
+#Source/Effects/FsStar/*
 Source/Effects/FsStar_Colorful/*
 Source/Effects/FsThin/*
 Source/Effects/FsToGray/*
