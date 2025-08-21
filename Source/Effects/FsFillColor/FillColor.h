@@ -2,7 +2,7 @@
 
 // clang-format off
 #include "Fs_Target.h"
-#include "AEConfig.hh"
+#include "AEConfig.h"
 #include "entry.h"
 #include "AE_Effect.h"
 #include "AE_EffectCB.h"
