@@ -28,9 +28,7 @@ typedef struct {
   A_long count;
 } FindEdgeParam;
 
-//*************************************************************************************************
 // Find the same color as the target and set a flag in red
-//*************************************************************************************************
 static PF_Err FindTargetColorSub8(refconType refcon, A_long xL, A_long yL,
                                   PF_Pixel8 *inP, PF_Pixel8 *outP) {
   PF_Err err = PF_Err_NONE;

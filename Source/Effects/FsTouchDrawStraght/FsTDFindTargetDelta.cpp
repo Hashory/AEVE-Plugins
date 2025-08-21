@@ -76,7 +76,7 @@ static PF_Err DeltaSub8(refconType refcon, A_long xL, A_long yL, PF_Pixel8 *inP,
   A_long v, mv, mx;
   v = 0;
   mv = 0;
-  mx = PF_MAX_CHAN8;  // A_u_char で識別
+  mx = PF_MAX_CHAN8;  // Identified by A_u_char
 
   if (mv < mx)
     if (xL <= infoP->width) {
@@ -114,7 +114,7 @@ static PF_Err DeltaSub16(refconType refcon, A_long xL, A_long yL,
   A_long v, mv, mx;
   v = 0;
   mv = 0;
-  mx = PF_MAX_CHAN8;  // A_u_char で識別
+  mx = PF_MAX_CHAN8;  // Identified by A_u_char
 
   if (mv < mx)
     if (xL <= infoP->width) {
@@ -151,7 +151,7 @@ static PF_Err DeltaSub32(refconType refcon, A_long xL, A_long yL,
   A_long v, mv, mx;
   v = 0;
   mv = 0;
-  mx = PF_MAX_CHAN8;  // A_u_char で識別
+  mx = PF_MAX_CHAN8;  // Identified by A_u_char
   if (mv < mx)
     if (xL <= infoP->width) {
       if (infoP->isAlpha == TRUE) {
