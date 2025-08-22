@@ -1,6 +1,5 @@
 // clang-format off
 #include "ChannelBlur.h"
-#include "Fs_Entry.h"
 // clang-format on
 
 // Pass parameters to After Effects
@@ -191,3 +190,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data,
   return err;
 }
 #endif
+
+// clang-format off
+#include "Fs_Entry.h"
+// clang-format on
