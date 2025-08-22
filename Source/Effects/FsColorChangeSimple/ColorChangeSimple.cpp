@@ -1,6 +1,5 @@
 // clang-format off
 #include "ColorChangeSimple.h"
-#include "Fs_Entry.h"
 // clang-format on
 
 PF_Err (*subFunc8)(refconType refcon, A_long xL, A_long yL, PF_Pixel8 *inP,
@@ -246,3 +245,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data,
   return err;
 }
 #endif
+
+// clang-format off
+#include "Fs_Entry.h"
+// clang-format on
