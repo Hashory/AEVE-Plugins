@@ -418,3 +418,4 @@ DllExport PF_Err EntryPointFunc(PF_Cmd cmd, PF_InData *in_data,
   }
   return err;
 }
+}
