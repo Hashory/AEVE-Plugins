@@ -31,7 +31,7 @@ Source/Effects/FsExtract-Hi/*
 Source/Effects/FsFilter/*
 Source/Effects/FsFlare/*
 Source/Effects/FsFrame/*
-Source/Effects/FsGrad_Test/*
+#Source/Effects/FsGrad_Test/*
 Source/Effects/FsGrayToColorize/*
 Source/Effects/FsGrayToCountourLine/*
 Source/Effects/FsGraytoneToColorize/*
