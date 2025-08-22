@@ -1,13 +1,10 @@
-//-----------------------------------------------------------------------------------
 /*
 	EdgeLine for VS2010
 */
-//-----------------------------------------------------------------------------------
 
 #pragma once
-#ifndef EdgeLine_H
-#define EdgeLine_H
 
+// clang-format off
 #include "Fs_Target.h"
 
 #include "AEConfig.h"
@@ -37,9 +34,10 @@
 
 #include "../FsLibrary/FsAE.h"
 //#include "FsAE.h"
+// clang-format on
 
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+// User interface ID
+// Used as parameter ID for ParamsSetup and Render functions
 enum {
 	ID_INPUT = 0,	// default input layer
 
@@ -51,7 +49,7 @@ enum {
 	ID_NUM_PARAMS
 };
 
-//UIの表示文字列
+// UI display strings
 #define	STR_TARGET			"TargetColor"
 #define	STR_SAMPLE			"SampleColor"
 #define	STR_LEVEL			"level(%)"
@@ -59,7 +57,7 @@ enum {
 #define	STR_DRAW			"DrawColor"
 
 
-//UIのパラメータ
+// UI parameters
 typedef struct ParamInfo8 {
 	PF_Pixel	targetCol;
 	PF_Pixel	sampleCol;
@@ -93,10 +91,8 @@ typedef struct ParamInfo32 {
 	A_long		h;
 	CFsAE		*ae;
 } ParamInfo32;
-//-------------------------------------------------------
 
 
-//-----------------------------------------------------------------------------------
 extern "C" {
 
 DllExport 
@@ -109,4 +105,3 @@ EntryPointFunc (
 	PF_LayerDef		*output,
 	void			*extra);
 }
-#endif // EdgeLine_H

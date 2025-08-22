@@ -1,25 +1,20 @@
-//-----------------------------------------------------------------------------------
 /*
 	F's Plugins for VS2010/VS2012
 */
-//-----------------------------------------------------------------------------------
-
 
 #pragma once
-#ifndef Fs_TARGET_H
-#define Fs_TARGET_H
 
+// clang-format off
+#include "FsVersion.h"
+// clang-format on
 
-//-----------------------------------------------------------------------------------
-//プラグインの識別に使われる名前
+// Name used for plugin identification
 #define FS_NAME			"F's EdgeLine"
 
-//-----------------------------------------------------------------------------------
-//プラグインの説明に使われる文字
-#define FS_DESCRIPTION	"境界線を描く"
+// Text used for plugin description
+#define FS_DESCRIPTION	"Draw boundary lines"
 
-//-----------------------------------------------------------------------------------
-	//プラグインが表示されるメニュー名
+// Menu name where plugin is displayed
 	//#define FS_CATEGORY "F's Plugins-Channel"
 	//#define FS_CATEGORY "F's Plugins-Draw"
 	//#define FS_CATEGORY "F's Plugins-Filter"
@@ -28,14 +23,9 @@
 	//#define FS_CATEGORY "F's Plugins-Script"
 	//#define FS_CATEGORY "F's Plugins-Test"
 
-//-----------------------------------------------------------
-#define SUPPORT_SMARTFX			//これを有効にするとSmartFX+Float_Colorに対応する
-//#define NO_USE_FSGRAPHICS	//これを有効にするとFsGraphics関係がインクルードされない
+#define SUPPORT_SMARTFX			// Enable this to support SmartFX+Float_Color
+//#define NO_USE_FSGRAPHICS	// Enable this to exclude FsGraphics related includes
 
-//-----------------------------------------------------------------------------------
-#include "FsVersion.h"
-
-//-----------------------------------------------------------------------------------
 //out_flags
 /*
 out_data->out_flags
@@ -47,11 +37,10 @@ out_data->out_flags
 	PF_OutFlag_I_DO_DIALOG				32
 */
 
-#define FS_OUT_FLAGS	33556032	//通常はこちら
-//#define FS_OUT_FLAGS	33556036	//こっちを有効にすると毎フレームごとに描画する。NON_PARAM_VARYを動作中に切り替えるときもこちらに
-//#define FS_OUT_FLAGS	1600		//8bitのみ
+#define FS_OUT_FLAGS	33556032	// Usually use this one
+//#define FS_OUT_FLAGS	33556036	// Enable this to render every frame. Also use this when switching NON_PARAM_VARY during operation
+//#define FS_OUT_FLAGS	1600		// 8bit only
 
-//-----------------------------------------------------------------------------------
 //out_flags2
 /*
 out_data->out_flags2
@@ -65,8 +54,4 @@ out_data->out_flags2
 #define FS_OUT_FLAGS2 134222921
 #else
 #define FS_OUT_FLAGS2 134217801
-#endif
-
-
-//-----------------------------------------------------------------------------------
 #endif

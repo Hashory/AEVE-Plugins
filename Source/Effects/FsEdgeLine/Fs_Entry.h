@@ -1,13 +1,10 @@
-//-----------------------------------------------------------------------------------
 /*
 	EdgeLine for VS2010
 */
-//-----------------------------------------------------------------------------------
 
 #pragma once
-#ifndef FSENRTY_H
-#define FSENRTY_H
 
+// clang-format off
 #include "Fs_Target.h"
 
 #include "AEConfig.h"
@@ -34,8 +31,8 @@
 #ifdef AE_OS_WIN
 	#include <Windows.h>
 #endif
+// clang-format on
 
-//-----------------------------------------------------------------------------------
 static PF_Err 
 About (	
 	PF_InData		*in_data,
@@ -49,7 +46,6 @@ About (
 	return err;
 }
 
-//-----------------------------------------------------------------------------------
 static PF_Err 
 GlobalSetup (
 	PF_InData		*in_data,
@@ -62,7 +58,6 @@ GlobalSetup (
 	err = ae.GlobalSetup(in_data,out_data,params,output);
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err GlobalSetdown(
 	PF_InData	*in_data)
 {
@@ -72,7 +67,6 @@ static PF_Err GlobalSetdown(
 	return PF_Err_NONE;
 }
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -82,7 +76,6 @@ static PF_Err SequenceSetup (
 
 	return PF_Err_NONE;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceSetdown (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -93,7 +86,6 @@ static PF_Err SequenceSetdown (
 }
 
 
-//-------------------------------------------------------------------------------------------------
 static PF_Err SequenceResetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -103,7 +95,6 @@ static PF_Err SequenceResetup (
 	return PF_Err_NONE;
 }
 /*
-//-------------------------------------------------------------------------------------------------
 static PF_Err
 HandleChangedParam(
 	PF_InData					*in_data,
@@ -117,7 +108,6 @@ HandleChangedParam(
 }
 */
 /*
-//-----------------------------------------------------------------------------------
 static PF_Err
 QueryDynamicFlags(	
 	PF_InData		*in_data,	
@@ -129,7 +119,6 @@ QueryDynamicFlags(
 	return err;
 }
 */
-//-----------------------------------------------------------------------------------
 static PF_Err 
 RespondtoAEGP ( 	
 	PF_InData		*in_data,
@@ -148,7 +137,6 @@ RespondtoAEGP (
 
 	return err;
 }
-//-----------------------------------------------------------------------------------
 DllExport	PF_Err 
 EntryPointFunc (
 	PF_Cmd			cmd,
@@ -222,6 +210,4 @@ EntryPointFunc (
 	}
 	return err;
 }
-
-//-------------------------------------------------------------------------------------------------
 #endif

@@ -1,16 +1,13 @@
-//-----------------------------------------------------------------------------------
 /*
 	F's Plugins for VS2010/VS2012
 */
-//-----------------------------------------------------------------------------------
 
-
+// clang-format off
 #include "EdgeLine.h"
+// clang-format on
 
-
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
+// Communicate parameters to After Effects
+// Refer to Param_Utils.h
 static PF_Err ParamsSetup (
 	PF_InData		*in_data,
 	PF_OutData		*out_data,
@@ -20,8 +17,7 @@ static PF_Err ParamsSetup (
 	PF_Err			err = PF_Err_NONE;
 	PF_ParamDef		def;
 
-	//----------------------------------------------------------------
-	//色の指定
+	// Color specification
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_COLOR(	STR_TARGET, 
 					0xFF,
@@ -29,8 +25,7 @@ static PF_Err ParamsSetup (
 					0x00,
 					ID_TARGET_COL
 					);
-	//----------------------------------------------------------------
-	//色の指定
+	// Color specification
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_COLOR(	STR_SAMPLE, 
 					0x00,
@@ -39,7 +34,6 @@ static PF_Err ParamsSetup (
 					ID_SAMPLE_COL
 					);
 
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDER(STR_LEVEL,	//Name
 						0,						//VALID_MIN
@@ -53,18 +47,16 @@ static PF_Err ParamsSetup (
 						0,						//WANT_PHASE
 						ID_LEVEL
 						);
-	//----------------------------------------------------------------
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(	STR_LENGTH,	//パラメータの名前
-					0, 		//数値入力する場合の最小値
-					200,			//数値入力する場合の最大値
-					0,				//スライダーの最小値 
-					20,			//スライダーの最大値
-					10,				//デフォルトの値
+	PF_ADD_SLIDER(	STR_LENGTH,	//Parameter name
+					0, 		//Minimum value for numeric input
+					200,			//Maximum value for numeric input
+					0,				//Slider minimum value 
+					20,			//Slider maximum value
+					10,				//Default value
 					ID_LENGTH
 					);
-	//----------------------------------------------------------------
-	//色の指定
+	// Color specification
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_COLOR(	STR_DRAW, 
 					0x00,
@@ -72,12 +64,10 @@ static PF_Err ParamsSetup (
 					0xFF,
 					ID_DRAW_COL
 					);
-	//----------------------------------------------------------------
 	out_data->num_params = 	ID_NUM_PARAMS; 
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err
 HandleChangedParam(
 	PF_InData					*in_data,
@@ -88,7 +78,6 @@ HandleChangedParam(
 {
 	return PF_Err_NONE;
 }
-//-----------------------------------------------------------------------------------
 static PF_Err
 QueryDynamicFlags(	
 	PF_InData		*in_data,	
@@ -99,7 +88,6 @@ QueryDynamicFlags(
 	PF_Err 	err 	= PF_Err_NONE;
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err GetParams(CFsAE *ae, ParamInfo8 *infoP)
 {
 	PF_Err		err 		= PF_Err_NONE;
@@ -119,7 +107,6 @@ static PF_Err GetParams(CFsAE *ae, ParamInfo8 *infoP)
 	
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static ParamInfo16 convTo16(ParamInfo8 *info)
 {
 	ParamInfo16 ret;
@@ -135,7 +122,6 @@ static ParamInfo16 convTo16(ParamInfo8 *info)
 	ret.ae			= info->ae;
 	return ret;
 }
-//-------------------------------------------------------------------------------------------------
 static ParamInfo32 convTo32(ParamInfo8 *info)
 {
 	ParamInfo32 ret;
@@ -150,7 +136,6 @@ static ParamInfo32 convTo32(ParamInfo8 *info)
 	ret.ae			= info->ae;
 	return ret;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage8 (
 	refconType		refcon, 
@@ -184,7 +169,6 @@ FilterImage8 (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage16 (
 	refconType		refcon, 
@@ -220,7 +204,6 @@ FilterImage16 (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 FilterImage32 (
 	refconType		refcon, 
@@ -254,13 +237,12 @@ FilterImage32 (
 
 	return err;
 }
-//-------------------------------------------------------------------------------------------------
 static PF_Err 
 	Exec (CFsAE *ae , ParamInfo8 *infoP)
 {
 	PF_Err	err = PF_Err_NONE;
 
-	//画面をコピー
+	// Copy screen
 	ERR(ae->CopyInToOut());
 	
 	if ( infoP->length<=0)
@@ -291,11 +273,10 @@ static PF_Err
 	return err;
 }
 
-//-------------------------------------------------------------------------------------------------
-//レンダリングのメイン
+// Main rendering function
 /*
-	SmartFXに対応していないホスト(After Effects7以前のもの)はこの関数が呼び出されて描画する
-	この関数を書いておけば一応v6.5対応になる
+	Hosts that do not support SmartFX (After Effects 7 and earlier) call this function for rendering
+	Writing this function provides basic v6.5 compatibility
 */
 static PF_Err 
 Render ( 
@@ -318,9 +299,8 @@ Render (
 	}
 	return err;
 }
-//-----------------------------------------------------------------------------------
 /*
-	SmartFX対応の場合、まずこの関数が呼ばれてパラメータの獲得を行う
+	For SmartFX support, this function is called first to acquire parameters
 */
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
@@ -347,7 +327,7 @@ PreRender(
 	return err;
 }
 #endif
-//-----------------------------------------------------------------------------------
+
 #if defined(SUPPORT_SMARTFX)
 static PF_Err
 SmartRender(
