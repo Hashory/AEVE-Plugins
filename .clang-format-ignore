@@ -8,7 +8,7 @@ AfterEffectsSDK/**/*
 #Source/Effects/FsAlphaThreshold/*
 Source/Effects/FsAnimatedNoise/*
 Source/Effects/FsCCplus/*
-Source/Effects/FsCellGrad/*
+#Source/Effects/FsCellGrad/*
 #Source/Effects/FsChannelBlur/*
 #Source/Effects/FsChannelNoise/*
 Source/Effects/FsChannelShift/*
