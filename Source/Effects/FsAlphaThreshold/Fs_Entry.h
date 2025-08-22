@@ -4,7 +4,7 @@
 #include "Fs_Target.h"
 #include "AEConfig.h"
 #include "entry.h"
-#include "AE_Effect.hh"
+#include "AE_Effect.h"
 #include "AE_EffectCB.h"
 #include "AE_EffectCBSuites.h"
 #include "AE_Macros.h"
