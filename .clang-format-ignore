@@ -5,7 +5,7 @@ AfterEffectsSDK/**/*
 
 # Effects
 #Source/Effects/FsAlphaFix/*
-Source/Effects/FsAlphaThreshold/*
+#Source/Effects/FsAlphaThreshold/*
 Source/Effects/FsAnimatedNoise/*
 Source/Effects/FsCCplus/*
 Source/Effects/FsCellGrad/*

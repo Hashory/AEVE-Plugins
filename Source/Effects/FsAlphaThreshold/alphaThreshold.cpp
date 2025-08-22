@@ -1,242 +1,173 @@
-//-----------------------------------------------------------------------------------
-/*
-	F's Plugins for VS2010/VS2012
-*/
-//-----------------------------------------------------------------------------------
-
-
+// clang-format off
 #include "alphaThreshold.h"
+// clang-format on
 
+// Pass parameters to After Effects
+// See Param_Utils.h
+static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data,
+                          PF_ParamDef *params[], PF_LayerDef *output) {
+  PF_Err err = PF_Err_NONE;
+  PF_ParamDef def;
 
-//-------------------------------------------------------------------------------------------------
-//AfterEffextsにパラメータを通達する
-//Param_Utils.hを参照のこと
-static PF_Err ParamsSetup (
-	PF_InData		*in_data,
-	PF_OutData		*out_data,
-	PF_ParamDef		*params[],
-	PF_LayerDef		*output)
-{
-	PF_Err			err = PF_Err_NONE;
-	PF_ParamDef		def;
+  AEFX_CLR_STRUCT(def);
+  PF_ADD_FLOAT_SLIDER(STR_A,  // Name
+                      0,      // VALID_MIN
+                      100,    // VALID_MAX
+                      0,      // SLIDER_MIN
+                      100,    // SLIDER_MAX
+                      1,      // CURVE_TOLERANCE
+                      50,     // DFLT
+                      1,      // PREC
+                      0,      // DISP
+                      0,      // WANT_PHASE
+                      ID_A);
+  out_data->num_params = ID_NUM_PARAMS;
 
-	//----------------------------------------------------------------
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDER(STR_A,	//Name
-						0,						//VALID_MIN
-						100,						//VALID_MAX
-						0,						//SLIDER_MIN
-						100,						//SLIDER_MAX
-						1,						//CURVE_TOLERANCE
-						50,						//DFLT
-						1,						//PREC
-						0,						//DISP
-						0,						//WANT_PHASE
-						ID_A
-						);
-	//----------------------------------------------------------------
-	out_data->num_params = 	ID_NUM_PARAMS; 
-
-	return err;
+  return err;
 }
-//-------------------------------------------------------------------------------------------------
-static PF_Err
-HandleChangedParam(
-	PF_InData					*in_data,
-	PF_OutData					*out_data,
-	PF_ParamDef					*params[],
-	PF_LayerDef					*outputP,
-	PF_UserChangedParamExtra	*extraP)
-{
-	PF_Err				err					= PF_Err_NONE;
-	return err;
+static PF_Err HandleChangedParam(PF_InData *in_data, PF_OutData *out_data,
+                                 PF_ParamDef *params[], PF_LayerDef *outputP,
+                                 PF_UserChangedParamExtra *extraP) {
+  PF_Err err = PF_Err_NONE;
+  return err;
 }
-//-----------------------------------------------------------------------------------
-static PF_Err
-QueryDynamicFlags(	
-	PF_InData		*in_data,	
-	PF_OutData		*out_data,	
-	PF_ParamDef		*params[],	
-	void			*extra)	
-{
-	PF_Err 	err 	= PF_Err_NONE;
-	return err;
+static PF_Err QueryDynamicFlags(PF_InData *in_data, PF_OutData *out_data,
+                                PF_ParamDef *params[], void *extra) {
+  PF_Err err = PF_Err_NONE;
+  return err;
 }
-//-------------------------------------------------------------------------------------------------
-static PF_Err 
-FilterImage8 (
-	refconType		refcon, 
-	A_long		xL, 
-	A_long		yL, 
-	PF_Pixel8	*inP, 
-	PF_Pixel8	*outP)
-{
-	PF_Err			err = PF_Err_NONE;
-	ParamInfo *	niP		= reinterpret_cast<ParamInfo*>(refcon);
+static PF_Err FilterImage8(refconType refcon, A_long xL, A_long yL,
+                           PF_Pixel8 *inP, PF_Pixel8 *outP) {
+  PF_Err err = PF_Err_NONE;
+  ParamInfo *niP = reinterpret_cast<ParamInfo *>(refcon);
 
-	A_u_char v = RoundByteFpLong((double)PF_MAX_CHAN8 * niP->a);
-	if (outP->alpha >= v){
-		outP->alpha = PF_MAX_CHAN8;
-	}else{
-		outP->alpha = 0;
-	}
-	return err;
+  A_u_char v = RoundByteFpLong((double)PF_MAX_CHAN8 * niP->a);
+  if (outP->alpha >= v) {
+    outP->alpha = PF_MAX_CHAN8;
+  } else {
+    outP->alpha = 0;
+  }
+  return err;
 }
-//-------------------------------------------------------------------------------------------------
-static PF_Err 
-FilterImage16 (
-	refconType	refcon, 
-	A_long		xL, 
-	A_long		yL, 
-	PF_Pixel16	*inP, 
-	PF_Pixel16	*outP)
-{
-	PF_Err			err = PF_Err_NONE;
-	ParamInfo *	niP		= reinterpret_cast<ParamInfo*>(refcon);
+static PF_Err FilterImage16(refconType refcon, A_long xL, A_long yL,
+                            PF_Pixel16 *inP, PF_Pixel16 *outP) {
+  PF_Err err = PF_Err_NONE;
+  ParamInfo *niP = reinterpret_cast<ParamInfo *>(refcon);
 
-	A_u_short v = RoundShortFpLong((double)PF_MAX_CHAN16 * niP->a);
-	if (outP->alpha >= v){
-		outP->alpha = PF_MAX_CHAN16;
-	}else{
-		outP->alpha = 0;
-	}
+  A_u_short v = RoundShortFpLong((double)PF_MAX_CHAN16 * niP->a);
+  if (outP->alpha >= v) {
+    outP->alpha = PF_MAX_CHAN16;
+  } else {
+    outP->alpha = 0;
+  }
 
-	return err;
+  return err;
 }
-//-------------------------------------------------------------------------------------------------
-static PF_Err 
-FilterImage32 (
-	refconType	refcon, 
-	A_long		xL, 
-	A_long		yL, 
-	PF_PixelFloat	*inP, 
-	PF_PixelFloat	*outP)
-{
-	PF_Err			err = PF_Err_NONE;
-	ParamInfo *	niP		= reinterpret_cast<ParamInfo*>(refcon);
+static PF_Err FilterImage32(refconType refcon, A_long xL, A_long yL,
+                            PF_PixelFloat *inP, PF_PixelFloat *outP) {
+  PF_Err err = PF_Err_NONE;
+  ParamInfo *niP = reinterpret_cast<ParamInfo *>(refcon);
 
-	if (outP->alpha >= 1.0){
-	}else if (outP->alpha >= niP->a){
-		outP->alpha = 1.0;
-	}else{
-		outP->alpha = 0;
-	}
-	return err;
+  if (outP->alpha >= 1.0) {
+  } else if (outP->alpha >= niP->a) {
+    outP->alpha = 1.0;
+  } else {
+    outP->alpha = 0;
+  }
+  return err;
 }
-//-------------------------------------------------------------------------------------------------
-static PF_Err GetParams(CFsAE *ae, ParamInfo *infoP)
-{
-	PF_Err		err 		= PF_Err_NONE;
+static PF_Err GetParams(CFsAE *ae, ParamInfo *infoP) {
+  PF_Err err = PF_Err_NONE;
 
-	ERR(ae->GetFLOAT(ID_A,&infoP->a));
-	infoP->a /= 100;
+  ERR(ae->GetFLOAT(ID_A, &infoP->a));
+  infoP->a /= 100;
 
-	return err;
+  return err;
 }
-//-------------------------------------------------------------------------------------------------
-static PF_Err 
-	Exec (CFsAE *ae , ParamInfo *infoP)
-{
-	PF_Err	err = PF_Err_NONE;
+static PF_Err Exec(CFsAE *ae, ParamInfo *infoP) {
+  PF_Err err = PF_Err_NONE;
 
-	//画面をコピー
-	ERR(ae->CopyInToOut());
-	
-	switch(ae->pixelFormat())
-	{
-	case PF_PixelFormat_ARGB128:
-		ERR(ae->iterate32((refconType)infoP,FilterImage32));
-		break;
-	case PF_PixelFormat_ARGB64:
-		ERR(ae->iterate16((refconType)infoP,FilterImage16));
-		break;
-	case PF_PixelFormat_ARGB32:
-		ERR(ae->iterate8((refconType)infoP,FilterImage8));
-		break;
-	}
-	return err;
+  // Copy screen
+  ERR(ae->CopyInToOut());
+
+  switch (ae->pixelFormat()) {
+    case PF_PixelFormat_ARGB128:
+      ERR(ae->iterate32((refconType)infoP, FilterImage32));
+      break;
+    case PF_PixelFormat_ARGB64:
+      ERR(ae->iterate16((refconType)infoP, FilterImage16));
+      break;
+    case PF_PixelFormat_ARGB32:
+      ERR(ae->iterate8((refconType)infoP, FilterImage8));
+      break;
+  }
+  return err;
 }
 
-//-------------------------------------------------------------------------------------------------
-//レンダリングのメイン
+// Main rendering function
 /*
-	SmartFXに対応していないホスト(After Effects7以前のもの)はこの関数が呼び出されて描画する
-	この関数を書いておけば一応v6.5対応になる
+    For hosts that do not support SmartFX (After Effects 7 or earlier),
+    this function is called for drawing. Including this function ensures
+    compatibility with v6.5.
 */
-static PF_Err 
-Render ( 
-	PF_InData		*in_data,
-	PF_OutData		*out_data,
-	PF_ParamDef		*params[],
-	PF_LayerDef		*output )
-{
+static PF_Err Render(PF_InData *in_data, PF_OutData *out_data,
+                     PF_ParamDef *params[], PF_LayerDef *output) {
+  PF_Err err = PF_Err_NONE;
+  PF_Handle pixelTable = NULL;
 
-	PF_Err	err = PF_Err_NONE;
-	PF_Handle		pixelTable = NULL;
-	
-	CFsAE ae(in_data,out_data,params,output,ID_NUM_PARAMS);
-	err =ae.resultErr();
-	if (!err){
-		ParamInfo info;
-		ERR(GetParams(&ae,&info));
-		ERR(Exec(&ae,&info));
-	}
-	return err;
+  CFsAE ae(in_data, out_data, params, output, ID_NUM_PARAMS);
+  err = ae.resultErr();
+  if (!err) {
+    ParamInfo info;
+    ERR(GetParams(&ae, &info));
+    ERR(Exec(&ae, &info));
+  }
+  return err;
 }
-//-----------------------------------------------------------------------------------
 /*
-	SmartFX対応の場合、まずこの関数が呼ばれてパラメータの獲得を行う
+    For SmartFX support, this function is called first to acquire parameters.
 */
 #if defined(SUPPORT_SMARTFX)
-static PF_Err
-PreRender(
-	PF_InData			*in_data,
-	PF_OutData			*out_data,
-	PF_PreRenderExtra	*extraP)
-{
-	PF_Err		err 		= PF_Err_NONE;
-	CFsAE ae(in_data,out_data,extraP,sizeof(ParamInfo),ID_NUM_PARAMS);
-	err = ae.resultErr();
-	if (!err){
-
-		ParamInfo *infoP = reinterpret_cast<ParamInfo*>(ae.LockPreRenderData());
-		if (infoP){
-			ae.SetHostPreRenderData();
-			ERR(GetParams(&ae,infoP));
-			ERR(ae.UnSetPreRenderData());
-			ae.UnlockPreRenderData();
-		}else{
-			err = PF_Err_OUT_OF_MEMORY;
-		}
-	}
-	return err;
+static PF_Err PreRender(PF_InData *in_data, PF_OutData *out_data,
+                        PF_PreRenderExtra *extraP) {
+  PF_Err err = PF_Err_NONE;
+  CFsAE ae(in_data, out_data, extraP, sizeof(ParamInfo), ID_NUM_PARAMS);
+  err = ae.resultErr();
+  if (!err) {
+    ParamInfo *infoP = reinterpret_cast<ParamInfo *>(ae.LockPreRenderData());
+    if (infoP) {
+      ae.SetHostPreRenderData();
+      ERR(GetParams(&ae, infoP));
+      ERR(ae.UnSetPreRenderData());
+      ae.UnlockPreRenderData();
+    } else {
+      err = PF_Err_OUT_OF_MEMORY;
+    }
+  }
+  return err;
 }
 #endif
-//-----------------------------------------------------------------------------------
 #if defined(SUPPORT_SMARTFX)
-static PF_Err
-SmartRender(
-	PF_InData				*in_data,
-	PF_OutData				*out_data,
-	PF_SmartRenderExtra		*extraP)
-{
-	PF_Err			err		= PF_Err_NONE,
-					err2 	= PF_Err_NONE;
+static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data,
+                          PF_SmartRenderExtra *extraP) {
+  PF_Err err = PF_Err_NONE, err2 = PF_Err_NONE;
 
-	CFsAE ae(in_data,out_data,extraP,ID_NUM_PARAMS);
-	err = ae.resultErr();
-	if (!err){
-		ParamInfo *infoP = reinterpret_cast<ParamInfo*>(ae.LockPreRenderData());
-		if (infoP){
-			ERR(Exec(&ae,infoP));
-			ERR2(ae.UnsetSmartRender());
-			ae.UnlockPreRenderData();
-		}else{
-			err = PF_Err_OUT_OF_MEMORY;
-		}
-	}
-	return err;
+  CFsAE ae(in_data, out_data, extraP, ID_NUM_PARAMS);
+  err = ae.resultErr();
+  if (!err) {
+    ParamInfo *infoP = reinterpret_cast<ParamInfo *>(ae.LockPreRenderData());
+    if (infoP) {
+      ERR(Exec(&ae, infoP));
+      ERR2(ae.UnsetSmartRender());
+      ae.UnlockPreRenderData();
+    } else {
+      err = PF_Err_OUT_OF_MEMORY;
+    }
+  }
+  return err;
 }
 #endif
 
+// clang-format off
 #include "Fs_Entry.h"
+// clang-format on
