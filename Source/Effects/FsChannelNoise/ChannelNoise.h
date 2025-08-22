@@ -56,3 +56,9 @@ typedef struct ParamInfo {
   PF_FpShort green_opt;
   PF_FpShort blue_opt;
 } ParamInfo, *ParamInfoP, **ParamInfoH;
+
+extern "C" {
+DllExport PF_Err EntryPointFunc(PF_Cmd cmd, PF_InData *in_data,
+                                PF_OutData *out_data, PF_ParamDef *params[],
+                                PF_LayerDef *output, void *extraP);
+}
