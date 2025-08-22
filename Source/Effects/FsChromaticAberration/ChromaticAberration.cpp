@@ -1,6 +1,5 @@
 // clang-format off
 #include "ChromaticAberration.h"
-#include "Fs_Entry.h"
 // clang-format on
 
 // Pass parameters to After Effects
@@ -314,4 +313,6 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data,
 }
 #endif
 
+// clang-format off
 #include "Fs_Entry.h"
+// clang-format on
