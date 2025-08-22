@@ -1,13 +1,6 @@
-//-----------------------------------------------------------------------------------
-/*
-	PluginSkeleton for VS2010
-*/
-//-----------------------------------------------------------------------------------
-
 #pragma once
-#ifndef ColorChangeSimple_H
-#define ColorChangeSimple_H
 
+// clang-format off
 #include "Fs_Target.h"
 
 #include "AEConfig.h"
@@ -36,44 +29,34 @@
 #endif
 
 #include "../FsLibrary/FsAE.h"
+// clang-format on
 
-
-//ユーザーインターフェースのID
-//ParamsSetup関数とRender関数のparamsパラメータのIDになる
+// User interface ID
+// ID for the params parameter of ParamsSetup and Render functions
 enum {
-	ID_INPUT = 0,	// default input layer 
-	ID_LEVEL_FIXED,	//long
-	ID_SRC_COLOR,	//PF_Pixel
-	ID_DST_COLOR,	//PF_Pixel
-	ID_NUM_PARAMS
-	};
+  ID_INPUT = 0,    // default input layer
+  ID_LEVEL_FIXED,  // long
+  ID_SRC_COLOR,    // PF_Pixel
+  ID_DST_COLOR,    // PF_Pixel
+  ID_NUM_PARAMS
+};
 
-#define STR_LEVEL	"許容値"
-#define STR_SRC		"元の色"
-#define STR_DST		"新しい色"
+#define STR_LEVEL "Tolerance"
+#define STR_SRC "Source Color"
+#define STR_DST "New Color"
 
-typedef struct ParamInfo{
-	A_u_char		level;
-	PF_Pixel  		src;
-	PF_Pixel  		dst;
-	PF_Pixel16  	dst16;
-	PF_PixelFloat  	dst32;
-} ParamInfo,*ParamInfoP,**ParamInfoH;
-
+typedef struct ParamInfo {
+  A_u_char level;
+  PF_Pixel src;
+  PF_Pixel dst;
+  PF_Pixel16 dst16;
+  PF_PixelFloat dst32;
+} ParamInfo, *ParamInfoP, **ParamInfoH;
 
 //-------------
 extern "C" {
 
-DllExport 
-PF_Err 
-EntryPointFunc (	
-	PF_Cmd			cmd,
-	PF_InData		*in_data,
-	PF_OutData		*out_data,
-	PF_ParamDef		*params[],
-	PF_LayerDef		*output,
-	void			*extra);
+DllExport PF_Err EntryPointFunc(PF_Cmd cmd, PF_InData *in_data,
+                                PF_OutData *out_data, PF_ParamDef *params[],
+                                PF_LayerDef *output, void *extra);
 }
-
-
-#endif // ColorChangeSimple_H
