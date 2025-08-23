@@ -263,7 +263,7 @@ add_subdirectory("Source/Effects/FsToGray")
 add_subdirectory("Source/Effects/FsTone")
 add_subdirectory("Source/Effects/FsToner")
 # add_subdirectory("Source/Effects/FsTouchDraw") # Link error
-# add_subdirectory("Source/Effects/FsTouchDrawCenter") # Link error
+add_subdirectory("Source/Effects/FsTouchDrawCenter")
 # add_subdirectory("Source/Effects/FsTouchDrawStraght") # Link error
 # add_subdirectory("Source/Effects/FsUnmult_KNSW_Fake") # Compile error
 # add_subdirectory("Source/Effects/FsUnmult_RG_Fake") # Compile error
