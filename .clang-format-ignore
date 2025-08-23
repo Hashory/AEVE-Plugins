@@ -11,7 +11,7 @@ Source/Effects/FsCCplus/*
 Source/Effects/FsCellGrad/*
 #Source/Effects/FsChannelBlur/*
 #Source/Effects/FsChannelNoise/*
-Source/Effects/FsChannelShift/*
+#Source/Effects/FsChannelShift/*
 #Source/Effects/FsChromaticAberration/*
 Source/Effects/FsColorChange/*
 Source/Effects/FsColorChangeFromPoint/*
