@@ -1,60 +1,49 @@
 /*
-	各種定数を設定
+        Set various constants
 
-	PiPLリソースに使う為にマクロ展開は最低限
-
+        Macro expansion is minimal for use with PiPL resources
 */
 #pragma once
-#ifndef Filter_Target_H
-#define Filter_Target_H
 
+// clang-format off
 #include "../FsLibrary_next/FsVersion.h"
+// clang-format on
 
-
-
-#define FS_DESCRIPTION		"Filter Effect Filter"
-#define	FS_NAME				"F's Filter"
-#define FS_MATCH_NAME		FS_NAME
-#define FS_CREATER			"Copyright (c) 2019 bryful ( bryful@gmail.com/twitter:bryful )"
+#define FS_DESCRIPTION "Filter Effect Filter"
+#define FS_NAME "F's Filter"
+#define FS_MATCH_NAME FS_NAME
+#define FS_CREATER \
+  "Copyright (c) 2019 bryful ( bryful@gmail.com/twitter:bryful )"
 //-----------------------------------------------------------------------------------
-//プラグインが表示されるメニュー名
-	//#define FS_CATEGORY "F's Plugins-Channel"
-	//#define FS_CATEGORY "F's Plugins-Draw"
-	#define FS_CATEGORY "NF's Plugins-Filter"
-	//#define FS_CATEGORY "F's Plugins-Cell"
-	//#define FS_CATEGORY "F's Plugins-Colorize"
-	//#define FS_CATEGORY "F's Plugins-Script"
-	//#define FS_CATEGORY "F's Plugins-{Legacy}"
+// Menu name where the plugin is displayed
+#define FS_CATEGORY "NF's Plugins-Filter"
 
+// #define SUPPORT_SMARTFX			//If this is enabled, it will
+// support SmartFX + Float_Color
 
-//#define SUPPORT_SMARTFX			//これを有効にするとSmartFX+Float_Colorに対応する
+// value:4 [PF_OutFlag_NON_PARAM_VARY] Render all frames
 
+// value:64 [PF_OutFlag_USE_OUTPUT_EXTENT]
+// value:16777216 [PF_OutFlag_I_HAVE_EXTERNAL_DEPENDENCIES]
 
+// value:33554432[PF_OutFlag_DEEP_COLOR_AWARE] 16bit
 
-//value:4 [PF_OutFlag_NON_PARAM_VARY] 全フレームで描画する
-
-//value:64 [PF_OutFlag_USE_OUTPUT_EXTENT] 表示画面全部
-//value:16777216 [PF_OutFlag_I_HAVE_EXTERNAL_DEPENDENCIES]
-
-//value:33554432[PF_OutFlag_DEEP_COLOR_AWARE] 16bit
-
-//#define FS_OUT_FLAGS	50332164	//こっちにすると全フレーム描画する
-#define FS_OUT_FLAGS	50332160	//通常はこちら
-
-
+// #define FS_OUT_FLAGS	50332164	//Render all frames with this
+#define FS_OUT_FLAGS 50332160  // Normal setting
 
 #if defined(SUPPORT_SMARTFX)
-//value:8 [PF_OutFlag2_PARAM_GROUP_START_COLLAPSED_FLAG] グループ
-//value:1024 [PF_OutFlag2_SUPPORTS_SMART_RENDER] スマートレンダー
-//value:4096 [PF_OutFlag2_FLOAT_COLOR_AWARE] 32bit
-#define FS_OUT_FLAGS2	5128
+// value:8 [PF_OutFlag2_PARAM_GROUP_START_COLLAPSED_FLAG] Group
+// value:1024 [PF_OutFlag2_SUPPORTS_SMART_RENDER] Smart Render
+// value:4096 [PF_OutFlag2_FLOAT_COLOR_AWARE] 32bit
+#define FS_OUT_FLAGS2 5128
 
 #else
-//value : 8[PF_OutFlag2_PARAM_GROUP_START_COLLAPSED_FLAG]
-#define FS_OUT_FLAGS2	8
+// value : 8[PF_OutFlag2_PARAM_GROUP_START_COLLAPSED_FLAG]
+#define FS_OUT_FLAGS2 8
 #endif
 
-#define FS_ABOUT_STR "function FsAbout()\
+#define FS_ABOUT_STR \
+  "function FsAbout()\
 {\
 	this.pluginName = \"%s\";\
 	this.pluginVersion = \"Version %d.%d\";\
@@ -84,9 +73,3 @@ var dlg = new FsAbout;\
 \
 dlg.show();\
 "
-
-
-
-
-#endif // Filter_Target_H
-
