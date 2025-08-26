@@ -14,7 +14,7 @@ Source/Effects/FsCellGrad/*
 #Source/Effects/FsChannelShift/*
 #Source/Effects/FsChromaticAberration/*
 Source/Effects/FsColorChange/*
-Source/Effects/FsColorChangeFromPoint/*
+#Source/Effects/FsColorChangeFromPoint/*
 #Source/Effects/FsColorChangeSimple/*
 #Source/Effects/FsColorKey/*
 Source/Effects/FsColorMatKey/*
